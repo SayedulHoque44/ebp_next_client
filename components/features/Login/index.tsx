@@ -8,8 +8,8 @@ import {
   Heading2,
   Label,
 } from "@/components/ui/Typography";
-import { LoginTestimonials } from "@/constants/constendData";
-import { mediaProvider } from "@/constants/mediaProvider";
+import { LoginTestimonials } from "@/lib/constants/constendData";
+import { mediaProvider } from "@/lib/constants/mediaProvider";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -92,7 +92,7 @@ const LoginPage = () => {
         <div
           className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black"
           style={{
-            backgroundImage: `url(${mediaProvider.bg2})`,
+            backgroundImage: `url(${mediaProvider.bg2.src})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -104,7 +104,7 @@ const LoginPage = () => {
         <div className="relative z-10 flex flex-col items-center justify-center gap-3 p-12 text-white">
           {/* Main Content */}
           <div className="flex flex-col justify-center max-w-md items-center">
-            <Heading1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-center">
+            <Heading1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-center text-white">
               Welcome Back!
             </Heading1>
             <Body className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed text-center font-sans">

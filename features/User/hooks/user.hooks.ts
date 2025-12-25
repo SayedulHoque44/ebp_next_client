@@ -8,9 +8,9 @@ import {
   IUserResponse,
 } from "../interface/user.interface";
 import { AxiosError } from "axios";
-import { useApiQuery } from "@/hooks/useApiQuery";
+import { useApiQuery } from "@/lib/hooks/useApiQuery";
 import UserApis from "../api/user.api";
-import { useApiMutation } from "@/hooks/useApiMutation";
+import { useApiMutation } from "@/lib/hooks/useApiMutation";
 
 const useGetUserQuery = ({
   queryKey = [],

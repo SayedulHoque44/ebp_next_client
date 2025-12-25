@@ -11,3 +11,5 @@
 ### TODO
 
 - Add bearer in token req with server keep mind also react project - But Apps issue , app also need to change
+  -import Swal from "sweetalert2"; find any alternative
+  -import toast from "react-hot-toast"; replace with sooner

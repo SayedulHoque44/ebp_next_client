@@ -3,7 +3,7 @@ import { ILoginRequest, ILoginResponse } from "../interface/auth.interface";
 
 const loginHandler = async (data: ILoginRequest): Promise<ILoginResponse> => {
   const res = await api.post("/users/login", data);
-  console.log("res - auth.api.ts -->", res);
+  // console.log("res - auth.api.ts -->", res);
   return res.data;
 };
 

@@ -1,5 +1,5 @@
-import dynamic from "next/dynamic";
 import React from "react";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 // const Providers = dynamic(() => import("../Providers"), {
 //   ssr: false,
 //   loading: () => <div>Loading...</div>,
@@ -16,7 +16,9 @@ const MainBody = ({
   return (
     <body className={`${className} `}>
       {/* <Providers>{children}</Providers> */}
-      <Providers>{children}</Providers>
+      <AntdRegistry>
+        <Providers>{children}</Providers>
+      </AntdRegistry>
       {/* GoogleAnalytics */}
       {/* Ads .. Etc here.. */}
     </body>

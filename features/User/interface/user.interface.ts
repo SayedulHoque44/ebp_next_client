@@ -10,6 +10,7 @@ export interface IUser {
   status: "Active" | "Inactive" | string;
   role: string;
   group: string;
+  photoURL: string;
   paymantNote: string;
   deviceLogin: any[]; // you can specify a more detailed type if known
   createdAt: string; // ISO date string

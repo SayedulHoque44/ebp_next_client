@@ -1,5 +1,5 @@
+import LoginPage from "@/components/features/Login";
 import { Metadata } from "next";
-import LoginPage from "./components/LoginPage";
 
 export const metadata: Metadata = {
   title: "Login",
