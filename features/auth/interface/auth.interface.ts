@@ -5,6 +5,12 @@ export interface ILoginRequest {
   pin: number;
   deviceInfo: string;
 }
+export interface IRegisterRequest {
+  name: string;
+  phone: string;
+  city: string;
+  pin: number;
+}
 
 export interface ILoginResponse {
   success: boolean;

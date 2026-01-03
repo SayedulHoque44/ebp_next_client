@@ -1,4 +1,4 @@
-import { contentTypeObj } from "@/lib/constants/ui_constent";
+import { contentTypeObj } from "@/constants/ui_constent";
 import { create } from "zustand";
 
 // ============================================

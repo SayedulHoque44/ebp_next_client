@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { mediaProvider } from "@/lib/constants/mediaProvider";
+import { mediaProvider } from "@/constants/mediaProvider";
 import Image from "next/image";
 
 const Logo = ({

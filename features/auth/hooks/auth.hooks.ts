@@ -1,10 +1,14 @@
 "use client";
 import { useQueryClient } from "@tanstack/react-query";
 import useAuthStore from "../store/useAuthStore";
-import { ILoginRequest, ILoginResponse } from "../interface/auth.interface";
+import {
+  ILoginRequest,
+  ILoginResponse,
+  IRegisterRequest,
+} from "../interface/auth.interface";
 import AuthApi from "../api/auth.api";
 import UserHooks from "@/features/User/hooks/user.hooks";
-import { errorToast } from "@/utils/toast";
+import { errorToast, successToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -42,6 +46,23 @@ const useAuthDataDefine = () => {
       console.log(error);
       // Handle Axios error structure
 
+      errorToast({ error: error });
+      throw error;
+    }
+  };
+
+  const register = async (
+    data: IRegisterRequest
+  ): Promise<ILoginResponse | any> => {
+    try {
+      const response = await AuthApi.registerHandler(data);
+      if (response.success) {
+        router.push("/login");
+        successToast("Registration successful");
+      }
+      return response;
+    } catch (error: any) {
+      console.log(error);
       errorToast({ error: error });
       throw error;
     }

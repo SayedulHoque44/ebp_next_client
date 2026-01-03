@@ -11,15 +11,23 @@ export const successToast = (
 ) => {
   return toast.success(msg, options);
 };
-export const errorToast = ({
-  msg,
-  options,
-  error,
-}: {
-  msg?: any;
-  error?: any;
-  options?: ToastOptionsProps;
-}) => {
+type ErrorToastArgs =
+  | string
+  | {
+      msg?: any;
+      error?: any;
+      options?: ToastOptionsProps;
+    };
+
+export const errorToast = (args: ErrorToastArgs) => {
+  // If called like errorToast("a message")
+  if (typeof args === "string") {
+    return toast.error(args);
+  }
+
+  // If called like errorToast({ msg, error, options })
+  const { msg, error, options } = args || {};
+
   if (error) {
     return toast.error(
       error?.response?.data?.message ||
@@ -31,6 +39,7 @@ export const errorToast = ({
   }
   return toast.error(msg, options);
 };
+
 export const infoToast = (msg: ToastMsgProps, options?: ToastOptionsProps) => {
   return toast.info(msg, options);
 };

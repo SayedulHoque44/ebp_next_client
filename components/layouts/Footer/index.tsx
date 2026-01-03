@@ -14,8 +14,8 @@ import {
   FaAward,
   FaClock,
 } from "react-icons/fa";
-import { SocialLinks, STATS, STATS_LABELS } from "@/lib/constants/ui_constent";
-import { mediaProvider } from "@/lib/constants/mediaProvider";
+import { SocialLinks, STATS, STATS_LABELS } from "@/constants/ui_constent";
+import { mediaProvider } from "@/constants/mediaProvider";
 
 const Footer = () => {
   const footerLinks = {

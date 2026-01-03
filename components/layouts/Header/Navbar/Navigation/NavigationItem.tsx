@@ -47,18 +47,18 @@ const NavigationItem = ({
       <Link
         className={`flex gap-2 items-center px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
           isActive
-            ? "bg-primary-100 text-primary-700 shadow-soft"
-            : "text-gray-600 hover:text-primary-600 hover:bg-primary-50"
+            ? "bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 shadow-soft dark:shadow-primary-900/20"
+            : "text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
         } ${className}`}
         href={item.link}
         onClick={onClick}
       >
         {showIcon && (
-          <span className="text-lg" style={{ color: item.color }}>
+          <span className="text-lg transition-colors duration-300" style={{ color: item.color }}>
             {getIcon(item.icon)}
           </span>
         )}
-        <span>{item.title}</span>
+        <span className="transition-colors duration-300">{item.title}</span>
       </Link>
     );
   }
@@ -69,15 +69,17 @@ const NavigationItem = ({
       <div
         className={`
           flex items-center space-x-4 p-4 rounded-xl cursor-pointer
-          transition-all duration-300 hover:shadow-md
-          bg-white border border-gray-100 hover:border-gray-200
+          transition-all duration-300 hover:shadow-md dark:hover:shadow-gray-800/50
+          bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 
+          hover:border-gray-200 dark:hover:border-gray-600/50
+          backdrop-blur-sm
           ${className}
         `}
         onClick={onClick}
       >
         {showIcon && (
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-lg"
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-lg transition-transform duration-300 hover:scale-110"
             style={{
               background: `linear-gradient(135deg, ${item.color} 0%, ${item.color}CC 100%)`,
               boxShadow: `0 4px 12px ${item.color}40`,
@@ -89,26 +91,28 @@ const NavigationItem = ({
 
         <div className="flex-1">
           <div
-            className="font-semibold text-base"
-            style={{
-              color: item.title === "Logout" ? "#ff4d4f" : "#1f2937",
-            }}
+            className={`font-semibold text-base transition-colors duration-300 ${
+              item.title === "Logout" 
+                ? "text-red-500 dark:text-red-400" 
+                : "text-gray-800 dark:text-gray-100"
+            }`}
           >
             {item.title}
           </div>
           {showDescription && (
             <div
-              className="text-sm"
-              style={{
-                color: item.title === "Logout" ? "#ff7875" : "#6b7280",
-              }}
+              className={`text-sm transition-colors duration-300 ${
+                item.title === "Logout" 
+                  ? "text-red-400 dark:text-red-500" 
+                  : "text-gray-600 dark:text-gray-400"
+              }`}
             >
               {item.description}
             </div>
           )}
         </div>
 
-        <div className="text-gray-300">
+        <div className="text-gray-300 dark:text-gray-500 transition-colors duration-300">
           <svg
             className="w-5 h-5"
             fill="none"

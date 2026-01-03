@@ -4,6 +4,10 @@ import {
 } from "@tanstack/react-query";
 import {
   IUser,
+  IUserCourseTimesRequest,
+  IUserCourseTimesResponse,
+  IUserGetAllUsersRequest,
+  IUserGetAllUsersResponse,
   IUserGetMeRequest,
   IUserResponse,
 } from "../interface/user.interface";
@@ -32,7 +36,26 @@ const useGetUserQuery = ({
   );
 };
 
-const useUserProfileUpdate = (
+const useGetSingleUserQuery = ({
+  queryKey = [],
+  params,
+  options,
+}: {
+  queryKey: (string | number)[];
+  params: { userId: string };
+  options: QueryObserverOptions<
+    IUserResponse,
+    AxiosError<{ message: string; [key: string]: any }>
+  >;
+}) => {
+  return useApiQuery<IUserResponse, { userId: string }>(
+    [...queryKey],
+    UserApis.getSingleUserHandler,
+    params,
+    options
+  );
+};
+const useUpdateSingleUserMutation = (
   options?: UseMutationOptions<
     IUserResponse,
     AxiosError<{ message: string }>,
@@ -44,7 +67,7 @@ const useUserProfileUpdate = (
     IUserResponse,
     { data: Partial<IUser>; userId: string }
   >(async (params) => {
-    const response = await UserApis.updateUserHandler(
+    const response = await UserApis.updateSingleUserHandler(
       params.data,
       params.userId
     );
@@ -52,9 +75,98 @@ const useUserProfileUpdate = (
   }, options);
 };
 
+const useGetAllUsersQuery = ({
+  queryKey = [],
+  params,
+  options,
+}: {
+  queryKey: (string | number)[];
+  params: IUserGetAllUsersRequest;
+  options: QueryObserverOptions<
+    IUserGetAllUsersResponse,
+    AxiosError<{ message: string; [key: string]: any }>
+  >;
+}) => {
+  return useApiQuery<IUserGetAllUsersResponse, IUserGetAllUsersRequest>(
+    [...queryKey],
+    UserApis.getAllUsersHandler,
+    params,
+    options
+  );
+};
+
+const useUpdateUserCourseTimesMutation = (
+  options?: UseMutationOptions<
+    IUserCourseTimesResponse,
+    AxiosError<{ message: string }>,
+    IUserCourseTimesRequest,
+    unknown
+  >
+) => {
+  return useApiMutation<IUserCourseTimesResponse, IUserCourseTimesRequest>(
+    async (params) => {
+      const response = await UserApis.updateUserCourseTimesHandler(params);
+      return response;
+    },
+    options
+  );
+};
+
+const useDeleteSingleUserMutation = (
+  options?: UseMutationOptions<
+    IUserResponse,
+    AxiosError<{ message: string }>,
+    { userId: string },
+    unknown
+  >
+) => {
+  return useApiMutation<IUserResponse, { userId: string }>(async (params) => {
+    const response = await UserApis.deleteSingleUserHandler(params.userId);
+    return response;
+  }, options);
+};
+
+const useLogoutAllDevicesMutation = (
+  options?: UseMutationOptions<
+    IUserResponse,
+    AxiosError<{ message: string }>,
+    unknown
+  >
+) => {
+  return useApiMutation<IUserResponse>(async () => {
+    const response = await UserApis.logoutAllDevicesHandler();
+    return response;
+  }, options);
+};
+
+const useDeleteUserCourseTimesMutation = (
+  options?: UseMutationOptions<
+    IUserCourseTimesResponse,
+    AxiosError<{ message: string }>,
+    { courseId: string },
+    unknown
+  >
+) => {
+  return useApiMutation<IUserCourseTimesResponse, { courseId: string }>(
+    async (params) => {
+      const response = await UserApis.deleteUserCourseTimesHandler(
+        params.courseId
+      );
+      return response;
+    },
+    options
+  );
+};
+
 const UserHooks = {
   useGetUserQuery,
-  useUserProfileUpdate,
+  useUpdateSingleUserMutation,
+  useLogoutAllDevicesMutation,
+  useDeleteUserCourseTimesMutation,
+  useGetSingleUserQuery,
+  useGetAllUsersQuery,
+  useUpdateUserCourseTimesMutation,
+  useDeleteSingleUserMutation,
 };
 
 export default UserHooks;

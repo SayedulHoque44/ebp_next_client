@@ -1,7 +1,7 @@
 "use client";
 import Loading from "@/components/handler/Loading";
-import useAuth from "@/features/auth/hooks/useAuth";
-import useAuthStore from "@/features/auth/store/useAuthStore";
+import useAuth from "@/features/Auth/hooks/useAuth";
+import useAuthStore from "@/features/Auth/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 

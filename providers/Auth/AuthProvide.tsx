@@ -1,5 +1,5 @@
 "use client";
-import useAuthDataDefine from "@/features/auth/hooks/auth.hooks";
+import useAuthDataDefine from "@/features/Auth/hooks/auth.hooks";
 import React from "react";
 import { AuthContext } from "./AuthProvider";
 

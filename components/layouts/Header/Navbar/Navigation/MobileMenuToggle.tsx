@@ -28,11 +28,11 @@ const MobileMenuToggle = ({
 
   const variants = {
     default:
-      "text-gray-700 hover:text-primary-600 hover:bg-primary-50 border border-gray-200 hover:border-primary-300",
+      "text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600",
     primary:
-      "text-primary-600 hover:text-primary-700 hover:bg-primary-50 border border-primary-200 hover:border-primary-400",
-    dark: "text-gray-800 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 hover:border-gray-400",
-    minimal: "text-gray-600 hover:text-gray-800 hover:bg-gray-50",
+      "text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 border border-primary-200 dark:border-primary-800 hover:border-primary-400 dark:hover:border-primary-600",
+    dark: "text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500",
+    minimal: "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800/50",
   };
 
   return (
@@ -51,7 +51,7 @@ const MobileMenuToggle = ({
       <div
         className={`absolute inset-0 rounded-xl transition-all duration-300 ${
           isOpen
-            ? "bg-gradient-to-r from-primary-500 to-primary-600 scale-110"
+            ? "bg-gradient-to-r from-primary-500 to-primary-600 dark:from-primary-600 dark:to-primary-700 scale-110"
             : "bg-transparent scale-100"
         }`}
         style={{ opacity: isOpen ? 0.15 : 0 }}
@@ -84,7 +84,7 @@ const MobileMenuToggle = ({
       {/* Ripple Effect */}
       <div
         className={`absolute inset-0 rounded-xl transition-all duration-300 ${
-          isOpen ? "bg-primary-100 scale-125" : "bg-transparent scale-100"
+          isOpen ? "bg-primary-100 dark:bg-primary-900/30 scale-125" : "bg-transparent scale-100"
         }`}
         style={{ opacity: isOpen ? 0.3 : 0 }}
       />

@@ -1,6 +1,6 @@
 "use client";
 import React, { memo, useCallback } from "react";
-import useAuth from "@/features/auth/hooks/useAuth";
+import useAuth from "@/features/Auth/hooks/useAuth";
 import UserPropile from "@/components/shared/UserProfile";
 import AntMobileNav from "./MotionNavbar/AntMobileNav";
 import {
@@ -11,10 +11,28 @@ import {
 } from "./Navigation";
 import Logo from "@/components/shared/Logo";
 import PLinkBtn from "@/components/shared/PLinkBtn";
+import BlogHooks from "@/features/Blog/hooks/blog.hooks";
 
 const Navbar = memo(() => {
   const { user } = useAuth();
-
+  // const {
+  //   data: blogs,
+  //   error,
+  //   isLoading,
+  //   isFetching,
+  // } = BlogHooks.useGetBlogs({
+  //   queryKey: ["blogs"],
+  //   params: {
+  //     page: 1,
+  //     limit: 1,
+  //   },
+  //   options: {
+  //     onSuccess: (data) => {
+  //       console.log(data);
+  //     },
+  //   },
+  // });
+  // console.log(blogs, isLoading, isFetching, error);
   // Use custom hooks for navigation configuration and responsive behavior
   const { desktopItems, mobileItems } = useNavigationConfig(!!user);
   const {
@@ -36,11 +54,11 @@ const Navbar = memo(() => {
   );
 
   return (
-    <div className="bg-white/95 backdrop-blur-md border-b border-gray-200">
-      <div className="flex justify-between items-center py-4 md:py-6 bg-linear-to-r from-white via-gray-50 to-white dark:bg-P-Black">
+    <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800/50 shadow-sm dark:shadow-gray-900/20 transition-colors duration-300">
+      <div className="flex justify-between items-center py-4 md:py-6 bg-gradient-to-r from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-900 transition-colors duration-300">
         {/* Logo */}
         <div className="shrink-0 min-w-0">
-          <Logo nameColor="text-P-Black" />
+          <Logo nameColor="text-P-Black dark:text-white" />
         </div>
 
         {/* Desktop Navigation */}
@@ -72,7 +90,7 @@ const Navbar = memo(() => {
             onToggle={toggleMobileMenu}
             size="sm"
             variant="default"
-            className="shadow-sm hover:shadow-md"
+            className="shadow-sm hover:shadow-md dark:shadow-gray-800/50 dark:hover:shadow-gray-700/50"
           />
         </div>
       </div>

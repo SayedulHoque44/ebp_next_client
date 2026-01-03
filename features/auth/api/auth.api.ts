@@ -1,9 +1,19 @@
 import api from "@/lib/api";
-import { ILoginRequest, ILoginResponse } from "../interface/auth.interface";
+import {
+  ILoginRequest,
+  ILoginResponse,
+  IRegisterRequest,
+} from "../interface/auth.interface";
 
 const loginHandler = async (data: ILoginRequest): Promise<ILoginResponse> => {
   const res = await api.post("/users/login", data);
   // console.log("res - auth.api.ts -->", res);
+  return res.data;
+};
+const registerHandler = async (
+  data: IRegisterRequest
+): Promise<ILoginResponse> => {
+  const res = await api.post("/users/register", data);
   return res.data;
 };
 
@@ -29,6 +39,7 @@ const loginHandler = async (data: ILoginRequest): Promise<ILoginResponse> => {
 const AuthApi = {
   loginHandler,
   // refreshTokenHandler,
+  registerHandler,
 };
 
 export default AuthApi;

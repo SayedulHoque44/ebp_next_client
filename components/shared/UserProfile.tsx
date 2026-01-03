@@ -2,9 +2,9 @@
 import React from "react";
 import { FiLogOut } from "react-icons/fi";
 import Link from "next/link";
-import useAuth from "@/features/auth/hooks/useAuth";
+import useAuth from "@/features/Auth/hooks/useAuth";
 import Image from "next/image";
-import { mediaProvider } from "@/lib/constants/mediaProvider";
+import { mediaProvider } from "@/constants/mediaProvider";
 const UserPropile = ({ logout = true }: { logout?: boolean }) => {
   const { user, clearUser } = useAuth();
 

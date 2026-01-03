@@ -8,8 +8,8 @@ import {
   Heading2,
   Label,
 } from "@/components/ui/Typography";
-import { LoginTestimonials } from "@/lib/constants/constendData";
-import { mediaProvider } from "@/lib/constants/mediaProvider";
+import { LoginTestimonials } from "@/constants/constendData";
+import { mediaProvider } from "@/constants/mediaProvider";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +18,7 @@ import { z } from "zod";
 import { FiEye, FiEyeOff, FiLock } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
-import useAuth from "@/features/auth/hooks/useAuth";
+import useAuth from "@/features/Auth/hooks/useAuth";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 

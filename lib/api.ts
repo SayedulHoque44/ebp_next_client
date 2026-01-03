@@ -1,6 +1,5 @@
 "use client";
-import AuthApi from "@/features/auth/api/auth.api";
-import useAuthStore from "@/features/auth/store/useAuthStore";
+import useAuthStore from "@/features/Auth/store/useAuthStore";
 import { errorToast } from "@/utils/toast";
 import axios, {
   AxiosError,

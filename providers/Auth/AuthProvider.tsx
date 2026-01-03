@@ -1,11 +1,11 @@
 "use client";
-import useAuthDataDefine from "@/features/auth/hooks/auth.hooks";
+import useAuthDataDefine from "@/features/Auth/hooks/auth.hooks";
 import { usePathname } from "next/navigation";
 import React, { createContext, useEffect } from "react";
 import {
   ILoginRequest,
   ILoginResponse,
-} from "@/features/auth/interface/auth.interface";
+} from "@/features/Auth/interface/auth.interface";
 import { IUser } from "@/features/User/interface/user.interface";
 
 export interface IAuthContext {
