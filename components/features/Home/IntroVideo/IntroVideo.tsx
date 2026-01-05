@@ -1,17 +1,20 @@
+"use client";
 import React, { useState } from "react";
-import Container from "../../../Shared/Container/Container";
-import YTVideoPlayer from "../../../Shared/Components/YTVideoPlayer";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
+import Container from "@/components/ui/Container";
+import SectionHeader from "@/components/shared/SectionHeader";
 import { FaPlay, FaClock, FaUsers, FaTrophy } from "react-icons/fa";
 import { motion } from "framer-motion";
-import AnimatedCounter from "../../../Shared/Components/AnimatedCounter/AnimatedCounter";
-import VideoPlayer from "../../../Shared/Components/VideoPlayer";
-import { STATS, STATS_LABELS } from "../../../Shared/Constants";
+import AnimatedCounter from "../common/AnimatedCounter";
+import VideoPlayer from "../common/VideoPlayer";
+import { STATS, STATS_LABELS } from "@/constants/ui_constent";
 
 const IntroVideo = () => {
   const [hasPlayed, setHasPlayed] = useState(false);
 
-  const handleVideoPlay = (event, playerState) => {
+  const handleVideoPlay = (
+    event: React.MouseEvent<HTMLDivElement>,
+    playerState: any
+  ) => {
     // Hide overlay when video is played for the first time
     if (!hasPlayed) {
       setHasPlayed(true);

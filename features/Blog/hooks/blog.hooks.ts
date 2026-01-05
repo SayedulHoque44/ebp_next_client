@@ -3,6 +3,7 @@ import {
   IBlog,
   IBlogGetBlogsRequest,
   IBlogResponse,
+  IBlogsResponse,
 } from "../interface/blog.interface";
 import {
   QueryObserverOptions,
@@ -20,11 +21,11 @@ const useGetBlogs = ({
   queryKey: (string | number)[];
   params: IBlogGetBlogsRequest;
   options?: QueryObserverOptions<
-    IBlogResponse,
+    IBlogsResponse,
     AxiosError<{ message: string; [key: string]: any }>
   >;
 }) => {
-  return useApiQuery<IBlogResponse, IBlogGetBlogsRequest>(
+  return useApiQuery<IBlogsResponse, IBlogGetBlogsRequest>(
     [...queryKey],
     BlogApis.getBlogsHandler,
     params,
@@ -34,14 +35,14 @@ const useGetBlogs = ({
 
 const useUpdateSingleBlog = (
   options?: UseMutationOptions<
-    IBlogResponse,
+    IBlogsResponse,
     AxiosError<{ message: string }>,
     { data: Partial<IBlog>; blogId: string },
     unknown
   >
 ) => {
   return useApiMutation<
-    IBlogResponse,
+    IBlogsResponse,
     { data: Partial<IBlog>; blogId: string }
   >(async (params) => {
     const response = await BlogApis.updateSingleBlogHandler(
@@ -54,13 +55,13 @@ const useUpdateSingleBlog = (
 
 const useCreateBlog = (
   options: UseMutationOptions<
-    IBlogResponse,
+    IBlogsResponse,
     AxiosError<{ message: string }>,
     Partial<Omit<IBlog, "_id">>,
     unknown
   >
 ) => {
-  return useApiMutation<IBlogResponse, Partial<Omit<IBlog, "_id">>>(
+  return useApiMutation<IBlogsResponse, Partial<Omit<IBlog, "_id">>>(
     async (params) => {
       const response = await BlogApis.createBlogHandler(params);
       return response;
@@ -71,13 +72,13 @@ const useCreateBlog = (
 
 const useDeleteSingleBlog = (
   options: UseMutationOptions<
-    IBlogResponse,
+    IBlogsResponse,
     AxiosError<{ message: string }>,
     { blogId: string },
     unknown
   >
 ) => {
-  return useApiMutation<IBlogResponse, { blogId: string }>(
+  return useApiMutation<IBlogsResponse, { blogId: string }>(
     async (params: { blogId: string }) => {
       const response = await BlogApis.deleteSingleBlogHandler(params.blogId);
       return response;

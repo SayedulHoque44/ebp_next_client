@@ -2,11 +2,8 @@ import { AxiosError } from "axios";
 import {
   IArgument,
   IArgumentGetArgumentsRequest,
-  IArgumentQueryParam,
   IArgumentResponse,
   IArgumentsResponse,
-  IUpdateArgumentRequest,
-  ICreateArgumentRequest,
 } from "../interface/argument.interface";
 import {
   QueryObserverOptions,
@@ -22,7 +19,7 @@ const useGetArguments = ({
   options,
 }: {
   queryKey: (string | number)[];
-  params?: IArgumentQueryParam[] | IArgumentGetArgumentsRequest;
+  params?: IArgumentGetArgumentsRequest;
   options?: QueryObserverOptions<
     IArgumentsResponse,
     AxiosError<{ message: string; [key: string]: any }>
@@ -30,7 +27,7 @@ const useGetArguments = ({
 }) => {
   return useApiQuery<
     IArgumentsResponse,
-    IArgumentQueryParam[] | IArgumentGetArgumentsRequest | undefined
+    IArgumentGetArgumentsRequest | undefined
   >([...queryKey], ArgumentApis.getArgumentsHandler, params, options);
 };
 
@@ -58,17 +55,17 @@ const useCreateArgument = (
   options?: UseMutationOptions<
     IArgumentResponse,
     AxiosError<{ message: string }>,
-    ICreateArgumentRequest,
+    Partial<Omit<IArgument, "_id" | "createdAt" | "updatedAt">>,
     unknown
   >
 ) => {
-  return useApiMutation<IArgumentResponse, ICreateArgumentRequest>(
-    async (params) => {
-      const response = await ArgumentApis.createArgumentHandler(params);
-      return response;
-    },
-    options
-  );
+  return useApiMutation<
+    IArgumentResponse,
+    Partial<Omit<IArgument, "_id" | "createdAt" | "updatedAt">>
+  >(async (params) => {
+    const response = await ArgumentApis.createArgumentHandler(params);
+    return response;
+  }, options);
 };
 
 const useDeleteSingleArg = (

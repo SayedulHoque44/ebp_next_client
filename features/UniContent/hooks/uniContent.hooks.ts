@@ -5,11 +5,9 @@ import {
   IUniContentQueryParam,
   IUniContentResponse,
   IUniContentsResponse,
-  ICreateUniContentRequest,
   ISubContentGetSubContentsRequest,
   ISubContentResponse,
   ISubContentsResponse,
-  ICreateSubContentRequest,
   ISubContent,
 } from "../interface/uniContent.interface";
 import {
@@ -42,17 +40,17 @@ const useCreateUniContent = (
   options?: UseMutationOptions<
     IUniContentResponse,
     AxiosError<{ message: string }>,
-    ICreateUniContentRequest,
+    Partial<Omit<IUniContent, "_id" | "createdAt" | "updatedAt">>,
     unknown
   >
 ) => {
-  return useApiMutation<IUniContentResponse, ICreateUniContentRequest>(
-    async (params) => {
-      const response = await UniContentApis.createUniContentHandler(params);
-      return response;
-    },
-    options
-  );
+  return useApiMutation<
+    IUniContentResponse,
+    Partial<Omit<IUniContent, "_id" | "createdAt" | "updatedAt">>
+  >(async (params) => {
+    const response = await UniContentApis.createUniContentHandler(params);
+    return response;
+  }, options);
 };
 
 const useUpdateSingleUC = (
@@ -116,17 +114,17 @@ const useCreateSubContent = (
   options?: UseMutationOptions<
     ISubContentResponse,
     AxiosError<{ message: string }>,
-    ICreateSubContentRequest,
+    Partial<Omit<ISubContent, "_id" | "_createdAt" | "updatedAt">>,
     unknown
   >
 ) => {
-  return useApiMutation<ISubContentResponse, ICreateSubContentRequest>(
-    async (params) => {
-      const response = await UniContentApis.createSubContentHandler(params);
-      return response;
-    },
-    options
-  );
+  return useApiMutation<
+    ISubContentResponse,
+    Partial<Omit<ISubContent, "_id" | "_createdAt" | "updatedAt">>
+  >(async (params) => {
+    const response = await UniContentApis.createSubContentHandler(params);
+    return response;
+  }, options);
 };
 
 const useDeleteSingleSubContent = (

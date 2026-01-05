@@ -1,7 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Container from "../../../Shared/Container/Container";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
+import Container from "@/components/ui/Container";
+import SectionHeader from "@/components/shared/SectionHeader";
 import {
   Heading1,
   Heading2,
@@ -11,8 +12,8 @@ import {
   Body,
   BodySmall,
   Caption,
-} from "../../../Shared/Components/Typography/Typography";
-import founder from "../../../assets/Images/founder.jpg";
+} from "@/components/ui/Typography";
+import { mediaProvider } from "@/constants/mediaProvider";
 import {
   FaGraduationCap,
   FaClock,
@@ -33,7 +34,8 @@ import {
   FaRocket,
 } from "react-icons/fa";
 import { SiZoom } from "react-icons/si";
-import { SocialLinks } from "../../../Shared/Constants";
+import { SocialLinks } from "@/constants/ui_constent";
+import Image from "next/image";
 
 const PosterCourseSchedule = () => {
   const [activeTab, setActiveTab] = useState("features");
@@ -482,9 +484,11 @@ const PosterCourseSchedule = () => {
 
               <div className="text-center">
                 <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <img
-                    src={founder}
+                  <Image
+                    src={mediaProvider.founder.src}
                     alt="Founder"
+                    width={100}
+                    height={100}
                     className="w-28 h-28 rounded-full object-cover"
                   />
                 </div>
@@ -494,7 +498,7 @@ const PosterCourseSchedule = () => {
                 </Body>
 
                 <div className="flex justify-center space-x-4 mt-6">
-                  {SocialLinks.map((item, index) => (
+                  {SocialLinks.map((item: any, index: number) => (
                     <a
                       href={item.link}
                       key={index}

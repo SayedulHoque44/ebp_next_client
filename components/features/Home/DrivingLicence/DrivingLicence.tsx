@@ -1,37 +1,29 @@
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Container from "../../../Shared/Container/Container";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
-import { useGetBlogsQuery } from "../../../redux/Api/BlogsManagmentApi/BlogManagmentApi";
-import BlogContainer from "../../Blog/BlogContainer/BlogContainer";
-import {
-  FaGraduationCap,
-  FaArrowRight,
-  FaTrophy,
-  FaUsers,
-  FaStar,
-} from "react-icons/fa";
-import ScrollLink from "../../../Shared/Components/ScrollLink";
-import {
-  Heading3,
-  Body,
-} from "../../../Shared/Components/Typography/Typography";
-import PLinkBtn from "../../../Shared/Components/PLinkBtn";
+import Container from "@/components/ui/Container";
+import SectionHeader from "@/components/shared/SectionHeader";
+import BlogContainer from "../../Blog/BlogContainer";
+import { FaGraduationCap, FaArrowRight } from "react-icons/fa";
+import { Heading3, Body } from "@/components/ui/Typography";
+import PLinkBtn from "@/components/shared/PLinkBtn";
+import BlogHooks from "@/features/Blog/hooks/blog.hooks";
+import { IBlog } from "@/features/Blog/interface/blog.interface";
 
 const DrivingLicence = () => {
-  const {
-    data: Blogs,
-    isLoading,
-    isFetching,
-  } = useGetBlogsQuery([
-    { name: "sort", value: "-createdAt" },
-    { name: "type", value: "Congratulate" },
-    { name: "limit", value: 3 },
-  ]);
+  const { data: BlogsResponse } = BlogHooks.useGetBlogs({
+    queryKey: ["blogs"],
+    params: {
+      sort: "-createdAt",
+      type: "Congratulate",
+      limit: 3,
+    },
+  });
+  const Blogs = BlogsResponse?.data?.result ?? [];
 
   return (
     <div
-      className="py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden"
+      className="py-20 bg-linear-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden"
       id="DL"
     >
       {/* Background Elements */}
@@ -55,39 +47,6 @@ const DrivingLicence = () => {
             className="mb-16"
           />
 
-          {/* Success Stats */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
-          >
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaTrophy className="text-white text-xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">5000+</h3>
-              <p className="text-gray-600">Students Passed</p>
-            </div>
-
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaStar className="text-white text-xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">95%</h3>
-              <p className="text-gray-600">Success Rate</p>
-            </div>
-
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaUsers className="text-white text-xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">45 Days</h3>
-              <p className="text-gray-600">Average Time</p>
-            </div>
-          </motion.div> */}
-
           {/* Blog Container */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -97,8 +56,8 @@ const DrivingLicence = () => {
             className="mb-12"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Blogs?.result.length > 0 &&
-                Blogs?.result.map((blog, index) => (
+              {Blogs.length > 0 &&
+                Blogs.map((blog: IBlog, index: number) => (
                   <motion.div
                     key={blog._id}
                     initial={{ opacity: 0, y: 20 }}
@@ -122,7 +81,7 @@ const DrivingLicence = () => {
           >
             <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-gray-100 max-w-2xl mx-auto">
               <div className="flex flex-col sm:flex-row items-center justify-center mb-4 sm:mb-6 md:mb-4 gap-3 sm:gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center flex-shrink-0 sm:mr-4">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-linear-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center shrink-0 sm:mr-4">
                   <FaGraduationCap className="text-white text-lg sm:text-xl md:text-2xl" />
                 </div>
                 <div className="text-center sm:text-left">
@@ -139,7 +98,7 @@ const DrivingLicence = () => {
                 link="/blogs"
                 text="View All Stories"
                 size="lg"
-                className="group w-full sm:w-auto !bg-gradient-to-r !from-primary-500 !to-primary-600 hover:!from-primary-600 hover:!to-primary-700 !focus:ring-primary-500"
+                className="group w-full sm:w-auto bg-linear-to-r! from-primary-500! to-primary-600! hover:from-primary-600! hover:to-primary-700! focus:ring-primary-500!"
                 rightIcon={
                   <FaArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 }

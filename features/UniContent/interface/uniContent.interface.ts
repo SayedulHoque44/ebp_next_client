@@ -108,6 +108,7 @@ export interface ISubContent {
   index: number;
   title: string;
   url: string;
+  description: string;
   imageUrl: string;
 }
 

@@ -1,22 +1,24 @@
+"use client";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { BiLogoFacebook, BiLogoWhatsapp, BiLogoYoutube } from "react-icons/bi";
 import { FaGraduationCap } from "react-icons/fa";
-import CTA from "../../../Shared/Components/CTA";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
-import Container from "../../../Shared/Container/Container";
-import AnimatedCounter from "../../../Shared/Components/AnimatedCounter/AnimatedCounter";
-import founder from "../../../assets/Images/founder.jpg";
+import CTA from "@/components/shared/CTA";
+import SectionHeader from "@/components/shared/SectionHeader";
+import Container from "@/components/ui/Container";
+import AnimatedCounter from "../common/AnimatedCounter";
+import { mediaProvider } from "@/constants/mediaProvider";
 import {
   Heading3,
   Body,
   BengaliBody,
   Caption,
   Overline,
-} from "../../../Shared/Components/Typography/Typography";
-import { SocialLinks, STATS, STATS_LABELS } from "../../../Shared/Constants";
+} from "@/components/ui/Typography";
+import { SocialLinks, STATS, STATS_LABELS } from "@/constants/ui_constent";
+import Image from "next/image";
 const FounderDetails = () => {
   // const socialLinks = [
   //   {
@@ -41,11 +43,7 @@ const FounderDetails = () => {
     Aos.refresh(); // Call AOS.refresh() after initialization
 
     return () => {
-      Aos.refresh({
-        // Optionally, you can pass options to AOS.refresh() within the cleanup function
-        debounceDelay: 50,
-        throttleDelay: 99,
-      });
+      Aos.refresh();
     };
   }, []);
   return (
@@ -143,7 +141,9 @@ const FounderDetails = () => {
                     className="text-3xl font-bold text-primary-600 mb-2"
                     easing="easeOutCubic"
                   />
-                  <Caption className="text-gray-600">{STATS_LABELS.SUCCESS_RATE}</Caption>
+                  <Caption className="text-gray-600">
+                    {STATS_LABELS.SUCCESS_RATE}
+                  </Caption>
                 </motion.div>
               </div>
             </div>
@@ -154,10 +154,12 @@ const FounderDetails = () => {
                 {/* Founder Image */}
                 <div className="relative mb-6">
                   <div className="relative overflow-hidden rounded-2xl">
-                    <img
+                    <Image
                       className="w-full h-80 object-cover"
-                      src={founder}
+                      src={mediaProvider.founder}
                       alt="Nazmul Islam - Founder"
+                      width={300}
+                      height={300}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                   </div>

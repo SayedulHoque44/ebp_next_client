@@ -1,10 +1,12 @@
+"use client";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
-import Container from "../../../Shared/Container/Container";
-import ReactPlayer from "react-player";
-import YTVideoPlayer from "../../../Shared/Components/YTVideoPlayer";
+import Container from "@/components/ui/Container";
+import VideoPlayer from "@/components/features/Home/common/VideoPlayer";
+import Image from "next/image";
+import YTVideoPlayer from "../common/YTVideoPlayer";
 
 const CourseInfo = () => {
   const liItems = [
@@ -23,11 +25,7 @@ const CourseInfo = () => {
     Aos.refresh(); // Call AOS.refresh() after initialization
 
     return () => {
-      Aos.refresh({
-        // Optionally, you can pass options to AOS.refresh() within the cleanup function
-        debounceDelay: 50,
-        throttleDelay: 99,
-      });
+      Aos.refresh();
     };
   }, []);
   return (
@@ -35,8 +33,10 @@ const CourseInfo = () => {
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
           <div className="overflow-hidden">
-            <img
-              className="mx-auto aos-init"
+            <Image
+              width={500}
+              height={500}
+              className="mx-auto aos-init h-full w-full"
               src="https://d1vstek0gf8y4r.cloudfront.net/Ebp_Assets/car-driving.png"
               alt=""
               data-aos="fade-up-left"

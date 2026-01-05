@@ -28,7 +28,7 @@ const ENDPOINT = {
 const getUniContentHandler = async <
   T extends IContentTypeObj = IContentTypeObj
 >(
-  params?: IUniContentGetUniContentRequest<T>
+  params?: IUniContentQueryParam[] | IUniContentGetUniContentRequest<T>
 ): Promise<IUniContentsResponse<T>> => {
   // Support both array format [{name, value}] and object format {key: value}
   let queryParams: Record<string, any> | undefined;
@@ -53,7 +53,7 @@ const getUniContentHandler = async <
 };
 
 const createUniContentHandler = async (
-  data: Omit<IUniContent, "_id" | "createdAt" | "updatedAt">
+  data: Partial<Omit<IUniContent, "_id" | "createdAt" | "updatedAt">>
 ): Promise<IUniContentResponse> => {
   const response = await api.post(`${ENDPOINT.CREATE_UNI_CONTENT()}`, data);
   return response.data;

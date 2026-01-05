@@ -1,33 +1,28 @@
+"use client";
 import React from "react";
-import Container from "../../../Shared/Container/Container";
-import { Button } from "antd";
-import HeadingStyle from "../../../Shared/Components/HeadingStyle/HeadingStyle";
-import { useGetBlogsQuery } from "../../../redux/Api/BlogsManagmentApi/BlogManagmentApi";
-import BlogContainer from "../../Blog/BlogContainer/BlogContainer";
-import PLinkBtn from "../../../Shared/Components/PLinkBtn";
-import {
-  FaArrowRight,
-  FaBookOpen,
-  FaCalendarAlt,
-  FaEye,
-  FaSortAmountDown,
-} from "react-icons/fa";
+import Container from "@/components/ui/Container";
+import BlogContainer from "../../Blog/BlogContainer";
+import PLinkBtn from "@/components/shared/PLinkBtn";
+import { FaArrowRight, FaBookOpen, FaSortAmountDown } from "react-icons/fa";
 import { motion } from "framer-motion";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
-import {
-  Heading3,
-  Body,
-} from "../../../Shared/Components/Typography/Typography";
+import SectionHeader from "@/components/shared/SectionHeader";
+import { Heading3, Body } from "@/components/ui/Typography";
+import BlogHooks from "@/features/Blog/hooks/blog.hooks";
+import { IBlog } from "@/features/Blog/interface/blog.interface";
 const LatestBlog = () => {
   const {
-    data: Blogs,
+    data: BlogsResponse,
     isLoading,
     isFetching,
-  } = useGetBlogsQuery([
-    { name: "sort", value: "-createdAt" },
-    { name: "type", value: "Blog" },
-    { name: "limit", value: 3 },
-  ]);
+  } = BlogHooks.useGetBlogs({
+    queryKey: ["blogs"],
+    params: {
+      sort: "-createdAt",
+      type: "Blog",
+      limit: 3,
+    },
+  });
+  const Blogs = BlogsResponse?.data?.result ?? [];
 
   return (
     <div
@@ -58,10 +53,10 @@ const LatestBlog = () => {
 
           {/* Blog Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {Blogs?.result.length > 0 &&
-              Blogs?.result.map((blog, index) => (
+            {Blogs?.length > 0 &&
+              Blogs?.map((blog: IBlog, index: number) => (
                 <motion.div
-                  key={blog._id}
+                  key={blog?._id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}

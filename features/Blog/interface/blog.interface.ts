@@ -14,6 +14,12 @@ export interface IBlog {
 
 export interface IBlogResponse {
   success: boolean;
+  data: IBlog; // Single blog object
+  message: string;
+}
+
+export interface IBlogsResponse {
+  success: boolean;
   data: {
     meta: {
       page: number;
@@ -21,7 +27,7 @@ export interface IBlogResponse {
       total: number;
       totalPages: number;
     };
-    result: IBlog[];
+    result: IBlog[]; // Always an array, never undefined
   };
   message: string;
 }

@@ -1,4 +1,5 @@
-import React, { useMemo, useState, useEffect } from "react";
+"use client";
+import React from "react";
 import { motion } from "framer-motion";
 
 import AnimatedWave from "./common/AnimateWave";
@@ -9,7 +10,6 @@ import DrivingLicence from "./DrivingLicence/DrivingLicence";
 import FounderDetails from "./FounderDetails/FounderDetails";
 import IntroVideo from "./IntroVideo/IntroVideo";
 import LatestBlog from "./LatestBlog/LatestBlog";
-import PinnedBlog from "./common/PinnedBlog";
 import YTFreeVideo from "./YTFreeVideo";
 import YTFeedback from "./YTFeedback";
 import Poster from "./Poster/Poster";
@@ -24,7 +24,6 @@ import {
   FaComments,
   FaHeart,
 } from "react-icons/fa";
-import { useUserUXSetting } from "@/features/User/store/user.store";
 import { IWaveLayer } from "./common/AnimateWave";
 import PinnedBlogWrapper from "./common/PinnedBlogWrapper";
 

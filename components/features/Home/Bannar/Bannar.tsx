@@ -1,20 +1,22 @@
+"use client";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import Button from "../../../Shared/Components/Button/Button";
-import Container from "../../../Shared/Container/Container";
-import AnimatedCounter from "../../../Shared/Components/AnimatedCounter/AnimatedCounter";
+import Button from "@/components/ui/Button";
+import Container from "@/components/ui/Container";
+import AnimatedCounter from "../common/AnimatedCounter";
 import { AppShowCase } from "../../AppPage";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import Image from "next/image";
 import { FaDownload, FaStar, FaUsers, FaGraduationCap } from "react-icons/fa";
-import CTA from "../../../Shared/Components/CTA";
+import CTA from "../../../shared/CTA";
 import {
   Caption,
   BengaliHeading1,
   BengaliBody,
-} from "../../../Shared/Components/Typography/Typography";
-import { STATS, STATS_LABELS } from "../../../Shared/Constants";
+} from "@/components/ui/Typography";
+import { STATS, STATS_LABELS } from "@/constants/ui_constent";
 
 const Bannar = () => {
   useEffect(() => {
@@ -22,15 +24,12 @@ const Bannar = () => {
     Aos.refresh();
 
     return () => {
-      Aos.refresh({
-        debounceDelay: 50,
-        throttleDelay: 99,
-      });
+      Aos.refresh();
     };
   }, []);
 
   return (
-    <div className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50">
+    <div className="relative min-h-screen flex items-center overflow-hidden bg-linear-to-br from-gray-50 via-white to-primary-50">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
@@ -127,7 +126,7 @@ const Bannar = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/dashboard">
+              <Link href="/dashboard">
                 <Button
                   variant="primary"
                   size="lg"
@@ -145,14 +144,17 @@ const Bannar = () => {
             <div className="relative">
               {/* Main App Showcase */}
               <div className="modern-card p-8 space-y-6">
-                <Link to={"/App/2"} className="block group">
+                <Link href={"/App/2"} className="block group">
                   <div className="relative overflow-hidden rounded-2xl shadow-large group-hover:shadow-glow transition-all duration-500">
-                    <img
+                    <Image
                       src="https://d1vstek0gf8y4r.cloudfront.net/Ebp_Assets/qbp_app/Qbp-banner.png"
+                      width={800}
+                      height={600}
                       className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
                       alt="Quiz Bangla Patente App"
+                      unoptimized
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                       <FaDownload className="text-primary-600" />
                     </div>
@@ -175,11 +177,11 @@ const Bannar = () => {
               </div>
 
               {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 w-12 sm:w-20 h-12 sm:h-20 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-2xl animate-bounce-gentle">
+              <div className="absolute -top-4 -right-4 w-12 sm:w-20 h-12 sm:h-20 bg-linear-to-r from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-2xl animate-bounce-gentle">
                 <FaGraduationCap />
               </div>
               <div
-                className="absolute -bottom-4 -left-4 w-12 sm:w-16 h-12 sm:h-16 bg-gradient-to-r from-accent-400 to-accent-600 rounded-full flex items-center justify-center text-white text-xl animate-bounce-gentle"
+                className="absolute -bottom-4 -left-4 w-12 sm:w-16 h-12 sm:h-16 bg-linear-to-r from-accent-400 to-accent-600 rounded-full flex items-center justify-center text-white text-xl animate-bounce-gentle"
                 style={{ animationDelay: "1s" }}
               >
                 <FaUsers />

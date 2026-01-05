@@ -3,6 +3,7 @@ import {
   IBlog,
   IBlogGetBlogsRequest,
   IBlogResponse,
+  IBlogsResponse,
 } from "../interface/blog.interface";
 
 const ENDPOINT = {
@@ -15,7 +16,7 @@ const ENDPOINT = {
 
 const getBlogsHandler = async (
   params?: IBlogGetBlogsRequest
-): Promise<IBlogResponse> => {
+): Promise<IBlogsResponse> => {
   const response = await api.get(`${ENDPOINT.GET_BLOGS()}`, { params });
   return response.data;
 };
@@ -23,7 +24,7 @@ const getBlogsHandler = async (
 const updateSingleBlogHandler = async (
   data: Partial<Omit<IBlog, "_id">>,
   blogId: string
-): Promise<IBlogResponse> => {
+): Promise<IBlogsResponse> => {
   const response = await api.patch(`${ENDPOINT.UPDATE_SINGLE_BLOG(blogId)}`, {
     ...data,
   });
@@ -32,14 +33,14 @@ const updateSingleBlogHandler = async (
 
 const createBlogHandler = async (
   data: Partial<Omit<IBlog, "_id">>
-): Promise<IBlogResponse> => {
+): Promise<IBlogsResponse> => {
   const response = await api.post(`${ENDPOINT.CREATE_BLOG()}`, data);
   return response.data;
 };
 
 const deleteSingleBlogHandler = async (
   blogId: string
-): Promise<IBlogResponse> => {
+): Promise<IBlogsResponse> => {
   const response = await api.delete(`${ENDPOINT.DELETE_SINGLE_BLOG(blogId)}`);
   return response.data;
 };

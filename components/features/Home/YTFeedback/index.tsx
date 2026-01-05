@@ -1,13 +1,13 @@
+"use client";
 import Aos from "aos";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import Container from "../../../Shared/Container/Container";
-import YTVideoSliderContainer from "../../../Shared/Videos/YTVideoSliderContainer";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
+import Container from "@/components/ui/Container";
+import YTVideoSliderContainer from "@/components/shared/YTVideoSliderContainer";
+import SectionHeader from "@/components/shared/SectionHeader";
 import { FaTrophy, FaArrowRight, FaStar, FaUsers } from "react-icons/fa";
-import ScrollLink from "../../../Shared/Components/ScrollLink";
-import PLinkBtn from "../../../Shared/Components/PLinkBtn";
-import { STATS, STATS_LABELS } from "../../../Shared/Constants";
+import PLinkBtn from "@/components/shared/PLinkBtn";
+import { STATS, STATS_LABELS } from "@/constants/ui_constent";
 
 const YTFeedback = () => {
   useEffect(() => {
@@ -15,11 +15,7 @@ const YTFeedback = () => {
     Aos.refresh(); // Call AOS.refresh() after initialization
 
     return () => {
-      Aos.refresh({
-        // Optionally, you can pass options to AOS.refresh() within the cleanup function
-        debounceDelay: 50,
-        throttleDelay: 99,
-      });
+      Aos.refresh();
     };
   }, []);
   return (

@@ -1,10 +1,10 @@
+"use client";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
-import CTA from "../../../Shared/Components/CTA";
-import Container from "../../../Shared/Container/Container";
-import YTVideoPlayer from "../../../Shared/Components/YTVideoPlayer";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
+import CTA from "@/components/shared/CTA";
+import Container from "@/components/ui/Container";
+import SectionHeader from "@/components/shared/SectionHeader";
 import { FaCar } from "react-icons/fa";
 import {
   Heading2,
@@ -13,8 +13,9 @@ import {
   BengaliBody,
   Caption,
   Overline,
-} from "../../../Shared/Components/Typography/Typography";
-import VideoPlayer from "../../../Shared/Components/VideoPlayer";
+} from "@/components/ui/Typography";
+import VideoPlayer from "@/components/features/Home/common/VideoPlayer";
+import Image from "next/image";
 const Course = () => {
   //
   useEffect(() => {
@@ -22,11 +23,7 @@ const Course = () => {
     Aos.refresh(); // Call AOS.refresh() after initialization
 
     return () => {
-      Aos.refresh({
-        // Optionally, you can pass options to AOS.refresh() within the cleanup function
-        debounceDelay: 50,
-        throttleDelay: 99,
-      });
+      Aos.refresh();
     };
   }, []);
   return (
@@ -83,8 +80,10 @@ const Course = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="flex items-start gap-4 p-4 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl">
                     <div className="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
-                      <img
+                      <Image
                         src="https://fastwpdemo.com/newwp/udrive/wp-content/uploads/2022/06/icon-6.png"
+                        width={100}
+                        height={100}
                         alt="Theory"
                         className="w-6 h-6"
                       />
@@ -101,8 +100,10 @@ const Course = () => {
 
                   <div className="flex items-start gap-4 p-4 bg-gradient-to-br from-accent-50 to-accent-100 rounded-xl">
                     <div className="flex-shrink-0 w-12 h-12 bg-accent-500 rounded-lg flex items-center justify-center">
-                      <img
+                      <Image
                         src="https://fastwpdemo.com/newwp/udrive/wp-content/uploads/2022/06/icon-7.png"
+                        width={100}
+                        height={100}
                         alt="Practical"
                         className="w-6 h-6"
                       />

@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
     // This ensures it's bundled with the application
     serverComponentsExternalPackages: [],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "d1vstek0gf8y4r.cloudfront.net",
+      },
+      {
+        protocol: "https",
+        hostname: "fastwpdemo.com",
+      },
+    ],
+  },
 };
 
 export default withSentryConfig(nextConfig, {
