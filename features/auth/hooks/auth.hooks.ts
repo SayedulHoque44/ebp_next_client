@@ -56,6 +56,7 @@ const useAuthDataDefine = () => {
   ): Promise<ILoginResponse | any> => {
     try {
       const response = await AuthApi.registerHandler(data);
+      console.log("response - auth.hooks.ts -->", response);
       if (response.success) {
         router.push("/login");
         successToast("Registration successful");
@@ -115,6 +116,7 @@ const useAuthDataDefine = () => {
     accessToken,
     isLoading,
     user,
+    register,
   };
 };
 

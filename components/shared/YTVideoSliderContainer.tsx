@@ -70,7 +70,7 @@ const YTVideoSliderContainer = ({
       >
         {data?.data?.result?.map((item: ISubContent) => (
           <SwiperSlide key={item?._id}>
-            <VideoSlide video={item as IYTVideo} setVideoPlay={setVideoPlay} />
+            <VideoSlide video={item} setVideoPlay={setVideoPlay} />
           </SwiperSlide>
         ))}
       </Swiper>
