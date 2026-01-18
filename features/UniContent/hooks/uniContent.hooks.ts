@@ -107,7 +107,7 @@ const useGetSubContents = ({
   return useApiQuery<
     ISubContentsResponse,
     IUniContentQueryParam[] | ISubContentGetSubContentsRequest | undefined
-  >([...queryKey], UniContentApis.getSubContentsHandler, params, options);
+  >([...queryKey,params], UniContentApis.getSubContentsHandler, params, options);
 };
 
 const useCreateSubContent = (

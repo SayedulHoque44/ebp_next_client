@@ -1,4 +1,3 @@
-"use client";
 import Aos from "aos";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
@@ -11,7 +10,7 @@ import PLinkBtn from "@/components/shared/PLinkBtn";
 const YTFreeVideo = () => {
   useEffect(() => {
     Aos.init();
-    Aos.refresh();
+    Aos.refresh(); // Call AOS.refresh() after initialization
 
     return () => {
       Aos.refresh();
@@ -82,7 +81,7 @@ const YTFreeVideo = () => {
               </div>
 
               <PLinkBtn
-                link="/YTFreeVideo"
+                link="/YTFreevideo"
                 text="View All Videos"
                 size="lg"
                 className="group w-full sm:w-auto !bg-gradient-to-r !from-red-500 !to-red-600 hover:!from-red-600 hover:!to-red-700 !focus:ring-red-500"

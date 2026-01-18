@@ -30,8 +30,12 @@ const BlogSection = () => {
   } = BlogHooks.useGetBlogs({
     queryKey: ["blogs"],
     params: {
+      sort: "-createdAt",
       page,
       limit: itemsPerPage,
+    },
+    options: {
+      refetchOnMount: true,
     },
   });
   const metaData = BlogsResponse?.data.meta;

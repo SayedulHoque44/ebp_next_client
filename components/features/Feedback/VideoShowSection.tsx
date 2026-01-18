@@ -42,7 +42,7 @@ const VideoShowSection = ({
     isLoading,
     isFetching,
   } = UniContentHooks.useGetSubContents({
-    queryKey: ["subcontents"],
+    queryKey: ["subcontents",id],
     params: {
       sort: sortBy,
       page: page,
@@ -81,6 +81,7 @@ const VideoShowSection = ({
     { value: "title", label: "Title A-Z", icon: <FaVideo /> },
     { value: "-title", label: "Title Z-A", icon: <FaVideo /> },
   ];
+  console.log(filteredVideos);
   return (
     <div className="py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden">
       {/* Background Elements */}

@@ -18,7 +18,7 @@ const useGetBlogs = ({
   params,
   options,
 }: {
-  queryKey: (string | number)[];
+  queryKey: unknown[];
   params: IBlogGetBlogsRequest;
   options?: QueryObserverOptions<
     IBlogsResponse,
@@ -26,7 +26,7 @@ const useGetBlogs = ({
   >;
 }) => {
   return useApiQuery<IBlogsResponse, IBlogGetBlogsRequest>(
-    [...queryKey],
+    [...queryKey, params],
     BlogApis.getBlogsHandler,
     params,
     options
