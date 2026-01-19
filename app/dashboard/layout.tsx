@@ -1,13 +1,16 @@
+import DashboardLayout from "@/components/layouts/DashboardLayout";
 import PrivateRoute from "@/providers/PrivateRoute";
 import React from "react";
 
-const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardMainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <PrivateRoute>
-      <h1>Dashboard Layout</h1>
-      {children}
+      <DashboardLayout>
+        <h1>Dashboard Layout</h1>
+        {children}
+      </DashboardLayout>
     </PrivateRoute>
   );
 };
 
-export default Dashboardlayout;
+export default DashboardMainLayout;
