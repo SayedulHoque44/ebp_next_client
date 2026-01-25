@@ -48,3 +48,51 @@ export const registerSchema = z
     message: "পিন দুটি একই হতে হবে",
     path: ["confirmPin"],
   });
+
+// Blog creation schema
+export const createBlogSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  type: z.enum(["Announcement", "Congratulate", "Blog"]),
+  tags: z.string().optional(),
+  pin: z.boolean().optional().default(false),
+});
+
+// Quiz Image Figure creation schema
+export const createFigureSchema = z.object({
+  figure: z.string().min(1, "Figure name is required"),
+});
+
+// Quiz creation schema
+export const createQuizSchema = z.object({
+  question: z.string().min(1, "Question is required"),
+  answer: z.enum(["V", "F"], {
+    required_error: "Answer is required",
+    invalid_type_error: "Answer must be either V (True) or F (False)",
+  }),
+  image: z.string().optional(),
+  authorAudio: z.string().optional(),
+});
+
+// Argument creation schema
+export const createArgumentSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  image: z.string().optional(),
+});
+
+// Topic creation schema
+export const createArgTopicSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  theory: z.string().min(1, "Theory is required"),
+  image: z.string().optional(),
+  videoUrl: z.string().optional(),
+  argumentId: z.string().min(1, "Argument ID is required"),
+});
+
+// UniContent creation schema
+export const createUniContentSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  contentType: z.string().min(1, "Content type is required"),
+  imageUrl: z.string().optional(),
+});

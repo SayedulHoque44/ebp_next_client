@@ -1,5 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  startTransition,
+  useMemo,
+  useCallback,
+  memo,
+} from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,136 +18,184 @@ import { DashboardIcon } from "@/constants/dashboardIcons";
 import UserPropile from "@/components/shared/UserProfile";
 import Logo from "@/components/shared/Logo";
 
+interface NavItemType {
+  to: string;
+  label: string;
+  icon: React.ReactNode;
+  end?: boolean;
+  activeCheck?: (path: string) => boolean;
+  id: string;
+}
+
+interface NavItemProps {
+  item: NavItemType;
+  collapsed: boolean;
+  pathname: string;
+}
+
+const NavItem = memo(({ item, collapsed, pathname }: NavItemProps) => {
+  const isActive = item.activeCheck
+    ? item.activeCheck(pathname)
+    : item.end
+      ? pathname === item.to
+      : pathname.startsWith(item.to);
+
+  return (
+    <Link
+      href={item.to}
+      className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group relative ${
+        isActive
+          ? "bg-P-primary text-white shadow-lg shadow-P-primary/30"
+          : "text-gray-500 hover:bg-purple-50 hover:text-P-primary"
+      }`}
+    >
+      <span className="shrink-0">{item.icon}</span>
+      <span
+        className={`whitespace-nowrap transition-all duration-300 ${
+          collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100"
+        }`}
+      >
+        {item.label}
+      </span>
+      {/* Tooltip for collapsed mode */}
+      {collapsed && (
+        <div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
+          {item.label}
+        </div>
+      )}
+    </Link>
+  );
+});
+
+NavItem.displayName = "NavItem";
+
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user, isLoading, accessToken } = useAuth();
+  const { user } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Mobile drawer
   const [isCollapsed, setIsCollapsed] = useState(false); // Desktop collapse
   const pathname = usePathname();
 
   // Close mobile sidebar on route change
   useEffect(() => {
-    setIsSidebarOpen(false);
+    startTransition(() => {
+      setIsSidebarOpen(false);
+    });
   }, [pathname]);
 
   // Secure content
   useEffect(() => {
-    const handleContextMenu = (e: any) => e.preventDefault();
+    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
     window.addEventListener("contextmenu", handleContextMenu);
     return () => window.removeEventListener("contextmenu", handleContextMenu);
   }, []);
 
-  const navItems = [
-    {
-      to: "/dashboard",
-      label: "Dashboard",
-      icon: <DashboardIcon route="/dashboard" size={20} />,
-      end: true,
-    },
-    ...(user?.role === "Admin"
-      ? [
-          {
-            to: "/dashboard/adminManagment/userManagment",
-            label: "Admin Management",
-            icon: <DashboardIcon route="adminManagment" size={20} />,
-            activeCheck: (path: string) => path.includes("/adminManagment"),
-          },
-        ]
-      : []),
-    {
-      to: "/dashboard/simulazioneEsame",
-      label: "Simulazione Esame",
-      icon: <DashboardIcon route="simulazioneEsame" size={20} />,
-    },
-    {
-      to: "/dashboard/quizPerArgument",
-      label: "Quiz Per Argomenti",
-      icon: <DashboardIcon route="quizPerArgument" size={20} />,
-    },
-    {
-      to: "/dashboard/ripassoErrori",
-      label: "Ripasso Errori",
-      icon: <DashboardIcon route="ripassoErrori" size={20} />,
-    },
-    {
-      to: "/dashboard/theory",
-      label: "Theory Con Quiz",
-      icon: <DashboardIcon route="theory" size={20} />,
-    },
-    {
-      to: "/dashboard/cerca",
-      label: "Cerca Quiz",
-      icon: <DashboardIcon route="cerca" size={20} />,
-    },
-    {
-      to: "/dashboard/PrivateVideos",
-      label: "Videos",
-      icon: <DashboardIcon route="PrivateVideos" size={20} />,
-    },
-    {
-      to: "/dashboard/patenteBooks",
-      label: "Books",
-      icon: <DashboardIcon route="patenteBooks" size={20} />,
-    },
-    {
-      to: "/dashboard/courseVideo",
-      label: "Course Video",
-      icon: <DashboardIcon route="courseVideo" size={20} />,
-    },
-    {
-      to: "/dashboard/QNAPdf",
-      label: "QNA",
-      icon: <DashboardIcon route="QNAPdf" size={20} />,
-    },
-    {
-      to: "/dashboard/quizBook",
-      label: "Quiz Book",
-      icon: <DashboardIcon route="quizBook" size={20} />,
-    },
-    {
-      to: "/dashboard/trucchi",
-      label: "Trucchi",
-      icon: <DashboardIcon route="trucchi" size={20} />,
-    },
-    {
-      to: "/dashboard/studentNotes",
-      label: "Notes",
-      icon: <DashboardIcon route="studentNotes" size={20} />,
-    },
-  ];
+  const navItems = useMemo<NavItemType[]>(
+    () => [
+      {
+        id: "dashboard",
+        to: "/dashboard",
+        label: "Dashboard",
+        icon: <DashboardIcon route="/dashboard" size={20} />,
+        end: true,
+      },
+      ...(user?.role === "Admin"
+        ? [
+            {
+              id: "admin-management",
+              to: "/dashboard/adminManagment/userManagment",
+              label: "Admin Management",
+              icon: <DashboardIcon route="adminManagment" size={20} />,
+              activeCheck: (path: string) => path.includes("/adminManagment"),
+            },
+          ]
+        : []),
+      {
+        id: "simulazione-esame",
+        to: "/dashboard/simulazioneEsame",
+        label: "Simulazione Esame",
+        icon: <DashboardIcon route="simulazioneEsame" size={20} />,
+      },
+      {
+        id: "quiz-per-argomenti",
+        to: "/dashboard/quizPerArgument",
+        label: "Quiz Per Argomenti",
+        icon: <DashboardIcon route="quizPerArgument" size={20} />,
+      },
+      {
+        id: "ripasso-errori",
+        to: "/dashboard/ripassoErrori",
+        label: "Ripasso Errori",
+        icon: <DashboardIcon route="ripassoErrori" size={20} />,
+      },
+      {
+        id: "theory",
+        to: "/dashboard/theory",
+        label: "Theory Con Quiz",
+        icon: <DashboardIcon route="theory" size={20} />,
+      },
+      {
+        id: "cerca",
+        to: "/dashboard/cerca",
+        label: "Cerca Quiz",
+        icon: <DashboardIcon route="cerca" size={20} />,
+      },
+      {
+        id: "videos",
+        to: "/dashboard/PrivateVideos",
+        label: "Videos",
+        icon: <DashboardIcon route="PrivateVideos" size={20} />,
+      },
+      {
+        id: "books",
+        to: "/dashboard/patenteBooks",
+        label: "Books",
+        icon: <DashboardIcon route="patenteBooks" size={20} />,
+      },
+      {
+        id: "course-video",
+        to: "/dashboard/courseVideo",
+        label: "Course Video",
+        icon: <DashboardIcon route="courseVideo" size={20} />,
+      },
+      {
+        id: "qna",
+        to: "/dashboard/QNAPdf",
+        label: "QNA",
+        icon: <DashboardIcon route="QNAPdf" size={20} />,
+      },
+      {
+        id: "quiz-book",
+        to: "/dashboard/quizBook",
+        label: "Quiz Book",
+        icon: <DashboardIcon route="quizBook" size={20} />,
+      },
+      {
+        id: "trucchi",
+        to: "/dashboard/trucchi",
+        label: "Trucchi",
+        icon: <DashboardIcon route="trucchi" size={20} />,
+      },
+      {
+        id: "notes",
+        to: "/dashboard/studentNotes",
+        label: "Notes",
+        icon: <DashboardIcon route="studentNotes" size={20} />,
+      },
+    ],
+    [user?.role]
+  );
 
-  const NavItem = ({ item, collapsed }: { item: any; collapsed: boolean }) => {
-    const isActive = item.activeCheck
-      ? item.activeCheck(pathname)
-      : item.end
-        ? pathname === item.to
-        : pathname.startsWith(item.to);
+  const handleToggleCollapse = useCallback(() => {
+    setIsCollapsed((prev) => !prev);
+  }, []);
 
-    return (
-      <Link
-        href={item.to}
-        className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group relative ${
-          isActive
-            ? "bg-P-primary text-white shadow-lg shadow-P-primary/30"
-            : "text-gray-500 hover:bg-purple-50 hover:text-P-primary"
-        }`}
-      >
-        <span className="shrink-0">{item.icon}</span>
-        <span
-          className={`whitespace-nowrap transition-all duration-300 ${
-            collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100"
-          }`}
-        >
-          {item.label}
-        </span>
-        {/* Tooltip for collapsed mode */}
-        {collapsed && (
-          <div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
-            {item.label}
-          </div>
-        )}
-      </Link>
-    );
-  };
+  const handleCloseSidebar = useCallback(() => {
+    setIsSidebarOpen(false);
+  }, []);
+
+  const handleOpenSidebar = useCallback(() => {
+    setIsSidebarOpen(true);
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden font-sans">
@@ -166,8 +221,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           )}
 
           <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={handleToggleCollapse}
             className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {isCollapsed ? (
               <RiMenuUnfoldLine size={20} />
@@ -179,8 +235,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto py-6 px-3 space-y-1 scrollbar-hide">
-          {navItems.map((item, index) => (
-            <NavItem key={index} item={item} collapsed={isCollapsed} />
+          {navItems.map((item) => (
+            <NavItem
+              key={item.id}
+              item={item}
+              collapsed={isCollapsed}
+              pathname={pathname}
+            />
           ))}
         </div>
 
@@ -216,7 +277,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <div
           className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-          onClick={() => setIsSidebarOpen(false)}
+          onClick={handleCloseSidebar}
+          aria-label="Close sidebar"
         />
         <aside
           className={`absolute top-0 left-0 h-full w-72 bg-white shadow-2xl transform transition-transform duration-300 ${
@@ -226,15 +288,21 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="h-20 flex items-center justify-between px-6 border-b border-gray-100">
             <Logo nameColor={"text-gray-800"} />
             <button
-              onClick={() => setIsSidebarOpen(false)}
+              onClick={handleCloseSidebar}
               className="p-2 hover:bg-gray-100 rounded-full"
+              aria-label="Close sidebar"
             >
               <IoClose size={24} className="text-gray-500" />
             </button>
           </div>
           <div className="p-4 space-y-1">
-            {navItems.map((item, index) => (
-              <NavItem key={index} item={item} collapsed={false} />
+            {navItems.map((item) => (
+              <NavItem
+                key={item.id}
+                item={item}
+                collapsed={false}
+                pathname={pathname}
+              />
             ))}
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100 bg-white">
@@ -256,8 +324,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Mobile Header */}
         <header className="md:hidden h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 sticky top-0 z-30">
           <button
-            onClick={() => setIsSidebarOpen(true)}
+            onClick={handleOpenSidebar}
             className="p-2 -ml-2 hover:bg-gray-100 rounded-lg"
+            aria-label="Open sidebar"
           >
             <HiMenuAlt2 size={24} className="text-gray-700" />
           </button>

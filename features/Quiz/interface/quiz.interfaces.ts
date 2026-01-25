@@ -106,3 +106,12 @@ export interface IGetUserPlayedQuizzesResponse {
   };
   message: string;
 }
+
+export interface IGetRandomPlayedQuizzesResponse {
+  success: boolean;
+  data: {
+    meta: IMeta;
+    topicQuizzes: IUserPlayedQuiz[];
+  };
+  message: string;
+}

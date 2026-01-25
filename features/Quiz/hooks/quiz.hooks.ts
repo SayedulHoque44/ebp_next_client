@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
 import {
+  IGetRandomPlayedQuizzesResponse,
   IGETRandomThirtyQuizzesResponse,
   IGetUserPlayedQuizzesRequest,
   IGetUserPlayedQuizzesResponse,
@@ -165,11 +166,11 @@ const useGetUserPlayedQuizzes = ({
 
 const useGetRandomPlayedQuizzes = (
   options?: QueryObserverOptions<
-    IGetUserPlayedQuizzesResponse,
+  IGetRandomPlayedQuizzesResponse,
     AxiosError<{ message: string; [key: string]: any }>
   >
 ) => {
-  return useApiQuery<IGetUserPlayedQuizzesResponse, void>(
+  return useApiQuery<IGetRandomPlayedQuizzesResponse, void>(
     ["random-played-quizzes"],
     QuizApis.getRandomPlayedQuizzesHandler,
     undefined,

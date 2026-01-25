@@ -88,7 +88,7 @@ const useGetAllUsersQuery = ({
   >;
 }) => {
   return useApiQuery<IUserGetAllUsersResponse, IUserGetAllUsersRequest>(
-    [...queryKey],
+    [...queryKey, params],
     UserApis.getAllUsersHandler,
     params,
     options

@@ -1,19 +1,19 @@
 // Dashboard Icons - Shared across DashboardContent and DashboardLayout
 import React from "react";
-import homeImg from "../assets/Images/dashboard/home-button.png";
-import patenteBookImg from "../assets/Images/dashboard/online-course.png";
-import QNAPdfImg from "../assets/Images/dashboard/question.png";
-import QNABookImg from "../assets/Images/dashboard/quiz.png";
-import adminMImg from "../assets/Images/dashboard/software-engineer.png";
-import quiz_2 from "../assets/Images/dashboard/quiz-1.png";
-import bookImg from "../assets/Images/dashboard/book.png";
-import courseVideoImg from "../assets/Images/dashboard/webinar.png";
-import YTVideoImg from "../assets/Images/dashboard/youtube.png";
-import theoryimg from "../assets/Images/dashboard/theory.png";
-import cercaimg from "../assets/Images/dashboard/search.png";
-import simulazioneEsameImg from "../assets/Images/dashboard/simulazione.png";
-import quizPerArgomentiImg from "../assets/Images/dashboard/quiz_per_arg.png";
-import ripassoErroriImg from "../assets/Images/dashboard/clipboard.png";
+const homeImg = "/assets/Images/dashboard/home-button.png";
+const patenteBookImg = "/assets/Images/dashboard/online-course.png";
+const QNAPdfImg = "/assets/Images/dashboard/question.png";
+const QNABookImg = "/assets/Images/dashboard/quiz.png";
+const adminMImg = "/assets/Images/dashboard/software-engineer.png";
+const quiz_2 = "/assets/Images/dashboard/quiz-1.png";
+const bookImg = "/assets/Images/dashboard/book.png";
+const courseVideoImg = "/assets/Images/dashboard/webinar.png";
+const YTVideoImg = "/assets/Images/dashboard/youtube.png";
+const theoryimg = "/assets/Images/dashboard/theory.png";
+const cercaimg = "/assets/Images/dashboard/search.png";
+const simulazioneEsameImg = "/assets/Images/dashboard/simulazione.png";
+const quizPerArgomentiImg = "/assets/Images/dashboard/quiz_per_arg.png";
+const ripassoErroriImg = "/assets/Images/dashboard/clipboard.png";
 
 // Dashboard icon mapping - maps routes to their corresponding images
 export const DASHBOARD_ICONS: any = {

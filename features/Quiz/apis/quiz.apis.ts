@@ -1,5 +1,6 @@
 import api from "@/lib/api";
 import {
+  IGetRandomPlayedQuizzesResponse,
   IGETRandomThirtyQuizzesResponse,
   IGetUserPlayedQuizzesRequest,
   IGetUserPlayedQuizzesResponse,
@@ -90,7 +91,7 @@ const getUserPlayedQuizzesHandler = async (
 };
 
 const getRandomPlayedQuizzesHandler =
-  async (): Promise<IGetUserPlayedQuizzesResponse> => {
+  async (): Promise<IGetRandomPlayedQuizzesResponse> => {
     const response = await api.get(`${ENDPOINT.GET_RANDOM_PLAYED_QUIZES()}`);
     return response.data;
   };

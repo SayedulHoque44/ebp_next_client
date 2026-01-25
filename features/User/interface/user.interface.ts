@@ -15,6 +15,7 @@ export interface IUser {
   deviceLogin: any[]; // you can specify a more detailed type if known
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
+  courseTimes: IUserCourse[];
   __v: number;
   logInAttempt: number;
   isDeleted: boolean;
@@ -29,12 +30,14 @@ export interface IUserResponse {
 
 export interface IUserGetAllUsersResponse {
   success: boolean;
-  data: IUser[];
-  meta: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
+  data: {
+    meta: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+    };
+    result: IUser[];
   };
   message: string;
 }

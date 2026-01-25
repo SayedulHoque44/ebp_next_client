@@ -9,7 +9,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-const api: AxiosInstance = axios.create({
+export const api: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   // withCredentials: true,
 });

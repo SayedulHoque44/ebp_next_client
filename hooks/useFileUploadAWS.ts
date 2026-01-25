@@ -11,8 +11,10 @@ interface IUploadSmallFileRequest {
 }
 
 interface IUploadSmallFileResponse {
-  // WILL NEED TO ADD MORE TYPES
-  url: string;
+  data: {
+    presignedUrl: string;
+    Key: string;
+  };
 }
 
 interface IGetPresignedUrlChunkRequest {
@@ -22,11 +24,24 @@ interface IGetPresignedUrlChunkRequest {
   partCount: number;
   fileSize: number;
 }
+
 interface IGetPresignedUrlChunkResponse {
-  // WILL NEED TO ADD MORE TYPES
-  url: string;
-  partNumber: number;
+  data: {
+    presignedUrls: Array<{ url: string; partNumber: number }>;
+    UploadId: string;
+    Key: string;
+  };
+}
+
+interface ICompleteMultipartUploadRequest {
   uploadId: string;
+  parts: Array<{ ETag: string; PartNumber: number }>;
+  Key: string;
+}
+
+interface ICompleteMultipartUploadResponse {
+  Key: string;
+  success: boolean;
 }
 
 const ENDPOINT = {
@@ -36,7 +51,7 @@ const ENDPOINT = {
 };
 
 const useUploadSmallFile = (
-  options: UseMutationOptions<
+  options?: UseMutationOptions<
     IUploadSmallFileResponse,
     AxiosError<{ message: string }>,
     IUploadSmallFileRequest,
@@ -55,7 +70,7 @@ const useUploadSmallFile = (
   );
 };
 const useGetPresignedUrlChunk = (
-  options: UseMutationOptions<
+  options?: UseMutationOptions<
     IGetPresignedUrlChunkResponse,
     AxiosError<{ message: string }>,
     IGetPresignedUrlChunkRequest,
@@ -74,14 +89,17 @@ const useGetPresignedUrlChunk = (
   }, options);
 };
 const useGetPresignedUrlChunkComplete = (
-  options: UseMutationOptions<
-    IUploadSmallFileResponse,
+  options?: UseMutationOptions<
+    ICompleteMultipartUploadResponse,
     AxiosError<{ message: string }>,
-    IUploadSmallFileRequest,
+    ICompleteMultipartUploadRequest,
     unknown
   >
 ) => {
-  return useApiMutation<IUploadSmallFileResponse, IUploadSmallFileRequest>(
+  return useApiMutation<
+    ICompleteMultipartUploadResponse,
+    ICompleteMultipartUploadRequest
+  >(
     async (params) => {
       const response = await api.post(
         `${ENDPOINT.GET_PRESIGNED_URL_CHUNCK_COMPLETE()}`,
@@ -96,4 +114,5 @@ const useGetPresignedUrlChunkComplete = (
 export const FileUploadHooks = {
   useUploadSmallFile,
   useGetPresignedUrlChunk,
+  useGetPresignedUrlChunkComplete,
 };

@@ -53,15 +53,7 @@ export interface ISystemResponse {
 
 export interface ISystemsResponse {
   success: boolean;
-  data: {
-    meta?: {
-      page: number;
-      limit: number;
-      total: number;
-      totalPages: number;
-    };
-    result: ISystem[];
-  };
+  data:  ISystem[];
   message: string;
 }
 

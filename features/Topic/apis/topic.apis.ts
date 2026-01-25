@@ -100,7 +100,7 @@ const TopicManagementApis = {
   updateSingleTopicHandler,
   createArgTopicHandler,
   deleteSingleTopicHandler,
-  // getTopicsByArgumentIdsHandler,
+  getTopicsByArgumentIdsHandler,
 };
 
 export default TopicManagementApis;

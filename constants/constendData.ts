@@ -1,3 +1,60 @@
+
+
+// query key
+export const QUERY_KEY = {
+  // User queries
+  ALL_USERS: "all-users",
+  SINGLE_USER: "single-user",
+  GET_ME_USER: "getMe-user",
+
+  // Blog queries
+  BLOGS: "blogs",
+  PINNED_BLOGS: "pinned-blogs",
+  BLOG: "blog",
+
+  // Quiz queries
+  QUIZZES: "quizzes",
+  RANDOM_THIRTY_QUIZZES: "random-thirty-quizzes",
+  RANDOM_PLAYED_QUIZZES: "random-played-quizzes",
+  QUIZ_SEARCH: "quiz-search",
+  SINGLE_QUIZ: "quiz",
+  USER_PLAYED_QUIZZES: "user-played-quizzes",
+  SINGLE_USER_QUIZ_STATISTICS: "single-user-quiz-statistics",
+
+  // Topic queries
+  TOPICS: "topics",
+  SINGLE_TOPIC: "topic",
+
+  // Argument queries
+  ARGUMENTS: "arguments",
+  SINGLE_ARGUMENT: "argument",
+
+  // UniContent queries
+  UNI_CONTENT: "uni-content",
+  SUB_CONTENTS: "subcontents",
+  SINGLE_UNI_CONTENT: "single-uni-content",
+  SINGLE_SUB_CONTENT: "single-sub-content",
+
+  // YTVideo queries
+  YT_VIDEOS: "yt-videos",
+  SINGLE_YT_VIDEO: "single-yt-video",
+
+  // System queries
+  SYSTEMS: "systems",
+  SINGLE_SYSTEM: "single-system",
+
+  // QuizImg queries
+  QUIZ_IMAGES: "quiz-images",
+  SINGLE_QUIZ_IMAGE: "single-quiz-image",
+  IMAGE_METADATA: "image-metadata",
+
+  // QnaPdf queries
+  QNA_PDFS: "qna-pdfs",
+};
+
+
+
+
 // Testimonial data
 export const LoginTestimonials = [
   {

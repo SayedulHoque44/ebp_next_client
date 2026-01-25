@@ -16,12 +16,12 @@ export interface IArgumentQueryParam {
 }
 
 export interface IArgumentGetArgumentsRequest {
-  page: number;
-  limit: number;
-  searchTerm: string;
-  sort: string;
-  count: boolean;
-  isDeleted: boolean;
+  page?: number;
+  limit?: number;
+  searchTerm?: string;
+  sort?: string;
+  count?: boolean;
+  isDeleted?: boolean;
 }
 
 export interface IArgumentResponse {

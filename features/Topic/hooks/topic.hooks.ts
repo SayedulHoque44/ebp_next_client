@@ -5,6 +5,8 @@ import {
   ITopicQueryParam,
   ITopicResponse,
   ITopicsResponse,
+  IGetTopicsByArgumentIdsRequest,
+  IGetTopicsByArgumentIdsResponse,
 } from "../interface/topic.interface";
 import {
   QueryObserverOptions,
@@ -116,28 +118,28 @@ const useDeleteSingleTopic = (
   );
 };
 
-// const useGetTopicsByArgumentIds = ({
-//   queryKey = [],
-//   params,
-//   options,
-// }: {
-//   queryKey: (string | number)[];
-//   params: IGetTopicsByArgumentIdsRequest;
-//   options?: QueryObserverOptions<
-//     IGetTopicsByArgumentIdsResponse,
-//     AxiosError<{ message: string; [key: string]: any }>
-//   >;
-// }) => {
-//   return useApiQuery<
-//     IGetTopicsByArgumentIdsResponse,
-//     IGetTopicsByArgumentIdsRequest
-//   >(
-//     [...queryKey],
-//     TopicManagementApis.getTopicsByArgumentIdsHandler,
-//     params,
-//     options
-//   );
-// };
+const useGetTopicsByArgumentIds = ({
+  queryKey = [],
+  params,
+  options,
+}: {
+  queryKey: (string | number)[];
+  params: IGetTopicsByArgumentIdsRequest;
+  options?: QueryObserverOptions<
+    IGetTopicsByArgumentIdsResponse,
+    AxiosError<{ message: string; [key: string]: any }>
+  >;
+}) => {
+  return useApiQuery<
+    IGetTopicsByArgumentIdsResponse,
+    IGetTopicsByArgumentIdsRequest
+  >(
+    [...queryKey],
+    TopicManagementApis.getTopicsByArgumentIdsHandler,
+    params,
+    options
+  );
+};
 
 const TopicManagementHooks = {
   useGetAllTopics,
@@ -145,6 +147,7 @@ const TopicManagementHooks = {
   useUpdateSingleTopic,
   useCreateArgTopic,
   useDeleteSingleTopic,
+  useGetTopicsByArgumentIds,
 };
 
 export default TopicManagementHooks;
