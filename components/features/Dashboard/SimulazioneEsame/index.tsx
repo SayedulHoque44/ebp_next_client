@@ -30,7 +30,7 @@ const SimulazioneEsame = () => {
     },
   });
   const QuizStats = singleUserQuizStatsData?.data;
-
+// console.log(QuizStats);
   // Calculate quiz statistics from API data
   const calculateQuizStats = () => {
     if (!QuizStats) {
@@ -143,6 +143,7 @@ const SimulazioneEsame = () => {
   // Update quiz data when query completes
   useEffect(() => {
     if (randomThirtyQuizzesData?.data && shouldFetchQuiz) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setNewQuizData(randomThirtyQuizzesData.data);
     }
   }, [randomThirtyQuizzesData, shouldFetchQuiz]);
@@ -150,6 +151,7 @@ const SimulazioneEsame = () => {
   // Reset quiz state and refetch stats when modal closes
   useEffect(() => {
     if (!isQuizModalOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setNewQuizData([]);
       setShouldFetchQuiz(false);
       // Refetch quiz stats to get updated data after completing quiz
@@ -453,7 +455,7 @@ const SimulazioneEsame = () => {
                     Scheda Ministeriale
                   </h3>
                   <p className="text-gray-600 text-sm md:text-base lg:text-lg mb-3 md:mb-4 group-hover:text-gray-700 transition-colors duration-300">
-                    Fai il quiz con un'esperienza personalizzata.
+                    Fai il quiz con un&apos;esperienza personalizzata.
                   </p>
 
                   {/* Toggle Options */}

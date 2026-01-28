@@ -93,7 +93,7 @@ const PagesManagment = ({ content }: PagesManagmentProps) => {
         key: "item",
         render: ({ imageUrl }: ISubContent) => (
           <div>
-            <Image src={imageUrl} height={200} />
+            <Image src={imageUrl} height={200} alt={imageUrl || ""} width={200} />
           </div>
         ),
       },

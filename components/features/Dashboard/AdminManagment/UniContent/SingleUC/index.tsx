@@ -55,7 +55,7 @@ const SingleUc = () => {
       return data.data.result[0];
     }
     return null;
-  }, [data?.data?.result]);
+  }, [data]);
 
   return (
     <div className="py-10">
@@ -77,13 +77,13 @@ const SingleUc = () => {
           <h2 className="text-4xl font-semibold mt-10 mb-5">
             {CheckType(content?.contentType || "")}
           </h2>
-          {CheckType(content?.contentType || "") === "Pages" && (
+          {content && CheckType(content.contentType || "") === "Pages" && (
             <PagesManagment content={content} />
           )}
-          {CheckType(content?.contentType || "") === "Videos" && (
+          {content && CheckType(content.contentType || "") === "Videos" && (
             <VideoManagment content={content} />
           )}
-          {CheckType(content?.contentType || "") === "YTVideo" && (
+          {content && CheckType(content.contentType || "") === "YTVideo" && (
             <YTVideoManagment content={content} />
           )}
         </>

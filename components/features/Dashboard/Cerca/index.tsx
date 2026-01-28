@@ -116,7 +116,7 @@ const Cerca = () => {
     queryFn: fetchQuizSearchResults,
     ...CACHE_CONFIG,
     // Keep previous data while fetching new data for smoother UX
-    placeholderData: (previousData) => previousData,
+    placeholderData: (previousData: any) => previousData,
   });
 
   const handleChange = useCallback(
@@ -173,12 +173,12 @@ const Cerca = () => {
         <div className="mb-8">
           <div className="relative max-w-2xl mx-auto">
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-pink-500/20 to-purple-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-orange-500/20 via-pink-500/20 to-purple-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative bg-white rounded-xl shadow-lg border-2 border-gray-100 hover:border-orange-300 transition-all duration-300 overflow-hidden">
                 <div className="flex items-center px-4 py-3">
                   <MagnifyingGlass
                     size={20}
-                    className="text-gray-400 mr-3 flex-shrink-0"
+                    className="text-gray-400 mr-3 shrink-0"
                   />
                   <input
                     type="text"
@@ -324,7 +324,7 @@ const Cerca = () => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
-                className="inline-block p-4 bg-gradient-to-br from-gray-100 to-gray-50 rounded-xl mb-4 shadow-sm"
+                className="inline-block p-4 bg-linear-to-br from-gray-100 to-gray-50 rounded-xl mb-4 shadow-sm"
               >
                 <MagnifyingGlass
                   size={40}
@@ -336,7 +336,7 @@ const Cerca = () => {
                 No results found
               </h3>
               <p className="text-gray-500 text-sm max-w-md mx-auto">
-                We couldn't find any quizzes matching your search. Try different
+                We couldn&apos;t find any quizzes matching your search. Try different
                 keywords or check your spelling.
               </p>
             </motion.div>
@@ -348,7 +348,7 @@ const Cerca = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 sticky bottom-4 z-10 backdrop-blur-sm bg-white/95"
+            className="rounded-xl shadow-lg border border-gray-200 p-4 sticky bottom-4 z-10 backdrop-blur-sm bg-white/95"
           >
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="text-xs text-gray-600">
@@ -450,7 +450,7 @@ const ShowTotal = ({ meta }: ShowTotalProps) => {
           }}
         >
           {/* Shine effect on hover */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
 
           {/* Decorative pattern */}
           <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-12 -mt-12"></div>
@@ -474,7 +474,7 @@ const ShowTotal = ({ meta }: ShowTotalProps) => {
                 </motion.p>
               </div>
               <div
-                className={`${stat.colors.iconBg} backdrop-blur-sm rounded-xl p-3 flex items-center justify-center flex-shrink-0 ml-3`}
+                className={`${stat.colors.iconBg} backdrop-blur-sm rounded-xl p-3 flex items-center justify-center shrink-0 ml-3`}
               >
                 <stat.Icon size={20} className="text-white" weight="bold" />
               </div>

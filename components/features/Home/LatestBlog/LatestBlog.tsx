@@ -75,7 +75,7 @@ const LatestBlog = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-center"
           >
-            <div className="modern-card p-4 sm:p-6 md:p-8 max-w-2xl mx-auto">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-gray-100 max-w-2xl mx-auto">
               <div className="flex flex-col sm:flex-row items-center justify-center mb-4 sm:mb-6 md:mb-6 gap-3 sm:gap-4">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center flex-shrink-0 sm:mr-4">
                   <FaBookOpen className="text-white text-lg sm:text-xl md:text-2xl" />
@@ -101,6 +101,7 @@ const LatestBlog = () => {
               />
             </div>
           </motion.div>
+          
         </div>
       </Container>
     </div>

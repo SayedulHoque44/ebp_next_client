@@ -18,7 +18,7 @@ interface EBFSelectProps<T extends FieldValues = FieldValues> {
   placeholder?: string;
 }
 
-const EBFSelect = memo(<T extends FieldValues = FieldValues>({
+const EBFSelectComponent = <T extends FieldValues = FieldValues>({
   label,
   name,
   options,
@@ -70,10 +70,12 @@ const EBFSelect = memo(<T extends FieldValues = FieldValues>({
       )}
     />
   );
-}) as <T extends FieldValues = FieldValues>(
+};
+
+EBFSelectComponent.displayName = "EBFSelect";
+
+const EBFSelect = memo(EBFSelectComponent) as <T extends FieldValues = FieldValues>(
   props: EBFSelectProps<T>
 ) => React.ReactElement;
-
-EBFSelect.displayName = "EBFSelect";
 
 export default EBFSelect;

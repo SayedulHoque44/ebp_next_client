@@ -111,7 +111,6 @@ const PinnedBlog = ({
               key={`confetti-${i}`}
               className="absolute animate-confetti"
               style={{
-                // eslint-disable-next-line react-hooks/purity
                 left: `${(Math.random() * 100) as any}%`,
                 top: "-5%",
                 backgroundColor: [
@@ -223,7 +222,7 @@ const PinnedBlog = ({
                   alt={title}
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
                 {/* <div className="absolute top-4 right-4 z-10">
                   <div className="flex items-center gap-2 bg-white/95 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
                     <img src={pinnedImg} alt="pinned" className="h-4 w-4" />
@@ -236,7 +235,7 @@ const PinnedBlog = ({
             </div>
 
             {/* Content */}
-            <div className="flex-1 p-8 lg:p-10 flex flex-col justify-between bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 relative">
+            <div className="flex-1 p-8 lg:p-10 flex flex-col justify-between bg-linear-to-br from-white via-purple-50/30 to-blue-50/30 relative">
               <div className="space-y-6 relative z-10">
                 <div className="space-y-3">
                   <Heading2 className="text-gray-900 leading-tight group-hover:text-purple-600 transition-colors duration-300">
@@ -293,7 +292,7 @@ const PinnedBlog = ({
               <div className="pt-6 border-t border-gray-200 relative z-10">
                 <a
                   href={`blogs/${_id}`}
-                  className="group relative inline-flex items-center gap-3 px-10 py-5 text-xl font-bold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-2xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-200 overflow-hidden"
+                  className="group relative inline-flex items-center gap-3 px-10 py-5 text-xl font-bold text-white bg-linear-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-2xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-200 overflow-hidden"
                 >
                   <span className="relative z-10">🎉 Read Full Story</span>
                   <svg

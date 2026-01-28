@@ -106,6 +106,19 @@ export interface IGetUserPlayedQuizzesResponse {
   };
   message: string;
 }
+export interface IGetUserPlayedStatisticsQuizzesResponse {
+  success: boolean;
+  data: {
+    totalQuizzes: number;
+    totalPlayedCount: number;
+    totalCorrectQuizzes: number;
+    totalinCorrectQuizzes: number;
+    remainingQuizzes: number;
+    completionPercentage: number;
+    accuracyPercentage: number;
+  };
+  message: string;
+}
 
 export interface IGetRandomPlayedQuizzesResponse {
   success: boolean;

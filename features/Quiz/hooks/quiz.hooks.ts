@@ -4,6 +4,7 @@ import {
   IGETRandomThirtyQuizzesResponse,
   IGetUserPlayedQuizzesRequest,
   IGetUserPlayedQuizzesResponse,
+  IGetUserPlayedStatisticsQuizzesResponse,
   IQuiz,
   IQuizGetQuizzesRequest,
   IQuizGetRandomQuizzesByTopicIdsRequest,
@@ -203,11 +204,11 @@ const useGetSingleUserQuizStatistics = ({
   queryKey: (string | number)[];
   params: { userId: string };
   options?: QueryObserverOptions<
-    IGetUserPlayedQuizzesResponse,
+    IGetUserPlayedStatisticsQuizzesResponse,
     AxiosError<{ message: string; [key: string]: any }>
   >;
 }) => {
-  return useApiQuery<IGetUserPlayedQuizzesResponse, { userId: string }>(
+  return useApiQuery<IGetUserPlayedStatisticsQuizzesResponse, { userId: string }>(
     [...queryKey],
     (params: { userId: string }) =>
       QuizApis.getSingleUserQuizStatisticsHandler(params?.userId),

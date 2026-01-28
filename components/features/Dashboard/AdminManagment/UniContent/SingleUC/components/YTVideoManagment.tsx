@@ -96,7 +96,7 @@ const YTVideoManagment = ({ content }: YTVideoManagmentProps) => {
             <a href={url} className="font-semibold my-2">
               {url}
             </a>
-            <ReactPlayer url={url} width={"100%"} controls={true} loop={true} />
+            <ReactPlayer src={url as any} width={"100%"} controls={true} loop={true} />
           </div>
         ),
       },
@@ -264,7 +264,7 @@ const CreatePageModal = ({ RefId }: CreatePageModalProps) => {
         >
           <EBInput type="text" name="title" label="Title" />
           <EBInput type="text" name="url" label="Youtube Url" />
-          <EBFTextarea type="text" name="info" label="Info" />
+          <EBFTextarea name="info" label="Info" />
 
           <Button disabled={isLoading || loading} htmlType="submit">
             Submit
@@ -363,7 +363,7 @@ const UpdateSubContentModal = ({
         >
           <EBInput type="text" name="title" label="Title" />
           <EBInput type="text" name="url" label="Youtube Url" />
-          <EBFTextarea type="text" name="info" label="Info" />
+          <EBFTextarea name="info" label="Info" />
           <Button disabled={isLoading || loading} htmlType="submit">
             Submit
           </Button>

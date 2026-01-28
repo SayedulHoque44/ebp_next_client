@@ -1,5 +1,6 @@
 // Dashboard Icons - Shared across DashboardContent and DashboardLayout
 import React from "react";
+import Image from "next/image";
 const homeImg = "/assets/Images/dashboard/home-button.png";
 const patenteBookImg = "/assets/Images/dashboard/online-course.png";
 const QNAPdfImg = "/assets/Images/dashboard/question.png";
@@ -74,11 +75,13 @@ export const DashboardIcon = ({
   const iconSrc = getDashboardIcon(route);
 
   return (
-    <img
-      src={iconSrc}
+    <Image
+      src={iconSrc as string}
       alt=""
-      className={`flex-shrink-0 ${className}`}
+      className={`shrink-0 ${className}`}
       style={{ width: size, height: size, objectFit: "contain" }}
+      width={size}
+      height={size}
     />
   );
 };

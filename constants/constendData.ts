@@ -50,9 +50,20 @@ export const QUERY_KEY = {
 
   // QnaPdf queries
   QNA_PDFS: "qna-pdfs",
+
+  // CourseVideo queries
+  COURSE_VIDEOS: "course-videos",
+  SINGLE_COURSE_VIDEO: "single-course-video",
 };
 
-
+export const contentTypeObj = {
+  Trucchi: "Trucchi",
+  PatenteBook: "PatenteBook",
+  STDNotes: "STDNotes",
+  CourseVideo: "CourseVideo",
+  FeedbackVideo: "FeedbackVideo",
+  YTFreeVideo: "YTFreeVideo",
+};
 
 
 // Testimonial data

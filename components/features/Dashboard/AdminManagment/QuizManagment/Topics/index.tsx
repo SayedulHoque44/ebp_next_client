@@ -57,9 +57,11 @@ const Topics = memo(() => {
   // Redirect if no ArgId (required route parameter)
   useEffect(() => {
     if (!ArgId) {
-      router.push("/dashboard/adminManagment/quizManagment");
+      router.push(
+        isTheory ? "/dashboard/theory" : "/dashboard/adminManagment/quizManagment"
+      );
     }
-  }, [ArgId, router]);
+  }, [ArgId, router, isTheory]);
 
   // Convert params array to request object
   const queryParams = useMemo<ITopicGetTopicsRequest>(() => {

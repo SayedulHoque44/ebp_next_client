@@ -9,7 +9,8 @@ import TextSpech from "@/components/shared/TextSpech";
 import TranslationInModal from "../Translation";
 import Logo from "../Logo";
 import QuizResult from "./QuizResult";
-import { Image } from "antd";
+import { Image as AntdImage } from "antd";
+import Image from "next/image";
 import { mediaProvider } from "@/constants/mediaProvider";
 
 
@@ -58,12 +59,34 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const prevQuizDataRef = useRef<QuizQuestion[]>([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const questions = quizData.slice(0, 30) || [];
   const currentQuestion = questions[currentQuestionIndex];
   //console.log(currentQuestion,"currentQuestion");
 
-  // Reset quiz state when new quiz data arrives
+  // Reset quiz state when modal opens - ensures fresh start every time
   useEffect(() => {
+    if (isOpen) {
+      // Reset all quiz state when modal opens
+      startTransition(() => {
+        setCurrentQuestionIndex(0);
+        setAnswers({});
+        setTimeRemaining(20 * 60); // Always start from 20 minutes
+        setIsTimerRunning(true);
+        setCurrentSection(0);
+        setShowResult(false);
+        setShowConfirmEnd(false);
+      });
+      // Update ref to track current quiz data
+      prevQuizDataRef.current = quizData;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]); // Only depend on isOpen to reset when modal opens/closes
+
+  // Reset quiz state when new quiz data arrives while modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+    
     const hasNewQuizData = 
       quizData && 
       quizData.length > 0 && 
@@ -79,7 +102,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
         setCurrentSection(0);
       });
     }
-  }, [quizData]);
+  }, [quizData, isOpen]);
 
   // Fetch image for current question - MUST be called before any conditional returns
   // const { data: imageData } = useGetImageMetabyIdQuery(currentQuestion?.image, {
@@ -196,7 +219,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
   if (isLoading) {
     return (
       <div
-        className="fixed inset-0 z-[1000] bg-[#cfe6d6] overflow-y-auto "
+        className="fixed inset-0 z-1000 bg-[#cfe6d6] overflow-y-auto "
         style={{ margin: 0 }}
       >
         <div className="h-full max-w-7xl mx-auto flex flex-col p-4 space-y-3 px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 py-3 sm:py-4 md:py-5 lg:py-6">
@@ -243,7 +266,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
               <div className="flex-1 flex flex-col h-full">
                 <div className="flex flex-1 flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
                   {/* Image Skeleton */}
-                  <div className="flex-shrink-0 w-[35%] sm:w-[36%] md:w-[37%] lg:w-[38%] bg-white rounded-lg p-2 sm:p-3 md:p-4 lg:p-6 shadow-sm flex items-center justify-center">
+                  <div className="shrink-0 w-[35%] sm:w-[36%] md:w-[37%] lg:w-[38%] bg-white rounded-lg p-2 sm:p-3 md:p-4 lg:p-6 shadow-sm flex items-center justify-center">
                     <Skeleton height={400} borderRadius={8} />
                   </div>
 
@@ -314,7 +337,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
   // Show empty state only if we have attempted to load and have no data
   if (questions.length === 0 && !isLoading) {
     return (
-      <div className="fixed inset-0 z-[9999] bg-green-50 flex items-center justify-center">
+      <div className="fixed inset-0 z-9999 bg-green-50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-600 mb-4">Nessun quiz disponibile</p>
           <button
@@ -440,7 +463,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
   if (showResult) {
     return (
       <div
-        className="fixed inset-0 z-[1000] bg-green-50 overflow-y-auto "
+        className="fixed inset-0 z-1000 bg-green-50 overflow-y-auto "
         style={{ margin: 0 }}
       >
         <QuizResult
@@ -468,7 +491,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[1000] bg-[#cfe6d6]  overflow-y-auto m-0"
+      className="fixed inset-0 z-1000 bg-[#cfe6d6]  overflow-y-auto m-0"
       style={{ margin: 0 }}
       onClick={(e) => {
         // Prevent closing by clicking outside
@@ -477,10 +500,11 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
     >
       <div className="h-full max-w-7xl mx-auto flex flex-col p-4 space-y-3 px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 py-3 sm:py-4 md:py-5 lg:py-6 ">
         <div className="flex items-center gap-1 md:gap-4 justify-between r">
-          <img
+          <AntdImage
             src={mediaProvider.dashboard.rpi.src}
             alt="R-P-I"
             className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-14 lg:h-14"
+          
           />
 
           <div className="text-center leading-tight">
@@ -590,7 +614,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
             <div className="flex-1 flex flex-col h-full">
               <div className="flex flex-1 flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
                 {/* Left: Quiz Image - Smaller side */}
-                <div className="flex-shrink-0 w-[35%] sm:w-[36%] md:w-[37%] lg:w-[38%] bg-white rounded-lg p-2 sm:p-3 md:p-4 lg:p-6 shadow-sm flex items-center justify-center">
+                <div className="shrink-0 w-[35%] sm:w-[36%] md:w-[37%] lg:w-[38%] bg-white rounded-lg p-2 sm:p-3 md:p-4 lg:p-6 shadow-sm flex items-center justify-center">
                   {imageUrl ? (
                     <Image
                       src={imageUrl}
@@ -647,14 +671,14 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                         <div className="flex items-center gap-2 sm:gap-2.5 md:gap-3">
                           <TextSpech
                             text={currentQuestion.question}
-                            className="!w-10 !h-10 sm:!w-11 sm:!h-11 md:!w-12 md:!h-12"
+                            className="w-10! h-10! sm:w-11! sm:h-11! md:w-12 md:h-12"
                             iconClassName="text-base sm:text-lg md:text-xl"
                           />
                           {showTranslation && (
                             <TranslationInModal
                               component={
                                 <button
-                                  className="group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full bg-gradient-to-br from-blue-50 to-blue-100/50 hover:from-blue-100 hover:to-blue-200 transition-all duration-200 shadow-sm hover:shadow-md"
+                                  className="group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full bg-linear-to-br from-blue-50 to-blue-100/50 hover:from-blue-100 hover:to-blue-200 transition-all duration-200 shadow-sm hover:shadow-md"
                                   aria-label="Translate question"
                                 >
                                   <Image
@@ -861,10 +885,11 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                       disabled={currentQuestionIndex === 0}
                       className="w-12 h-12 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white border border-gray-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:shadow-lg overflow-hidden"
                     >
-                      <img
+                      <Image
                         src={mediaProvider.dashboard.backQuiz.src as string}
                         alt="Previous"
                         className="w-full h-full object-contain"
+                        fill
                       />
                     </button>
                     {/* Next button (circle) */}
@@ -873,9 +898,10 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                       disabled={currentQuestionIndex >= questions.length - 1}
                       className="w-12 h-12 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white border border-gray-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:shadow-lg overflow-hidden"
                     >
-                      <img
+                      <Image
                         src={mediaProvider.dashboard.nextQuiz.src as string}
                         alt="Next"
+                        fill
                         className="w-full h-full object-contain"
                       />
                     </button>

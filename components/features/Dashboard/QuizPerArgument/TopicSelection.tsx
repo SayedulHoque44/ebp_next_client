@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { BsFillFilePostFill } from "react-icons/bs";
 import EBSearch from "@/components/shared/EBSearch";
 import { Button } from "antd";
@@ -16,6 +16,7 @@ import QuizPlayModal from "@/components/shared/QuizScreen/QuizPlayModal";
 import useIsLocked from "@/hooks/useIsLocked";
 import toast from "react-hot-toast";
 import { QUERY_KEY } from "@/constants/constendData";
+import { useQueryClient } from "@tanstack/react-query";
 
 const TopicSelection = () => {
   const searchParams = useSearchParams();
@@ -75,25 +76,31 @@ const TopicSelection = () => {
 
   const [shouldFetchQuiz, setShouldFetchQuiz] = useState(false);
   const [quizData, setQuizData] = useState<any[]>([]);
+  const hasOpenedModalRef = useRef(false);
+  const queryClient = useQueryClient();
+  const [refetchCounter, setRefetchCounter] = useState(0);
 
   const quizQueryParams = useMemo<IQuizGetRandomQuizzesByTopicIdsRequest>(() => ({
     topicsIds: selectedTopicIds,
   }), [selectedTopicIds]);
 
   const quizQueryKey = useMemo(
-    () => [QUERY_KEY.RANDOM_PLAYED_QUIZZES, ...selectedTopicIds],
-    [selectedTopicIds]
+    () => [QUERY_KEY.RANDOM_PLAYED_QUIZZES, ...selectedTopicIds, refetchCounter],
+    [selectedTopicIds, refetchCounter]
   );
 
-  const { data: randomQuizData, isLoading: isRandomQuizLoading, isFetching: isRandomQuizFetching } =
+  const { data: randomQuizData, isLoading: isRandomQuizLoading, isFetching: isRandomQuizFetching, refetch: refetchRandomQuizzes } =
     QuizHooks.useGetRandomQuizzesByTopicIds({
       queryKey: quizQueryKey as any,
       params: quizQueryParams,
       options: {
         enabled: shouldFetchQuiz && selectedTopicIds.length > 0,
+        refetchOnMount: true,
+        staleTime: 0, // Always consider data stale to force fresh fetch
+        cacheTime: 0, // Don't cache the data
       },
     });
-
+console.log("randomQuizData", randomQuizData, shouldFetchQuiz, selectedTopicIds,isRandomQuizLoading, isRandomQuizFetching);
   // SearchTerm
   const onSearch = useCallback(
     (value: string) => {
@@ -133,26 +140,54 @@ const TopicSelection = () => {
     setSelectedTopicIds(allIds);
   }, [isLocked, result, selectedTopicIds.length]);
 
-  const handleStartQuiz = useCallback(() => {
+  const handleStartQuiz = useCallback(async () => {
     if (selectedTopicIds.length === 0) return;
+    
+    // Reset modal state
+    hasOpenedModalRef.current = false;
+    setQuizData([]);
+    
+    // Invalidate previous query cache to force fresh fetch
+    await queryClient.invalidateQueries({ 
+      queryKey: [QUERY_KEY.RANDOM_PLAYED_QUIZZES, ...selectedTopicIds] 
+    });
+    
+    // Increment counter to create new query key (forces fresh fetch)
+    setRefetchCounter((prev) => prev + 1);
+    
+    // Enable fetching
     setShouldFetchQuiz(true);
-  }, [selectedTopicIds]);
+  }, [selectedTopicIds, queryClient]);
 
-  // Update quiz data and open modal when query completes
-  useEffect(() => {
-    if (randomQuizData?.data?.topicQuizzes && shouldFetchQuiz) {
-      setQuizData(randomQuizData.data.topicQuizzes);
-      setIsQuizModalOpen(true);
-    }
-  }, [randomQuizData, shouldFetchQuiz]);
+  // Derive quiz data from query result
+  const derivedQuizData = useMemo(() => {
+    return randomQuizData?.data?.topicQuizzes || [];
+  }, [randomQuizData?.data?.topicQuizzes]);
 
-  // Reset when modal closes
+  // Update quiz data and open modal when query completes (using ref to prevent cascading renders)
   useEffect(() => {
-    if (!isQuizModalOpen) {
-      setShouldFetchQuiz(false);
-      setQuizData([]);
+    if (derivedQuizData.length > 0 && shouldFetchQuiz && !hasOpenedModalRef.current) {
+      hasOpenedModalRef.current = true;
+      // Use setTimeout to defer state updates and avoid cascading renders
+      const timeoutId = setTimeout(() => {
+        setQuizData(derivedQuizData);
+        setIsQuizModalOpen(true);
+      }, 0);
+      return () => clearTimeout(timeoutId);
     }
-  }, [isQuizModalOpen]);
+    // Reset ref when shouldFetchQuiz becomes false
+    if (!shouldFetchQuiz) {
+      hasOpenedModalRef.current = false;
+    }
+  }, [derivedQuizData, shouldFetchQuiz]);
+
+  // Handle modal close and reset state
+  const handleCloseModal = useCallback(() => {
+    setIsQuizModalOpen(false);
+    setShouldFetchQuiz(false);
+    setQuizData([]);
+    hasOpenedModalRef.current = false;
+  }, []);
 
   const selectedCount = selectedTopicIds.length;
 
@@ -260,14 +295,14 @@ const TopicSelection = () => {
             <div
               onClick={handleStartQuiz}
               className={`fixed bottom-6 sm:bottom-8 md:bottom-10 right-6 sm:right-8 md:right-10 z-50 ${
-                isRandomQuizLoading || isRandomQuizFetching
+                isRandomQuizFetching
                   ? "cursor-wait opacity-75"
                   : "cursor-pointer"
               }`}
             >
               <div className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-P-primary hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center gap-2 sm:gap-3 transition-all transform hover:scale-105">
                 <span className="font-medium text-sm sm:text-base">
-                  {isRandomQuizLoading || isRandomQuizFetching
+                  {isRandomQuizFetching
                     ? "Caricamento..."
                     : "Inizia i Quiz"}
                 </span>
@@ -281,9 +316,9 @@ const TopicSelection = () => {
       {/* Quiz Play Modal */}
       <QuizPlayModal
         quizData={quizData}
-        isLoading={isRandomQuizLoading || isRandomQuizFetching}
+        isLoading={isRandomQuizFetching}
         isOpen={isQuizModalOpen}
-        onClose={() => setIsQuizModalOpen(false)}
+        onClose={handleCloseModal}
         quizType={"fixed"}
         manualeEnabled={true}
         traduzioneEnabled={true}

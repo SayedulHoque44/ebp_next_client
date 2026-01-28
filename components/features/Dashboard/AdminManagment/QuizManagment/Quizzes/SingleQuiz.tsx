@@ -58,7 +58,7 @@ const AUDIO_FOLDER_NAME = "AuthorAudio";
 
 interface SingleQuizProps {
   quiz: IQuiz & { index?: number };
-  cerca?: string;
+  cerca?: any;
   shouldShowLock?: boolean;
 }
 

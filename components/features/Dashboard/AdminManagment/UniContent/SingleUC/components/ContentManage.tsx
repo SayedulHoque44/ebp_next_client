@@ -20,7 +20,9 @@ const ContentManage = ({ content }: ContentManageProps) => {
     <div className="flex  gap-3">
       {content.imageUrl && (
         <div>
-          <Image src={content.imageUrl} width={200} />
+          <Image src={content.imageUrl} width={200} height={200} alt={content.title} />
+          
+          
         </div>
       )}
       <div>

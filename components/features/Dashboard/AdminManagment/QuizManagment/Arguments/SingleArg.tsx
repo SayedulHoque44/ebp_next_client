@@ -80,7 +80,7 @@ const SingleArg = memo(({
   const { _id, image, title, index = 0, totalQuizzes } = argument;
   const { isTheory, isAdmin } = useContext(TheoryProvider);
   const router = useRouter();
-  const actionButtonsRef = useRef<HTMLDivElement>(null);
+  const actionButtonsRef = useRef<any>(null);
 
   const deleteArgumentMutation = ArgumentHooks.useDeleteSingleArg({
     onSuccess: async (response) => {
@@ -112,13 +112,13 @@ const SingleArg = memo(({
 
   // Handle navigation or selection
   const handleClick = useCallback(() => {
-    if (actionButtonsRef.current) return;
+    if (actionButtonsRef.current?.target) return;
 
     if (selectable && onToggleSelect) {
       onToggleSelect(_id);
       return;
     }
-
+console.log("routingPath", routingPath);
     // For Next.js, pass data via URL query params (replaces React Router's state)
     router.push(
       `${routingPath}/${_id}?title=${encodeURIComponent(title)}&index=${index}&shouldShowLock=${shouldShowLock}`

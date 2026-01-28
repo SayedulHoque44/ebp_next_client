@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { QUERY_KEY } from "@/constants/constendData";
 import { useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 
 interface SingleFigureProps {
   item: IQuizImage;
@@ -86,7 +87,9 @@ const SingleFigure = ({ item }: SingleFigureProps) => {
       <div className="bg-P-primary/50 border-2 border-P-primary shadow-1 text-black p-5 rounded mb-4 gap-3 flex min-h-[200px]">
         <div className="flex flex-1 gap-5">
           <div className="w-[20%] xl:w-[10%] flex items-center justify-center">
-            <img
+            <Image
+              width={200}
+              height={200}
               src={item.imageUrl}
               alt={item.figure}
               className="mx-auto max-w-full max-h-[200px] object-contain"

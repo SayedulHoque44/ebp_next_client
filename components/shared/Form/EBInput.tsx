@@ -11,7 +11,7 @@ interface EBInputProps<T extends FieldValues = FieldValues> {
   placeholder?: string;
 }
 
-const EBInput = memo(<T extends FieldValues = FieldValues>({
+const EBInputComponent = <T extends FieldValues = FieldValues>({
   type = "text",
   name,
   label,
@@ -46,10 +46,12 @@ const EBInput = memo(<T extends FieldValues = FieldValues>({
       />
     </div>
   );
-}) as <T extends FieldValues = FieldValues>(
+};
+
+EBInputComponent.displayName = "EBInput";
+
+const EBInput = memo(EBInputComponent) as <T extends FieldValues = FieldValues>(
   props: EBInputProps<T>
 ) => React.ReactElement;
-
-EBInput.displayName = "EBInput";
 
 export default EBInput;

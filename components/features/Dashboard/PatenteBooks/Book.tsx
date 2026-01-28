@@ -7,6 +7,7 @@ import useAuth from "@/features/Auth/hooks/useAuth";
 import UserHooks from "@/features/User/hooks/user.hooks";
 import { QUERY_KEY } from "@/constants/constendData";
 import { IUser } from "@/features/User/interface/user.interface";
+import Image from "next/image";
 
 interface BookProps {
   book: {
@@ -110,10 +111,11 @@ const Book = ({ book, href }: BookProps) => {
       className="group h-full flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden cursor-pointer transition-all duration-300"
     >
       <div className="relative overflow-hidden h-[280px] bg-gray-50">
-        <img
+        <Image
           className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
           src={coverImage}
           alt={title}
+          fill
         />
       </div>
 
@@ -131,7 +133,7 @@ const Book = ({ book, href }: BookProps) => {
         </div>
 
         <div className="mt-auto pt-4 border-t border-gray-50">
-          <button className="w-full inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-P-primary to-purple-600 rounded-xl hover:from-purple-600 hover:to-P-primary transition-all duration-300 shadow-md shadow-purple-200 group-hover:shadow-lg group-hover:shadow-purple-300">
+          <button className="w-full inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-linear-to-r from-P-primary to-purple-600 rounded-xl hover:from-purple-600 hover:to-P-primary transition-all duration-300 shadow-md shadow-purple-200 group-hover:shadow-lg group-hover:shadow-purple-300">
             Read Book
             <svg
               className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"

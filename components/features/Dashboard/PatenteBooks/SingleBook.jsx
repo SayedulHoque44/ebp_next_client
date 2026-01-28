@@ -5,7 +5,7 @@ import Container from "../../../Shared/Container/Container";
 import useGetSingleBook from "../../../Util/Hooks/useGetSingleBook";
 import usePContext from "../../../Util/Hooks/usePContext";
 import AddPages from "./AddPages";
-
+import Image from "next/image";
 const SingleBook = () => {
   const { id } = useParams();
   const { singleBook, isLoading, refetch } = useGetSingleBook(id);
@@ -24,11 +24,14 @@ const SingleBook = () => {
             <h1 className="text-4xl my-5 text-center">{title}</h1>
             <div>
               {pages?.map((page, index) => (
-                <img
+                <Image
                   draggable="false"
                   key={index}
                   className="mx-auto mb-10"
                   src={page.pageImage}
+                  alt={page.pageImage}
+                  width={200}
+                  height={200}
                 />
               ))}
             </div>

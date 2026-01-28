@@ -9,12 +9,14 @@ const EBSearch = ({
   allowClear = true,
   className = "",
   defaultValue = "",
+  disabled = false,
 }: {
   placeholder?: string;
   onSearch?: (value: string) => void;
   allowClear?: boolean;
   className?: string;
   defaultValue?: string;
+  disabled?: boolean;
 }) => {
   const [value, setValue] = useState(defaultValue);
 

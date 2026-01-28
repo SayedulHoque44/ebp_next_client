@@ -18,6 +18,7 @@ const EBPPlayer = ({ videoId }) => {
   useEffect(() => {
     //console.log(videoId);
     if (videoId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(true);
       fetch(
         `https://easy-bangla-patente-server-sayedulhoque44.vercel.app/CourseVideosSingle/${videoId}`

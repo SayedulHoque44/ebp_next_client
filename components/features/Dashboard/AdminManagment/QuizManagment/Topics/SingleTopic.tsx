@@ -67,7 +67,7 @@ const SingleTopic = memo(({
   const { _id, title, index = 0, image, totalQuizzes } = topic;
   const { isTheory, isAdmin } = useContext(TheoryProvider);
   const router = useRouter();
-  const actionButtonsRef = useRef<HTMLDivElement>(null);
+  const actionButtonsRef = useRef<any>(null);
   const isLocked = useIsLocked();
 
   const deleteTopicMutation = TopicManagementHooks.useDeleteSingleTopic({
@@ -97,7 +97,7 @@ const SingleTopic = memo(({
 
   // Handle navigation to topic detail page
   const handleNavigate = useCallback(() => {
-    if (actionButtonsRef.current) return;
+    if (actionButtonsRef.current?.target) return;
 
     if (selectable && onToggleSelect) {
       onToggleSelect(_id);

@@ -1,6 +1,7 @@
 import api from "@/lib/api";
 import {
   IGetRandomPlayedQuizzesResponse,
+  IGetUserPlayedStatisticsQuizzesResponse,
   IGETRandomThirtyQuizzesResponse,
   IGetUserPlayedQuizzesRequest,
   IGetUserPlayedQuizzesResponse,
@@ -108,7 +109,7 @@ const createUserPlayedQuizHandler = async (
 
 const getSingleUserQuizStatisticsHandler = async (
   userId: string
-): Promise<IGetUserPlayedQuizzesResponse> => {
+): Promise<IGetUserPlayedStatisticsQuizzesResponse> => {
   const response = await api.get(
     `${ENDPOINT.GET_SINGLE_USER_QUIZ_STATISTICS(userId)}`
   );

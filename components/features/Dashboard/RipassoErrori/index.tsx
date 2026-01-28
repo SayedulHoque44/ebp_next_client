@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState, useEffect, useCallback } from "react";
+import React, { useMemo, useState, useEffect, useCallback, startTransition } from "react";
 import { Image } from "antd";
 import { FaClock } from "react-icons/fa";
 import { Lock } from "@phosphor-icons/react";
@@ -69,20 +69,19 @@ const RipassoErrori = () => {
       refetchOnWindowFocus: true,
     },
   });
-console.log("userQuizPlayed", userQuizPlayed);
+
   const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
   const [shouldFetchQuiz, setShouldFetchQuiz] = useState(false);
   const [newQuizData, setNewQuizData] = useState<any[]>([]);
 
   const playedQuizData = useMemo(
     () => userQuizPlayed?.data?.result || [],
-    [userQuizPlayed?.data?.result]
+    [userQuizPlayed]
   );
-  const metaData:any = useMemo(
+  const metaData = useMemo(
     () => userQuizPlayed?.data?.meta,
-    [userQuizPlayed?.data?.meta]
+    [userQuizPlayed]
   );
-  console.log("metaData", metaData);
 
   // Fetch quiz data only when shouldFetchQuiz is true
   const {
@@ -93,12 +92,15 @@ console.log("userQuizPlayed", userQuizPlayed);
   } = QuizHooks.useGetRandomPlayedQuizzes({
     enabled: shouldFetchQuiz,
   });
-console.log("randomPlayedQuizData", randomPlayedQuizData);
+
   // Reset to page 1 when filters change
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPage(1);
-  }, [filterParams]);
+    if (filterParams.length > 0 || page !== 1) {
+      setTimeout(() => {
+        setPage(1);
+      }, 0);
+    }
+  }, [filterParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Trigger refetch when shouldFetchQuiz becomes true (to get fresh data)
   useEffect(() => {
@@ -114,22 +116,24 @@ console.log("randomPlayedQuizData", randomPlayedQuizData);
   // Update quiz data when query completes
   useEffect(() => {
     if (randomPlayedQuizData?.data?.topicQuizzes && shouldFetchQuiz) {
-      setNewQuizData(randomPlayedQuizData.data.topicQuizzes);
+      setTimeout(() => {
+        setNewQuizData(randomPlayedQuizData.data.topicQuizzes);
+      }, 0);
     }
   }, [randomPlayedQuizData, shouldFetchQuiz]);
 
-  // Reset quiz state and refetch data when modal closes
-  useEffect(() => {
-    if (!isQuizModalOpen) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Handle modal close - reset state and refetch data
+  const handleCloseModal = useCallback(() => {
+    setIsQuizModalOpen(false);
+    setTimeout(() => {
       setNewQuizData([]);
       setShouldFetchQuiz(false);
       // Refetch user quiz played data to get updated results after completing quiz
       if (refetchUserQuizPlayed) {
         refetchUserQuizPlayed();
       }
-    }
-  }, [isQuizModalOpen, refetchUserQuizPlayed]);
+    }, 0);
+  }, [refetchUserQuizPlayed]);
 
   // Function to trigger new quiz fetch
   const handleStartQuiz = useCallback(() => {
@@ -506,7 +510,7 @@ console.log("randomPlayedQuizData", randomPlayedQuizData);
                   isRandomPlayedQuizLoading || isRandomPlayedQuizFetching
                 }
                 isOpen={isQuizModalOpen}
-                onClose={() => setIsQuizModalOpen(false)}
+                onClose={handleCloseModal}
                 quizType={"fixed"}
                 manualeEnabled={true}
                 traduzioneEnabled={true}
@@ -516,7 +520,7 @@ console.log("randomPlayedQuizData", randomPlayedQuizData);
         </div>
 
         {/* Pagination */}
-        {metaData?.totalPage && metaData.totalPage > 1 && (
+        {metaData?.totalPages && metaData.totalPages > 1 && (
           <div className="flex justify-center pt-4">
             <Pagination
               current={page}

@@ -101,13 +101,14 @@ export interface IUniContentsResponse<
 }
 
 export interface ISubContent {
-  RefId: IUniContent;
+  RefId: IUniContent | string;
   _id: string;
   _createdAt: string;
   updatedAt: string;
   index: number;
   title: string;
   url: string;
+  info?: string;
   description: string;
   imageUrl: string;
 }
