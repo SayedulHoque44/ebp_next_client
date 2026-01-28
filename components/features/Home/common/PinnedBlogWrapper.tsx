@@ -24,7 +24,7 @@ const PinnedBlogWrapper = () => {
     },
   });
   const Blog = BlogResponse?.data?.result?.[0] as IBlog;
-console.log("Blog", BlogResponse);
+// console.log("Blog", BlogResponse);
   // Handle client-side mounting (Next.js hydration)
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect

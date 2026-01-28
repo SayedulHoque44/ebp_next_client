@@ -16,6 +16,8 @@ import play from "@/public/assets/Images/play.png";
 import privacyPolicy from "@/public/assets/Images/privacy-policy.png";
 import rewards from "@/public/assets/Images/rewards.png";
 import robot from "@/public/assets/Images/robot.png";
+import icon6 from "@/public/assets/Images/icon-6.png";
+import icon7 from "@/public/assets/Images/icon-7.png";
 
 // Dashboard images
 import ask from "@/public/assets/Images/dashboard/ask.png";
@@ -65,6 +67,8 @@ export const mediaProvider = {
   privacyPolicy,
   rewards,
   robot,
+  icon6,
+  icon7,
   // Dashboard images
   dashboard: {
     ask,

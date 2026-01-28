@@ -1,7 +1,5 @@
 "use client";
-import Aos from "aos";
-import "aos/dist/aos.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { BiLogoFacebook, BiLogoWhatsapp, BiLogoYoutube } from "react-icons/bi";
 import { FaGraduationCap } from "react-icons/fa";
@@ -9,6 +7,7 @@ import CTA from "@/components/shared/CTA";
 import SectionHeader from "@/components/shared/SectionHeader";
 import Container from "@/components/ui/Container";
 import AnimatedCounter from "../common/AnimatedCounter";
+import FounderBackground from "./components/FounderBackground";
 import { mediaProvider } from "@/constants/mediaProvider";
 import {
   Heading3,
@@ -19,6 +18,7 @@ import {
 } from "@/components/ui/Typography";
 import { SocialLinks, STATS, STATS_LABELS } from "@/constants/ui_constent";
 import Image from "next/image";
+
 const FounderDetails = () => {
   // const socialLinks = [
   //   {
@@ -37,22 +37,12 @@ const FounderDetails = () => {
   //     icon: <BiLogoWhatsapp />,
   //   },
   // ];
-  //
-  useEffect(() => {
-    Aos.init();
-    Aos.refresh(); // Call AOS.refresh() after initialization
-
-    return () => {
-      Aos.refresh();
-    };
-  }, []);
+  // AOS is initialized globally via AOSProvider in HomeClient.tsx,
+  // so we don't need to call Aos.init() here.
   return (
     <div className="py-20 bg-gradient-to-br from-white via-gray-50 to-primary-50 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-primary-300 rounded-full"></div>
-        <div className="absolute bottom-20 left-20 w-48 h-48 bg-accent-300 rounded-full"></div>
-      </div>
+      <FounderBackground />
 
       <Container>
         <div className="relative z-10">

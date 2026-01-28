@@ -1,96 +1,48 @@
-import Aos from "aos";
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import Container from "@/components/ui/Container";
-import YTVideoSliderContainer from "@/components/shared/YTVideoSliderContainer";
-import SectionHeader from "@/components/shared/SectionHeader";
-import { FaPlay, FaArrowRight, FaYoutube } from "react-icons/fa";
-import PLinkBtn from "@/components/shared/PLinkBtn";
+import YTFreeVideoBackground from "./components/YTFreeVideoBackground";
+import YTFreeVideoHeader from "./components/YTFreeVideoHeader";
+import YTFreeVideoSlider from "./components/YTFreeVideoSlider";
+import YTFreeVideoCTA from "./components/YTFreeVideoCTA";
 
+/**
+ * YTFreeVideo Component (Server Component)
+ * 
+ * Main free videos section - optimized for SEO and performance.
+ * 
+ * SEO Benefits:
+ * - Server-rendered static content (headings, descriptions)
+ * - Proper semantic HTML structure
+ * - Fast initial page load
+ * - Better crawlability
+ * 
+ * Performance Benefits:
+ * - Background elements server-rendered
+ * - Static content doesn't require JavaScript
+ * - Only interactive parts are client components
+ * - Reduced initial bundle size
+ * 
+ * Note: AOS is initialized at the page level via AOSProvider in HomeClient
+ */
 const YTFreeVideo = () => {
-  useEffect(() => {
-    Aos.init();
-    Aos.refresh(); // Call AOS.refresh() after initialization
-
-    return () => {
-      Aos.refresh();
-    };
-  }, []);
   return (
     <div
-      className="py-20 bg-gradient-to-br from-gray-50 via-white to-primary-50 relative overflow-hidden"
+      className="py-20 bg-linear-to-br from-gray-50 via-white to-primary-50 relative overflow-hidden"
       id="videos"
     >
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-primary-300 rounded-full"></div>
-        <div className="absolute bottom-20 left-20 w-48 h-48 bg-accent-300 rounded-full"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary-100 rounded-full"></div>
-      </div>
+      {/* Background Elements - Server Rendered */}
+      <YTFreeVideoBackground />
 
       <Container>
         <div className="relative z-10">
-          <SectionHeader
-            badge={{
-              icon: <FaPlay className="mr-2" />,
-              text: "Free Videos",
-              className: "bg-primary-100 text-primary-700",
-            }}
-            title="Our Free"
-            subtitle="Videos"
-            description="Watch our free videos to learn more about our course and get a preview of our teaching methods. These videos will help you understand our approach and decide if our course is right for you."
-            className="mb-16"
-          />
+          {/* Section Header - Server Rendered for SEO */}
+          <YTFreeVideoHeader />
 
-          {/* Video Slider Container */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-12"
-          >
-            <YTVideoSliderContainer
-              RefId={"66a5f14fcef6bbd5277663da"}
-              limit={6}
-              sorting={"createdAt"}
-            />
-          </motion.div>
+          {/* Video Slider - Client Component for Animations */}
+          <YTFreeVideoSlider />
 
-          {/* CTA Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center"
-          >
-            <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-gray-100 max-w-2xl mx-auto">
-              <div className="flex flex-col sm:flex-row items-center justify-center mb-4 sm:mb-6 md:mb-4 gap-3 sm:gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center flex-shrink-0 sm:mr-4">
-                  <FaYoutube className="text-white text-lg sm:text-xl md:text-2xl" />
-                </div>
-                <div className="text-center sm:text-left">
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1">
-                    More Free Content
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-600">
-                    Explore our complete video library
-                  </p>
-                </div>
-              </div>
-
-              <PLinkBtn
-                link="/YTFreevideo"
-                text="View All Videos"
-                size="lg"
-                className="group w-full sm:w-auto !bg-gradient-to-r !from-red-500 !to-red-600 hover:!from-red-600 hover:!to-red-700 !focus:ring-red-500"
-                rightIcon={
-                  <FaArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                }
-              />
-            </div>
-          </motion.div>
+          {/* CTA Section - Client Component for Animations */}
+          <YTFreeVideoCTA />
         </div>
       </Container>
     </div>
