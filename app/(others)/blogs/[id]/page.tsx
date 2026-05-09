@@ -4,14 +4,20 @@ import { Metadata } from "next";
 import BlogApis from "@/features/Blog/apis/blog.api";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-// Generate dynamic metadata based on blog data
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+/**
+ * Generate dynamic metadata for single blog page
+ * Server-side metadata generation for SEO
+ */
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
   try {
+    const { id } = await params;
     const result = await BlogApis.getSingleBlogHandler({
-      blogId: params.id,
+      blogId: id,
     });
 
     if (result?.data?.title) {
@@ -24,6 +30,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           description: result.data.description || "",
           images: result.data.imageUrl ? [result.data.imageUrl] : [],
           type: "article",
+          publishedTime: result.data.createdAt,
+          ...(result.data.updatedAt && {
+            modifiedTime: result.data.updatedAt,
+          }),
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: result.data.title,
+          description: result.data.description || "",
+          images: result.data.imageUrl ? [result.data.imageUrl] : [],
+        },
+        alternates: {
+          canonical: `/blogs/${id}`,
         },
       };
     }
@@ -38,12 +57,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const page = ({ params }: Props) => {
-  return (
-    <>
-      <SingleBlogContainer />
-    </>
-  );
+const page = async ({ params }: Props) => {
+  return <SingleBlogContainer />;
 };
 
 export default page;

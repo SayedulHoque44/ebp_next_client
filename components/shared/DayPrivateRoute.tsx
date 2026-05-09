@@ -37,7 +37,7 @@ export const DayPrivateRoute = ({
     <>
       <div className="flex justify-center sticky top-40 -mb-[200px] z-12">
         <div className="w-full md:w-1/2 ">
-          <div className="flex flex-col justify-center items-center w-full border-l-6 border-warning bg-warning bg-opacity-[45%] px-7 py-8 shadow-md dark:bg-opacity-90 md:p-9 gap-7">
+          <div className="flex flex-col justify-center items-center w-full border-l-6 border-warning bg-warning bg-opacity-[45%] px-7 py-8 shadow-md md:p-9 gap-7">
             <div className="mr-5 flex h-9 w-9 items-center justify-center rounded-lg bg-warning bg-opacity-30">
               <MdOutlineDesktopAccessDisabled className="w-6 h-6" />
             </div>

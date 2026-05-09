@@ -1,8 +1,9 @@
+"use client";
 import React from "react";
 import Book from "../PatenteBooks/Book";
-import Container from "../../../Shared/Container/Container";
-import AdSense from "react-adsense";
-import SectionHeader from "../../../Shared/Components/SectionHeader/SectionHeader";
+import Container from "@/components/ui/Container";
+// import AdSense from "react-adsense";
+import SectionHeader from "@/components/shared/SectionHeader";
 import { BookOpen } from "@phosphor-icons/react";
 
 const QuizBook = () => {
@@ -36,8 +37,7 @@ const QuizBook = () => {
             book={{
               title: "Quiz Book",
               description: "৭০০০+ কুইজ পডতে পারবেন।",
-              coverImage:
-                "https://i.ibb.co/vhTyhdd/Whats-App-Image-2024-03-30-at-16-39-57-859a015a.jpg",
+              coverImage: `${process.env.NEXT_PUBLIC_AWS_IMAGES_CDN_BASE_URL}Ebp_Assets/quiz-book-01.jpg`,
             }}
           />
         </div>

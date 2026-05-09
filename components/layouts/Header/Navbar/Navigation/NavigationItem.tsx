@@ -47,8 +47,8 @@ const NavigationItem = ({
       <Link
         className={`flex gap-2 items-center px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
           isActive
-            ? "bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 shadow-soft dark:shadow-primary-900/20"
-            : "text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+            ? "bg-primary-100 text-primary-700 shadow-soft"
+            : "text-gray-600 hover:text-primary-600 hover:bg-primary-50"
         } ${className}`}
         href={item.link}
         onClick={onClick}
@@ -69,9 +69,9 @@ const NavigationItem = ({
       <div
         className={`
           flex items-center space-x-4 p-4 rounded-xl cursor-pointer
-          transition-all duration-300 hover:shadow-md dark:hover:shadow-gray-800/50
-          bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 
-          hover:border-gray-200 dark:hover:border-gray-600/50
+          transition-all duration-300 hover:shadow-md
+          bg-white border border-gray-100
+          hover:border-gray-200
           backdrop-blur-sm
           ${className}
         `}
@@ -92,9 +92,7 @@ const NavigationItem = ({
         <div className="flex-1">
           <div
             className={`font-semibold text-base transition-colors duration-300 ${
-              item.title === "Logout" 
-                ? "text-red-500 dark:text-red-400" 
-                : "text-gray-800 dark:text-gray-100"
+              item.title === "Logout" ? "text-red-500" : "text-gray-800"
             }`}
           >
             {item.title}
@@ -102,9 +100,7 @@ const NavigationItem = ({
           {showDescription && (
             <div
               className={`text-sm transition-colors duration-300 ${
-                item.title === "Logout" 
-                  ? "text-red-400 dark:text-red-500" 
-                  : "text-gray-600 dark:text-gray-400"
+                item.title === "Logout" ? "text-red-400" : "text-gray-600"
               }`}
             >
               {item.description}
@@ -112,7 +108,7 @@ const NavigationItem = ({
           )}
         </div>
 
-        <div className="text-gray-300 dark:text-gray-500 transition-colors duration-300">
+        <div className="text-gray-300 transition-colors duration-300">
           <svg
             className="w-5 h-5"
             fill="none"

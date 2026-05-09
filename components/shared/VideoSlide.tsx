@@ -13,7 +13,10 @@ const getYouTubeId = (url: string): string | null => {
 };
 
 // Get YouTube thumbnail URL
-const getYouTubeThumbnail = (url: string, quality: "default" | "medium" | "high" | "maxres" = "maxres"): string => {
+const getYouTubeThumbnail = (
+  url: string,
+  quality: "default" | "medium" | "high" | "maxres" = "maxres",
+): string => {
   const videoId = getYouTubeId(url);
   if (!videoId) return "";
   return `https://img.youtube.com/vi/${videoId}/${quality}default.jpg`;
@@ -54,7 +57,12 @@ const VideoSlide = ({
 
   // Pause video when it scrolls out of view (optimized with throttling)
   useEffect(() => {
-    if (!containerRef?.current || !isPlayerReady || !youtubePlayerRef.current || !showPlayer) {
+    if (
+      !containerRef?.current ||
+      !isPlayerReady ||
+      !youtubePlayerRef.current ||
+      !showPlayer
+    ) {
       return;
     }
 
@@ -122,7 +130,10 @@ const VideoSlide = ({
       <div className="relative w-full bg-gray-900 rounded-t-xl sm:rounded-t-2xl overflow-hidden aspect-video">
         {!showPlayer ? (
           // Thumbnail with Play Button - Always visible, lazy loaded
-          <div className="relative w-full h-full cursor-pointer" onClick={handlePlay}>
+          <div
+            className="relative w-full h-full cursor-pointer"
+            onClick={handlePlay}
+          >
             {thumbnailUrl ? (
               <Image
                 src={thumbnailUrl}

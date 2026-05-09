@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "img.youtube.com",
       },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+      },
     ],
   },
 };
@@ -30,7 +34,8 @@ const nextConfig: NextConfig = {
 // Check if Sentry is enabled (has DSN) to avoid unnecessary source map uploads
 // Since Sentry is currently disabled (dsn: undefined), skip the wrapper to save build time
 // This prevents the ~4 minute delay in runAfterProductionCompile from source map uploads
-const isSentryEnabled = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
+const isSentryEnabled =
+  process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 // If Sentry is disabled, export config directly without wrapper to skip source map uploads
 // Only apply Sentry config when actually enabled

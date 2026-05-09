@@ -169,13 +169,6 @@
   --animate-pulse-glow: pulseGlow 2s infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #111827;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -242,5 +235,34 @@ body {
   }
   50% {
     box-shadow: 0 0 40px rgba(131, 25, 244, 0.6);
+  }
+}
+
+/* Button ripple — spans must be position:absolute or they participate in flex and widen the button */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0);
+  animation: ripple-expand 0.6s linear;
+}
+
+.ripple-primary {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.ripple-secondary {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+@keyframes ripple-expand {
+  to {
+    transform: scale(4);
+    opacity: 0;
   }
 }

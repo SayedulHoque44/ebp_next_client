@@ -22,7 +22,7 @@ export const MobileMenuTogglePropTypes = {
   onToggle: PropTypes.func.isRequired,
   className: PropTypes.string,
   size: PropTypes.oneOf(["sm", "md", "lg"]),
-  variant: PropTypes.oneOf(["default", "primary", "dark"]),
+  variant: PropTypes.oneOf(["default", "primary", "minimal"]),
 };
 
 export const ResponsiveNavigationPropTypes = {

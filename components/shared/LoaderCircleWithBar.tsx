@@ -1,20 +1,14 @@
 import React from "react";
-import { CirclesWithBar } from "react-loader-spinner"; //TODO: Remove this loader
+import { FallingLines } from "react-loader-spinner"; //TODO: Remove this loader
 
 const LoaderCircleWithBar = ({ className }: { className?: string }) => {
   return (
     <div className={`${className ? className : ""} flex justify-center py-10`}>
-      <CirclesWithBar
-        height="100"
-        width="100"
+      <FallingLines
         color="#8319f4"
-        wrapperStyle={{}}
-        wrapperClass=""
+        width="100"
         visible={true}
-        outerCircleColor=""
-        innerCircleColor=""
-        barColor=""
-        ariaLabel="circles-with-bar-loading"
+        ariaLabel="falling-circles-loading"
       />
     </div>
   );

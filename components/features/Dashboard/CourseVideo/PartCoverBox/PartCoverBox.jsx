@@ -32,15 +32,13 @@ const PartCoverBox = ({ partInfo }) => {
   return (
     <span
       onClick={handlePaidCheck}
-      className=" block cursor-pointer mx-auto max-w-sm p-6 bg-[##1f2937] border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      className=" block cursor-pointer mx-auto max-w-sm p-6 bg-[##1f2937] border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
-      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
         {title}
       </h5>
-      <p className="font-normal text-gray-700 dark:text-gray-400">
-        {description}
-      </p>
-      <span className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-P-primary rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-P-primary  dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      <p className="font-normal text-gray-700">{description}</p>
+      <span className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-P-primary rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
         দেখুন
         <svg
           className="w-3.5 h-3.5 ml-2"

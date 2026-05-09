@@ -1,5 +1,5 @@
 "use client";
-import Loading from "@/components/handler/Loading";
+import RootLoader from "@/components/shared/RootLoader/RootLoader";
 import useAuth from "@/features/Auth/hooks/useAuth";
 import useAuthStore from "@/features/Auth/store/useAuthStore";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { user, isLoading, accessToken } = useAuth();
   const hasHydrated = useAuthStore(
-    (state) => (state as any).hasHydrated ?? false
+    (state) => (state as any).hasHydrated ?? false,
   );
 
   //   console.log("private ------- route", {
@@ -39,7 +39,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 
   // Wait for rehydration to complete before making auth decisions
   if (!hasHydrated) {
-    return <Loading />;
+    return <RootLoader />;
   }
 
   // After rehydration: if no accessToken, show nothing (redirecting)
@@ -49,7 +49,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 
   // If we have accessToken but still loading (fetching user), show loading
   if (accessToken && isLoading) {
-    return <Loading />;
+    return <RootLoader />;
   }
 
   // If we have accessToken but no user and not loading, show nothing (redirecting)
@@ -63,7 +63,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   }
 
   // Fallback: show loading
-  return <Loading />;
+  return <RootLoader />;
 };
 
 export default PrivateRoute;

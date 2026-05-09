@@ -38,7 +38,7 @@ const YTFreeVideoCTA = () => {
           link="/YTFreevideo"
           text="View All Videos"
           size="lg"
-          className="group w-full sm:w-auto !bg-linear-to-r !from-red-500 !to-red-600 hover:!from-red-600 hover:!to-red-700 !focus:ring-red-500"
+          className="group w-full sm:w-auto bg-linear-to-r! from-red-500! !to-red-600 hover:!from-red-600 hover:!to-red-700 !focus:ring-red-500"
           rightIcon={
             <FaArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
           }

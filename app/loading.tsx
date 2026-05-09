@@ -1,4 +1,4 @@
-import Loading from "@/components/handler/Loading";
+import RootLoader from "@/components/shared/RootLoader/RootLoader";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Get better insights faster.",
 };
 const Page = () => {
-  return <Loading />;
+  return <RootLoader />;
 };
 
 export default Page;

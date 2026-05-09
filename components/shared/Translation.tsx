@@ -23,23 +23,17 @@ const TranslationInModal = ({ text, component }: TranslationInModalProps) => {
   const [translatedText, setTranslatedText] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const showModal = useCallback(
-    (event: React.MouseEvent<HTMLSpanElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-      setIsModalOpen(true);
-    },
-    []
-  );
+  const showModal = useCallback((event: React.MouseEvent<HTMLSpanElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setIsModalOpen(true);
+  }, []);
 
-  const handleCancel = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-      setIsModalOpen(false);
-    },
-    []
-  );
+  const handleCancel = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setIsModalOpen(false);
+  }, []);
 
   useEffect(() => {
     const translateText = async () => {
@@ -48,12 +42,12 @@ const TranslationInModal = ({ text, component }: TranslationInModalProps) => {
       try {
         setLoading(true);
         const response = await axios.post(
-          process.env.NEXT_PUBLIC_API_URL + "/api/words/translate/create",
+          process.env.NEXT_PUBLIC_API_URL + "words/translate/create",
           {
             sourceWords: text,
             sourceLang: "it",
             translatedLang: "bn",
-          }
+          },
         );
         setTranslatedText(response.data.data.translated);
       } catch (error) {
@@ -76,7 +70,7 @@ const TranslationInModal = ({ text, component }: TranslationInModalProps) => {
 
   const isOriginalTextSingleWord = useMemo(
     () => text?.trim().split(" ").length === 1,
-    [text]
+    [text],
   );
 
   return (
@@ -175,12 +169,12 @@ export const TranslationFnText = ({
       try {
         setLoading(true);
         const response = await axios.post(
-           process.env.NEXT_PUBLIC_API_URL + "/api/words/translate/create",
-        {
+          process.env.NEXT_PUBLIC_API_URL + "/api/words/translate/create",
+          {
             sourceWords: inputText,
             sourceLang: translateLang,
             translatedLang: inputedLang,
-          }
+          },
         );
 
         setTranslatedText(response.data.data.translated);

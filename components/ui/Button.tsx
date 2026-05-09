@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, forwardRef, useImperativeHandle } from "react";
+import React, { useRef, forwardRef, useCallback } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { cn } from "@/lib/utils";
 
@@ -50,15 +50,20 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     forwardedRef
   ) => {
-    const localRef = useRef<HTMLButtonElement>(null);
+    const localRef = useRef<HTMLButtonElement | null>(null);
 
-    // Merge external forwarded ref with internal ref
-    useImperativeHandle(forwardedRef, () => {
-      if (!localRef.current) {
-        throw new Error("Button ref is not available");
-      }
-      return localRef.current;
-    });
+    const setButtonRef = useCallback(
+      (node: HTMLButtonElement | null) => {
+        localRef.current = node;
+        if (typeof forwardedRef === "function") {
+          forwardedRef(node);
+        } else if (forwardedRef != null) {
+          (forwardedRef as React.MutableRefObject<HTMLButtonElement | null>).current =
+            node;
+        }
+      },
+      [forwardedRef],
+    );
 
     // Base button classes
     const baseClasses =
@@ -153,7 +158,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        ref={localRef}
+        ref={setButtonRef}
         className={buttonClasses}
         onClick={handleClick}
         disabled={loading || rest.disabled}

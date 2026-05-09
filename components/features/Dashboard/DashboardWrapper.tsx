@@ -20,10 +20,14 @@ const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
   const router = useRouter();
   const SingleUser = user;
 
+  const userCourseTimes = useMemo(
+    () => [...(SingleUser?.courseTimes || [])].reverse(),
+    [SingleUser?.courseTimes],
+  );
+
   // Memoize course status checks
-  const courseTimes = SingleUser?.courseTimes;
   const courseStatuses = useMemo(() => {
-    if (!courseTimes) {
+    if (!userCourseTimes?.length) {
       return {
         isThereAnyOnGoingCourse: null,
         isThereEndedCourse: null,
@@ -33,19 +37,19 @@ const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
 
     return {
       isThereAnyOnGoingCourse:
-        courseTimes.find(
-          (courseTimeEle: IUserCourse) => courseTimeEle.status === "ONGOING"
+        userCourseTimes.find(
+          (courseTimeEle: IUserCourse) => courseTimeEle.status === "ONGOING",
         ) || null,
       isThereEndedCourse:
-        courseTimes.find(
-          (courseTimeEle: IUserCourse) => courseTimeEle.status === "ENDED"
+        userCourseTimes.find(
+          (courseTimeEle: IUserCourse) => courseTimeEle.status === "ENDED",
         ) || null,
       isThereUpcoming:
-        courseTimes.find(
-          (courseTimeEle: IUserCourse) => courseTimeEle.status === "UPCOMING"
+        userCourseTimes.find(
+          (courseTimeEle: IUserCourse) => courseTimeEle.status === "UPCOMING",
         ) || null,
     };
-  }, [courseTimes]);
+  }, [userCourseTimes]);
 
   const { isThereAnyOnGoingCourse, isThereEndedCourse, isThereUpcoming } =
     courseStatuses;
@@ -78,12 +82,7 @@ const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
         return;
       }
     }
-  }, [
-    SingleUser,
-    isLoading,
-    isThereAnyOnGoingCourse,
-    router,
-  ]);
+  }, [SingleUser, isLoading, isThereAnyOnGoingCourse, router]);
   return (
     <>
       {isDashboardPage && (

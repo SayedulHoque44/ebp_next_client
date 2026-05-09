@@ -26,7 +26,7 @@ export const getObjectKeyFromUrl = (cdnUrl: string, imageUrl: string) => {
 export const getFileNameFromCdnUrl = (
   cdnUrl: string,
   folderName: string,
-  imageUrl: string
+  imageUrl: string,
 ) => {
   if (imageUrl) {
     return imageUrl.substring(cdnUrl.length + folderName.length);
@@ -50,7 +50,7 @@ export const paidGurdRoute = (path: string, loggedUser: any) => {
     return toast.error("কিছু সম্যসা হয়েছে !");
   } else if (loggedUser?.paymentStatus === "paid") {
     return toast.error(
-      "আপনার কোর্স টাইম শেষ হয়ে গিয়েছে, টাইম বাডানোর জন্য যোগাযোগ করুন।"
+      "আপনার কোর্স টাইম শেষ হয়ে গিয়েছে, টাইম বাডানোর জন্য যোগাযোগ করুন।",
     );
   } else {
     return toast.error("আপনাকে কোর্সটা কিনতে হবে।");
@@ -72,9 +72,8 @@ export const EBP_Images_CDN_BaseUrl =
 export const fileMaxSize = 400 * 1024 * 1024; // 400MB
 export const chunkSize = 5 * 1024 * 1024; // 100MB
 
-
 // Function to format remaining time in years, months, days, hours, minutes, and seconds
-function formatTime(time:any) {
+function formatTime(time: any) {
   const years = time.years();
   const months = time.months();
   const days = time.days();
@@ -97,7 +96,7 @@ function formatTime(time:any) {
         <span className="text-xs md:text-sm text-gray-600 font-medium mt-1">
           {years === 1 ? "Year" : "Years"}
         </span>
-      </div>
+      </div>,
     );
   }
 
@@ -113,7 +112,7 @@ function formatTime(time:any) {
         <span className="text-xs md:text-sm text-gray-600 font-medium mt-1">
           {months === 1 ? "Month" : "Months"}
         </span>
-      </div>
+      </div>,
     );
   }
 
@@ -129,7 +128,7 @@ function formatTime(time:any) {
         <span className="text-xs md:text-sm text-gray-600 font-medium mt-1">
           {days === 1 ? "Day" : "Days"}
         </span>
-      </div>
+      </div>,
     );
   }
 
@@ -155,7 +154,7 @@ function formatTime(time:any) {
             {" "}
             {hours === 1 ? "Hour" : "Hours"}
           </span>
-        </div>
+        </div>,
       );
     }
 
@@ -173,7 +172,7 @@ function formatTime(time:any) {
             {" "}
             {minutes === 1 ? "Minute" : "Minutes"}
           </span>
-        </div>
+        </div>,
       );
     }
 
@@ -190,7 +189,7 @@ function formatTime(time:any) {
           <span className="text-xs md:text-sm text-gray-600 font-medium mt-1">
             {seconds === 1 || seconds === 0 ? "Second" : "Seconds"}
           </span>
-        </div>
+        </div>,
       );
     }
   }
@@ -214,7 +213,11 @@ function formatTime(time:any) {
 }
 // Course Time checker
 
-export const Timecheckers = (startDate:any, endDate:any, remainingTime:any) => {
+export const Timecheckers = (
+  startDate: any,
+  endDate: any,
+  remainingTime: any,
+) => {
   const courseStartTime = new Date(startDate).getTime();
   const courseEndTime = new Date(endDate).getTime();
   const currentTime = new Date().getTime();
@@ -226,23 +229,40 @@ export const Timecheckers = (startDate:any, endDate:any, remainingTime:any) => {
   return formatTime(remainingTime);
 };
 
-export const DayPrivateRoute = ({ loggedUser, dayCount, redirectUrl }: { loggedUser: any, dayCount: number, redirectUrl?: string }) => {
-  const router = useRouter();
+export const DayPrivateRoute = ({
+  loggedUser,
+  dayCount,
+  redirectUrl,
+}: {
+  loggedUser: any;
+  dayCount: number[] | number;
+  redirectUrl?: string;
+}) => {
+  const currentDay = moment().tz(moment.tz.guess()).day(); // 0=Sun, 6=Sat
+  const isBlockedDay = Array.isArray(dayCount)
+    ? dayCount.includes(currentDay)
+    : currentDay === dayCount;
+  const shouldRedirect = isBlockedDay && !!redirectUrl;
+
+  React.useEffect(() => {
+    if (shouldRedirect && redirectUrl) {
+      window.location.href = redirectUrl;
+    }
+  }, [shouldRedirect, redirectUrl]);
+
   if (loggedUser?.role === "Admin") {
     return false;
   }
 
-  const currentDayCount = moment().tz(moment.tz.guess()).day(); // 1-7
-
-  if (currentDayCount === dayCount) {
+  if (isBlockedDay) {
     if (redirectUrl) {
-      router.push(redirectUrl);
+      return true;
     } else {
       return (
         <>
-          <div className="flex justify-center sticky top-40 -mb-[200px] z-[12]">
+          <div className="flex justify-center sticky top-40 -mb-[200px] z-12">
             <div className="w-full md:w-1/2 ">
-              <div className="flex flex-col justify-center items-center w-full border-l-6 border-warning bg-warning bg-opacity-[45%] px-7 py-8 shadow-md dark:bg-opacity-90 md:p-9 gap-7">
+              <div className="flex flex-col justify-center items-center w-full border-l-6 border-warning bg-warning bg-opacity-[45%] px-7 py-8 shadow-md md:p-9 gap-7">
                 <div className="mr-5 flex h-9 w-9 items-center justify-center rounded-lg bg-warning bg-opacity-30">
                   <MdOutlineDesktopAccessDisabled size={35} />
                 </div>
@@ -251,9 +271,7 @@ export const DayPrivateRoute = ({ loggedUser, dayCount, redirectUrl }: { loggedU
                     {"Temporary Course Video Disabled!"}
                   </h5>
                   <p className="leading-relaxed text-white">
-                    {
-                      "আমাদের ওয়েভসাইটে কাজ চলতেচে তাই ২৪ ঘন্টার জন্য আমাদের কোর্স ভিডিও বন্ধ থাববে। ধন্যবাদ। 😊"
-                    }
+                    {`কোর্স ভিডিও আমাদের ওয়েবসাইটে শুদুমাত্র লাইভ ক্লাস যেদিন হবে ওই দিন গুলোতে দেখতে পারবেন, অ্যাপ এ প্রতিদিন দেখতে পারবেন তাই অ্যাপ এ দেখুন 😊`}
                   </p>
                 </div>
               </div>
@@ -264,4 +282,5 @@ export const DayPrivateRoute = ({ loggedUser, dayCount, redirectUrl }: { loggedU
       );
     }
   }
+  return false;
 };

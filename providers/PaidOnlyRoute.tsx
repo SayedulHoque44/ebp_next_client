@@ -37,7 +37,7 @@ const PaidOnlyRoute = ({ children }: { children: React.ReactNode }) => {
       return null;
     } else if (user.paymentStatus === "paid") {
       toast.error(
-        "আপনার কোর্স টাইম শেষ হয়ে গিয়েছে, টাইম বাডানোর জন্য যোগাযোগ করুন।"
+        "আপনার কোর্স টাইম শেষ হয়ে গিয়েছে, টাইম বাডানোর জন্য যোগাযোগ করুন।",
       );
       router.push("/dashboard");
       return null;

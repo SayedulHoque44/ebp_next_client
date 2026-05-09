@@ -122,9 +122,9 @@ const AntMobileNav = ({
       style={{ zIndex: 1000 }}
       closable={false}
     >
-      <div className="h-full flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <div className="h-full flex flex-col bg-gray-50 transition-colors duration-300">
         {/* Clean Header */}
-        <div className="p-4 bg-white dark:bg-gray-800/95 border-b border-gray-100 dark:border-gray-700/50 backdrop-blur-sm transition-colors duration-300">
+        <div className="p-4 bg-white border-b border-gray-100 backdrop-blur-sm transition-colors duration-300">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-between w-full">
               {/* Profile Section */}
@@ -139,14 +139,14 @@ const AntMobileNav = ({
                   >
                     <UserPropile logout={false} />
                     <div>
-                      <h5 className="text-sm font-semibold text-gray-800 dark:text-gray-100 transition-colors duration-300">
+                      <h5 className="text-sm font-semibold text-gray-800 transition-colors duration-300">
                         {user?.name || "User"}
                       </h5>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">{user?.phone}</p>
+                      <p className="text-xs text-gray-500 transition-colors duration-300">{user?.phone}</p>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 text-P-Black dark:text-white transition-colors duration-300">
+                  <div className="flex items-center gap-2 text-P-Black transition-colors duration-300">
                     <h5 className="text-lg font-semibold">
                       Easy Bangla Patente
                     </h5>
@@ -159,7 +159,7 @@ const AntMobileNav = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex items-center justify-center w-8 h-8 rounded-lg bg-red-500 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700 text-white transition-colors duration-200 shadow-sm dark:shadow-red-900/30"
+                  className="flex items-center justify-center w-8 h-8 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 shadow-sm"
                 >
                   <AiOutlineClose className="w-4 h-4" />
                 </button>
@@ -178,7 +178,7 @@ const AntMobileNav = ({
                   router.push("/login");
                   onClose();
                 }}
-                className="w-full bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-sm dark:shadow-primary-900/30 hover:shadow-md dark:hover:shadow-primary-900/50"
+                className="w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
               >
                 Login to Your Account
               </button>
@@ -189,12 +189,12 @@ const AntMobileNav = ({
             {navItems.map((item: any, index: number) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 rounded-xl shadow-sm dark:shadow-gray-800/50 hover:shadow-md dark:hover:shadow-gray-700/50 transition-all duration-300 cursor-pointer"
+                className="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
               >
                 <Card
                   hoverable
                   onClick={() => handleMenuItemClick(item)}
-                  className="border-0 shadow-none bg-transparent dark:bg-transparent"
+                  className="border-0 shadow-none bg-transparent"
                   styles={{
                     body: { padding: "16px" },
                   }}
@@ -214,7 +214,7 @@ const AntMobileNav = ({
                   <div className="flex-1">
                     <Text
                       strong
-                      className={item.title === "Logout" ? "text-red-500 dark:text-red-400" : "text-gray-800 dark:text-gray-100"}
+                      className={item.title === "Logout" ? "text-red-500" : "text-gray-800"}
                       style={{
                         fontSize: "16px",
                         display: "block",
@@ -225,7 +225,7 @@ const AntMobileNav = ({
                     </Text>
                     <Text
                       type="secondary"
-                      className={item.title === "Logout" ? "text-red-400 dark:text-red-500" : "text-gray-600 dark:text-gray-400"}
+                      className={item.title === "Logout" ? "text-red-400" : "text-gray-600"}
                       style={{
                         fontSize: "12px",
                       }}
@@ -235,7 +235,7 @@ const AntMobileNav = ({
                         : `Navigate to ${item.title.toLowerCase()}`}
                     </Text>
                   </div>
-                  <div className="text-gray-300 dark:text-gray-500 transition-colors duration-300">
+                  <div className="text-gray-300 transition-colors duration-300">
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -258,11 +258,11 @@ const AntMobileNav = ({
         </div>
 
         {/* Clean Footer */}
-        <div className="p-6 bg-white dark:bg-gray-800/95 border-t border-gray-100 dark:border-gray-700/50 backdrop-blur-sm transition-colors duration-300">
+        <div className="p-6 bg-white border-t border-gray-100 backdrop-blur-sm transition-colors duration-300">
           <div className="text-center">
             <Text
               type="secondary"
-              className="text-gray-600 dark:text-gray-400"
+              className="text-gray-600"
               style={{ fontSize: "11px" }}
             >
               © 2024 EBP - Easy Bangla Patente
@@ -270,7 +270,7 @@ const AntMobileNav = ({
             <br />
             <Text
               type="secondary"
-              className="text-gray-500 dark:text-gray-500"
+              className="text-gray-500"
               style={{ fontSize: "10px" }}
             >
               All rights reserved

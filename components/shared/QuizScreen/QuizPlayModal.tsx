@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo, startTransition } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  startTransition,
+} from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import {
@@ -13,10 +19,9 @@ import { Image as AntdImage } from "antd";
 import Image from "next/image";
 import { mediaProvider } from "@/constants/mediaProvider";
 
-
 export interface QuizQuestion {
   _id?: string;
-  ArgTopicId? : string;
+  ArgTopicId?: string;
   argumentId?: string;
   question: string;
   answer?: string | boolean;
@@ -86,12 +91,12 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
   // Reset quiz state when new quiz data arrives while modal is open
   useEffect(() => {
     if (!isOpen) return;
-    
-    const hasNewQuizData = 
-      quizData && 
-      quizData.length > 0 && 
+
+    const hasNewQuizData =
+      quizData &&
+      quizData.length > 0 &&
       prevQuizDataRef.current.length !== quizData.length;
-    
+
     if (hasNewQuizData) {
       prevQuizDataRef.current = quizData;
       startTransition(() => {
@@ -160,51 +165,56 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
   }, [timeRemaining]);
 
   const resultData = useMemo(() => {
-    return questions.map((q, idx): {
-      _id?: string;
-      ArgTopicId?: string;
-      argumentId?: string;
-      question: string;
-      correctAnswer: string;
-      userAnswer: string;
-      imageUrl: string | null;
-      authorAudio?: string;
-      isCorrect: boolean | null;
-    } => {
-      const correctRaw = q?.answer ?? "";
+    return questions.map(
+      (
+        q,
+        idx,
+      ): {
+        _id?: string;
+        ArgTopicId?: string;
+        argumentId?: string;
+        question: string;
+        correctAnswer: string;
+        userAnswer: string;
+        imageUrl: string | null;
+        authorAudio?: string;
+        isCorrect: boolean | null;
+      } => {
+        const correctRaw = q?.answer ?? "";
 
-      const correctAnswer =
-        typeof correctRaw === "boolean"
-          ? correctRaw
-            ? "V"
-            : "F"
-          : String(correctRaw || "").trim();
+        const correctAnswer =
+          typeof correctRaw === "boolean"
+            ? correctRaw
+              ? "V"
+              : "F"
+            : String(correctRaw || "").trim();
 
-      const userAnswerRaw = answers[idx] ?? "";
-      const userAnswer =
-        typeof userAnswerRaw === "boolean"
-          ? userAnswerRaw
-            ? "V"
-            : "F"
-          : String(userAnswerRaw || "").trim();
+        const userAnswerRaw = answers[idx] ?? "";
+        const userAnswer =
+          typeof userAnswerRaw === "boolean"
+            ? userAnswerRaw
+              ? "V"
+              : "F"
+            : String(userAnswerRaw || "").trim();
 
-      const isCorrect =
-        userAnswer && correctAnswer
-          ? userAnswer.toLowerCase() === correctAnswer.toLowerCase()
-          : null;
+        const isCorrect =
+          userAnswer && correctAnswer
+            ? userAnswer.toLowerCase() === correctAnswer.toLowerCase()
+            : null;
 
-      return {
-        _id: q?._id,
-        ArgTopicId: q?.ArgTopicId,
-        argumentId: q?.argumentId,
-        question: q?.question,
-        correctAnswer,
-        userAnswer,
-        imageUrl: q?.image?.imageUrl || q?.imageUrl || q?.figure || null,
-        authorAudio: q?.authorAudio,
-        isCorrect,
-      };
-    });
+        return {
+          _id: q?._id,
+          ArgTopicId: q?.ArgTopicId,
+          argumentId: q?.argumentId,
+          question: q?.question,
+          correctAnswer,
+          userAnswer,
+          imageUrl: q?.image?.imageUrl || q?.imageUrl || q?.figure || null,
+          authorAudio: q?.authorAudio,
+          isCorrect,
+        };
+      },
+    );
   }, [questions, answers]);
 
   // Personalization flags (only applied for personalized mode)
@@ -405,7 +415,9 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
   };
 
   // Get question status
-  const getQuestionStatus = (index: number): "current" | "answered" | "unanswered" => {
+  const getQuestionStatus = (
+    index: number,
+  ): "current" | "answered" | "unanswered" => {
     if (index === currentQuestionIndex) return "current";
     if (answers[index]) return "answered";
     return "unanswered";
@@ -500,11 +512,12 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
     >
       <div className="h-full max-w-7xl mx-auto flex flex-col p-4 space-y-3 px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 py-3 sm:py-4 md:py-5 lg:py-6 ">
         <div className="flex items-center gap-1 md:gap-4 justify-between r">
-          <AntdImage
+          <Image
+            width={100}
+            height={100}
             src={mediaProvider.dashboard.rpi.src}
             alt="R-P-I"
-            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-14 lg:h-14"
-          
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-16 lg:h-16"
           />
 
           <div className="text-center leading-tight">
@@ -550,7 +563,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
               {
                 length: Math.min(
                   sectionEnd - sectionStart + 1,
-                  questions.length
+                  questions.length,
                 ),
               },
               (_, idx) => {
@@ -568,14 +581,14 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                       status === "current"
                         ? "bg-red-600 text-white border-red-600"
                         : status === "answered"
-                        ? "bg-green-200 text-black "
-                        : "bg-white text-black "
+                          ? "bg-green-200 text-black "
+                          : "bg-white text-black "
                     }`}
                   >
                     {qIndex + 1}
                   </button>
                 );
-              }
+              },
             )}
           </div>
         </div>
@@ -596,8 +609,8 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                     status === "current"
                       ? "bg-red-600 text-white border-red-600"
                       : status === "answered"
-                      ? "bg-green-200 text-black "
-                      : "bg-white text-black "
+                        ? "bg-green-200 text-black "
+                        : "bg-white text-black "
                   }`}
                 >
                   {i + 1}
@@ -618,6 +631,8 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                   {imageUrl ? (
                     <Image
                       src={imageUrl}
+                      width={300}
+                      height={300}
                       alt="Quiz"
                       className="w-full max-w-full h-28 sm:h-40 md:h-60 lg:h-72 object-contain rounded-lg"
                     />
@@ -889,7 +904,8 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                         src={mediaProvider.dashboard.backQuiz.src as string}
                         alt="Previous"
                         className="w-full h-full object-contain"
-                        fill
+                        width={48}
+                        height={48}
                       />
                     </button>
                     {/* Next button (circle) */}
@@ -901,7 +917,8 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                       <Image
                         src={mediaProvider.dashboard.nextQuiz.src as string}
                         alt="Next"
-                        fill
+                        width={48}
+                        height={48}
                         className="w-full h-full object-contain"
                       />
                     </button>
