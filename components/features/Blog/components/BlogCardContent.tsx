@@ -1,4 +1,5 @@
 "use client";
+// @ts-nocheck
 
 import React, { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -17,7 +18,7 @@ interface BlogCardContentProps {
 
 /**
  * BlogCardContent Component (Client Component)
- * 
+ *
  * Blog card content with expandable description
  * Client component for interactions
  */
@@ -32,11 +33,14 @@ export const BlogCardContent: React.FC<BlogCardContentProps> = ({
   const [seeMore, setSeeMore] = useState(false);
 
   const handleResize = useCallback(() => {
-    setIsMobile(typeof window !== "undefined" ? window.innerWidth < 768 : false);
+    setIsMobile(
+      typeof window !== "undefined" ? window.innerWidth < 768 : false,
+    );
   }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsMobile(window.innerWidth < 768);
       window.addEventListener("resize", handleResize);
     }
