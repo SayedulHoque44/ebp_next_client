@@ -19,7 +19,7 @@ interface VideoShowSectionProps {
 
 /**
  * VideoShowSection Component (Client Component)
- * 
+ *
  * Main video listing section
  * Client component for data fetching and state management
  */
@@ -48,6 +48,7 @@ const VideoShowSection: React.FC<VideoShowSectionProps> = ({
   });
 
   const metaData = subContentsResponse?.data?.meta;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const allVideos = subContentsResponse?.data?.result || [];
 
   // Filter videos based on search term (client-side filtering for better UX)
@@ -57,7 +58,7 @@ const VideoShowSection: React.FC<VideoShowSectionProps> = ({
     return allVideos.filter(
       (video: ISubContent) =>
         video.title?.toLowerCase().includes(term) ||
-        video.description?.toLowerCase().includes(term)
+        video.description?.toLowerCase().includes(term),
     );
   }, [allVideos, searchTerm]);
 

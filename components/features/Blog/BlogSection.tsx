@@ -13,7 +13,7 @@ import { BlogPagination } from "./components/BlogPagination";
 
 /**
  * BlogSection Component (Client Component)
- * 
+ *
  * Main blog listing page
  * Client component for data fetching and state management
  */
@@ -40,6 +40,7 @@ const BlogSection = () => {
   });
 
   const metaData = BlogsResponse?.data.meta;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const blogs = BlogsResponse?.data?.result ?? [];
 
   // Filter blogs client-side if searchTerm exists (for better UX)
@@ -49,7 +50,7 @@ const BlogSection = () => {
     return blogs.filter(
       (blog: IBlog) =>
         blog.title.toLowerCase().includes(term) ||
-        blog.description.toLowerCase().includes(term)
+        blog.description.toLowerCase().includes(term),
     );
   }, [blogs, searchTerm]);
 
@@ -73,10 +74,7 @@ const BlogSection = () => {
           <BlogHeader />
 
           {/* Search Bar */}
-          <BlogSearch
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-          />
+          <BlogSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
           {/* Blog Grid */}
           {filteredBlogs.length === 0 && !isLoading ? (
