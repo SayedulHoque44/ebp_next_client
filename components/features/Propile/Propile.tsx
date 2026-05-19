@@ -12,13 +12,14 @@ import ProfileInfoDisplay from "./UpdateUser/ProfileInfoDisplay";
 import ProfileCard from "./components/ProfileCard";
 import ProfileSection from "./components/ProfileSection";
 import Button from "@/components/ui/Button";
+import { SignOut } from "@phosphor-icons/react";
 import { Heading1, Heading2, Body, Caption } from "@/components/ui/Typography";
 import { IProfileUser } from "./types";
 
 const Propile = () => {
   const { id } = useParams<{ id: string }>();
   const userId = Array.isArray(id) ? id[0] : id;
-  const { user: loggedUser, clearUser } = useAuth();
+  const { user: loggedUser, confirmLogout } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
 
   const { data: singleUserResponse, isLoading } =
@@ -83,10 +84,14 @@ const Propile = () => {
                 </div>
                 <Button
                   variant="outline"
-                  onClick={clearUser}
-                  className="w-full cursor-pointer sm:w-auto"
+                  onClick={() => confirmLogout()}
+                  ripple={false}
+                  leftIcon={
+                    <SignOut className="h-5 w-5 shrink-0" weight="bold" />
+                  }
+                  className="h-11 w-full cursor-pointer rounded-full border-2 border-red-200 bg-white px-6 text-sm font-semibold text-red-600 shadow-none hover:border-red-300 hover:bg-red-50 hover:text-red-700 focus:ring-red-200 sm:w-auto"
                 >
-                  Logout
+                  Sign Out
                 </Button>
               </div>
             </div>

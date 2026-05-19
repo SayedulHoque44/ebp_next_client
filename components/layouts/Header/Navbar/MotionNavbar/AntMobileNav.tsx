@@ -10,11 +10,9 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
 import { AiOutlineClose } from "react-icons/ai";
 import UserPropile from "@/components/shared/UserProfile";
 import useAuth from "@/features/Auth/hooks/useAuth";
-import { errorToast, successToast } from "@/utils/toast";
 
 const { Text } = Typography;
 
@@ -27,7 +25,7 @@ const AntMobileNav = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const { logout, user } = useAuth();
+  const { confirmLogout, user } = useAuth();
   const router = useRouter();
   // Handle body scroll when drawer is open
   useEffect(() => {
@@ -42,31 +40,7 @@ const AntMobileNav = ({
     };
   }, [isOpen]);
 
-  // Handle logout functionality
-  const handleLogout = async () => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You will be logged out of your account.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, logout!",
-        cancelButtonText: "Cancel",
-      });
-
-      if (result.isConfirmed) {
-        logout();
-        successToast("Logged out successfully!");
-        router.push("/");
-        onClose();
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-      errorToast({ error: error });
-    }
-  };
+  const handleLogout = () => confirmLogout(onClose);
 
   // Handle menu item click
   const handleMenuItemClick = (item: any) => {

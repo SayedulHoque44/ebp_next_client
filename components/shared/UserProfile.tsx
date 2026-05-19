@@ -10,7 +10,7 @@ const UserPropile = ({ logout = true }: { logout?: boolean }) => {
 
   // console.log(SingleUser);
   return (
-    <div className="flex items-center gap-4">
+    <div className={`flex items-center ${logout ? "gap-4" : ""}`}>
       <Link
         href={`/propile/${user?._id}`}
         className="h-12 w-12 rounded-full overflow-hidden  border-2 border-P-gry cursor-pointer relative"

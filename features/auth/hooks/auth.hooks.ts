@@ -10,7 +10,8 @@ import AuthApi from "../api/auth.api";
 import UserHooks from "@/features/User/hooks/user.hooks";
 import { errorToast, successToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import Swal from "sweetalert2";
 
 const useAuthDataDefine = () => {
   const queryClient = useQueryClient();
@@ -52,7 +53,7 @@ const useAuthDataDefine = () => {
   };
 
   const register = async (
-    data: IRegisterRequest
+    data: IRegisterRequest,
   ): Promise<ILoginResponse | any> => {
     try {
       const response = await AuthApi.registerHandler(data);
@@ -75,6 +76,37 @@ const useAuthDataDefine = () => {
     clearAccessToken();
     queryClient.clear();
   };
+
+  const confirmLogout = useCallback(
+    async (onSuccess?: () => void) => {
+      try {
+        const result = await Swal.fire({
+          title: "Are you sure?",
+          text: "You will be logged out of your account.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, logout!",
+          cancelButtonText: "Cancel",
+        });
+
+        if (result.isConfirmed) {
+          await logout();
+          successToast("Logged out successfully!");
+          router.push("/");
+          onSuccess?.();
+          return true;
+        }
+        return false;
+      } catch (error: unknown) {
+        console.error("Logout error:", error);
+        errorToast({ error });
+        return false;
+      }
+    },
+    [logout, router],
+  );
 
   const { data: userData, isFetching } = UserHooks.useGetUserQuery({
     queryKey: ["getMe-user"],
@@ -108,6 +140,7 @@ const useAuthDataDefine = () => {
     refetchQuery,
     login,
     logout,
+    confirmLogout,
     // setAccessToken,
     setUser,
     clearUser,

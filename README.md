@@ -10,21 +10,18 @@
 
 ### TODO
 
-- Remove Dark Mode
 - Add bearer in token req with server keep mind also react project - But Apps issue , app also need to change
   -import Swal from "sweetalert2"; find any alternative
   -import toast from "react-hot-toast"; replace with sooner
 - in argument and topic single data retirve use query of them single featch of them instead of use navigation state on both react and next.js implementended then in all topic or argument query reduce the size of data all data dont need on their
 - Success student of some youtube video not playing and showing thumbnail
-- User profile page
-- Button ripple fix
-- User course info show
-- Profile page not worked yet
+- theoryconquiz theory bengali translation not showing only Theory
+- profile page -> Additional Information + Account Details design not same as previos
+- thouh its paid uses when try to open trucci book it redirect to dashboard
 
 ### Migration preocess important notes
 
 - Initially keep all things same just copy paste setup then try to run properly all things exact same as prev app, its also help to debug by following prev app code
--
 
 ### prompt
 

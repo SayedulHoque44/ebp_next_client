@@ -1,4 +1,5 @@
-import { Image } from "antd";
+import Image from "next/image";
+import { Image as AntdImage } from "antd";
 import React, { useMemo } from "react";
 import {
   FaClock,
@@ -158,14 +159,21 @@ const QuizResult: React.FC<QuizResultProps> = ({
           }
 
           // Convert userAnswer to string (handle boolean values)
-          const givenAnswer: string = typeof userAnswer === "boolean" 
-            ? (userAnswer ? "V" : "F")
-            : String(userAnswer).trim();
+          const givenAnswer: string =
+            typeof userAnswer === "boolean"
+              ? userAnswer
+                ? "V"
+                : "F"
+              : String(userAnswer).trim();
 
           // Ensure isCorrect is a boolean
-          const isCorrectValue: boolean = typeof isCorrect === "boolean" 
-            ? isCorrect 
-            : (givenAnswer.toLowerCase() === String(item?.correctAnswer || "").toLowerCase().trim());
+          const isCorrectValue: boolean =
+            typeof isCorrect === "boolean"
+              ? isCorrect
+              : givenAnswer.toLowerCase() ===
+                String(item?.correctAnswer || "")
+                  .toLowerCase()
+                  .trim();
 
           return {
             quizId: item._id,
@@ -174,12 +182,16 @@ const QuizResult: React.FC<QuizResultProps> = ({
             isCorrect: isCorrectValue,
           };
         })
-        .filter((item): item is {
-          quizId: string;
-          userId: string;
-          givenAnswer: string;
-          isCorrect: boolean;
-        } => item !== null); // Filter out null items
+        .filter(
+          (
+            item,
+          ): item is {
+            quizId: string;
+            userId: string;
+            givenAnswer: string;
+            isCorrect: boolean;
+          } => item !== null,
+        ); // Filter out null items
 
       // Call API if we have valid data
       if (payload.length > 0) {
@@ -216,7 +228,9 @@ const QuizResult: React.FC<QuizResultProps> = ({
     );
   }
 
-  const getStatus = (item: QuizResultItem): "correct" | "wrong" | "unanswered" => {
+  const getStatus = (
+    item: QuizResultItem,
+  ): "correct" | "wrong" | "unanswered" => {
     const userAnswer =
       item?.userAnswer === undefined || item?.userAnswer === null
         ? ""
@@ -259,7 +273,9 @@ const QuizResult: React.FC<QuizResultProps> = ({
     },
   };
 
-  const getAnswerColorClass = (answer: string | boolean | null | undefined): string => {
+  const getAnswerColorClass = (
+    answer: string | boolean | null | undefined,
+  ): string => {
     const normalized = String(answer || "")
       .trim()
       .toLowerCase();
@@ -374,8 +390,8 @@ const QuizResult: React.FC<QuizResultProps> = ({
                       {status === "correct"
                         ? "Corretto"
                         : status === "wrong"
-                        ? "Errato"
-                        : "Non risposto"}
+                          ? "Errato"
+                          : "Non risposto"}
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
@@ -389,7 +405,7 @@ const QuizResult: React.FC<QuizResultProps> = ({
 
                       {item?.imageUrl && (
                         <div className="w-24 h-24 rounded-xl overflow-hidden border border-white/80 bg-white shadow-md">
-                          <Image
+                          <AntdImage
                             src={item.imageUrl}
                             alt={`Domanda ${index + 1}`}
                             className="w-full h-full object-contain"
@@ -407,7 +423,7 @@ const QuizResult: React.FC<QuizResultProps> = ({
                         </span>
                         <span
                           className={`px-3 py-1.5 rounded-lg bg-white/80 text-sm font-semibold shadow-sm ${getAnswerColorClass(
-                            userAnswer
+                            userAnswer,
                           )}`}
                         >
                           La tua risposta: {userAnswer || "Non hai risposto"}

@@ -16,12 +16,21 @@ import { NAVBAR_STYLES } from "./config/navbar.config";
  */
 const Navbar = memo(() => {
   const { user } = useAuth();
-  const { isMobileMenuOpen, closeMobileMenu } = useResponsiveNavigation();
+  const {
+    isMobileMenuOpen,
+    closeMobileMenu,
+    toggleMobileMenu,
+    handleItemClick,
+  } = useResponsiveNavigation();
 
   return (
     <div className={NAVBAR_STYLES.container}>
       {/* Main Header */}
-      <NavbarHeader />
+      <NavbarHeader
+        isMobileMenuOpen={isMobileMenuOpen}
+        toggleMobileMenu={toggleMobileMenu}
+        handleItemClick={handleItemClick}
+      />
 
       {/* Mobile Navigation */}
       <NavbarMobileNav

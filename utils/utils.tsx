@@ -2,7 +2,10 @@ import moment from "moment-timezone";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
-import { MdOutlineDesktopAccessDisabled } from "react-icons/md";
+import {
+  MdOutlineDesktopAccessDisabled,
+  MdOutlineSmartphone,
+} from "react-icons/md";
 
 export const minimizeText = (text: string, mobile: boolean) => {
   const textSize = mobile ? 100 : 200;
@@ -262,22 +265,41 @@ export const DayPrivateRoute = ({
         <>
           <div className="flex justify-center sticky top-40 -mb-[200px] z-12">
             <div className="w-full md:w-1/2 ">
-              <div className="flex flex-col justify-center items-center w-full border-l-6 border-warning bg-warning bg-opacity-[45%] px-7 py-8 shadow-md md:p-9 gap-7">
-                <div className="mr-5 flex h-9 w-9 items-center justify-center rounded-lg bg-warning bg-opacity-30">
-                  <MdOutlineDesktopAccessDisabled size={35} />
-                </div>
-                <div className="w-full flex flex-col items-center">
-                  <h5 className="mb-3 text-lg font-semibold text-[#9D5425]">
-                    {"Temporary Course Video Disabled!"}
-                  </h5>
-                  <p className="leading-relaxed text-white">
-                    {`কোর্স ভিডিও আমাদের ওয়েবসাইটে শুদুমাত্র লাইভ ক্লাস যেদিন হবে ওই দিন গুলোতে দেখতে পারবেন, অ্যাপ এ প্রতিদিন দেখতে পারবেন তাই অ্যাপ এ দেখুন 😊`}
-                  </p>
+              <div className="w-full overflow-hidden rounded-2xl border border-warning-200/90 bg-white shadow-large sm:rounded-3xl">
+                <div className="h-1 bg-linear-to-r from-warning-400 via-warning-500 to-warning-600" />
+                <div className="flex flex-col items-center gap-5 px-7 py-8 sm:flex-row sm:items-start md:p-9">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-warning-100 text-warning-600">
+                    <MdOutlineDesktopAccessDisabled className="h-8 w-8" />
+                  </div>
+                  <div className="w-full min-w-0 text-center sm:text-left">
+                    <span className="mb-2 inline-block rounded-full bg-warning-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-warning-800">
+                      Notice
+                    </span>
+                    <h5 className="mb-3 text-lg font-bold text-gray-900 sm:text-xl">
+                      Temporary Course Video Disabled
+                    </h5>
+                    <p className="font-bengali text-sm leading-relaxed text-gray-600 sm:text-base">
+                      কোর্স ভিডিও আমাদের ওয়েবসাইটে শুধুমাত্র লাইভ ক্লাস যেদিন হবে
+                      ওই দিনগুলোতে দেখতে পারবেন। অ্যাপে প্রতিদিন দেখতে পারবেন —
+                      তাই অ্যাপে দেখুন।
+                    </p>
+                    <div className="mt-5 flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-left">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
+                        <MdOutlineSmartphone className="h-5 w-5" />
+                      </div>
+                      <p className="font-bengali text-sm leading-snug text-primary-800">
+                        <span className="font-semibold text-primary-900">
+                          মোবাইল অ্যাপ:
+                        </span>{" "}
+                        প্রতিদিনের কোর্স ভিডিও অ্যাপ থেকেই দেখুন।
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex justify-center p-5 bluryBg absolute top-0 right-0 bottom-0 left-0 z-10 overflow-y-auto"></div>
+          <div className="bluryBg absolute top-0 right-0 bottom-0 left-0 z-10 flex justify-center overflow-y-auto bg-gray-900/50 p-5 backdrop-blur-md"></div>
         </>
       );
     }

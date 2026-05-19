@@ -1,4 +1,3 @@
-import React from "react";
 import type { Metadata } from "next";
 import ContentPages from "@/components/features/Dashboard/ContentPages";
 

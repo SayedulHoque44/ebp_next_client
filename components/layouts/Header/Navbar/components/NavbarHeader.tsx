@@ -2,12 +2,17 @@
 
 import React, { useCallback } from "react";
 import useAuth from "@/features/Auth/hooks/useAuth";
-import { useResponsiveNavigation } from "../Navigation";
 import { NavbarLogo } from "./NavbarLogo";
 import { NavbarDesktopNav } from "./NavbarDesktopNav";
 import { NavbarUserActions } from "./NavbarUserActions";
 import { NavbarMobileToggle } from "./NavbarMobileToggle";
 import { NAVBAR_STYLES } from "../config/navbar.config";
+
+interface NavbarHeaderProps {
+  isMobileMenuOpen: boolean;
+  toggleMobileMenu: () => void;
+  handleItemClick: (item: any, onItemClick?: (item: any) => void) => void;
+}
 
 /**
  * NavbarHeader Component (Client Component)
@@ -15,13 +20,12 @@ import { NAVBAR_STYLES } from "../config/navbar.config";
  * Main navbar header with logo, navigation, and actions
  * Client component for navigation interactions
  */
-export const NavbarHeader: React.FC = () => {
+export const NavbarHeader: React.FC<NavbarHeaderProps> = ({
+  isMobileMenuOpen,
+  toggleMobileMenu,
+  handleItemClick,
+}) => {
   const { user } = useAuth();
-  const {
-    isMobileMenuOpen,
-    toggleMobileMenu,
-    handleItemClick,
-  } = useResponsiveNavigation();
 
   // Handle navigation item click
   const onItemClick = useCallback(

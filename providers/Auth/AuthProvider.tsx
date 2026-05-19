@@ -12,6 +12,7 @@ export interface IAuthContext {
   refetchQuery: (callBack: () => any) => void;
   login: (data: ILoginRequest) => Promise<ILoginResponse | any>;
   logout: () => Promise<void>;
+  confirmLogout: (onSuccess?: () => void) => Promise<boolean>;
   setUser: (user: IUser) => void;
   clearUser: () => void;
   clearAccessToken: () => void;

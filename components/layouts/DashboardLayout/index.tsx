@@ -43,7 +43,9 @@ const NavItem = memo(({ item, collapsed, pathname }: NavItemProps) => {
   return (
     <Link
       href={item.to}
-      className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group relative ${
+      className={`flex items-center py-3 rounded-xl transition-all duration-300 group relative ${
+        collapsed ? "justify-center px-2" : "gap-3 px-3"
+      } ${
         isActive
           ? "bg-P-primary text-white shadow-lg shadow-P-primary/30"
           : "text-gray-500 hover:bg-purple-50 hover:text-P-primary"
@@ -201,23 +203,23 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex h-screen bg-gray-50 overflow-hidden font-sans">
       {/* Desktop Sidebar */}
       <aside
-        className={`hidden md:flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 ${
+        className={`hidden md:flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 overflow-x-hidden ${
           isCollapsed ? "w-20" : "w-72"
         }`}
       >
         {/* Sidebar Header */}
-        <div className="h-20 flex items-center justify-between px-4 border-b border-gray-100">
-          <div
-            className={`transition-all duration-300 ${
-              isCollapsed ? "scale-0 w-0" : "scale-100 w-auto"
-            }`}
-          >
-            {!isCollapsed && <Logo nameColor={"text-gray-800"} />}
-          </div>
+        <div
+          className={`h-20 flex items-center border-b border-gray-100 shrink-0 ${
+            isCollapsed
+              ? "flex-col justify-center gap-1 px-2"
+              : "justify-between px-4"
+          }`}
+        >
+          {!isCollapsed && <Logo nameColor={"text-gray-800"} />}
           {isCollapsed && (
-            <div className="w-full flex justify-center">
-              <span className="text-2xl font-bold text-P-primary">EB</span>
-            </div>
+            <span className="text-xl font-bold text-P-primary leading-none">
+              EB
+            </span>
           )}
 
           <button
@@ -234,7 +236,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto py-6 px-3 space-y-1 scrollbar-hide">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-3 space-y-1 scrollbar-hide min-w-0">
           {navItems.map((item) => (
             <NavItem
               key={item.id}
@@ -246,14 +248,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         {/* User Profile Footer */}
-        <div className="p-4 border-t border-gray-100">
+        <div
+          className={`border-t border-gray-100 shrink-0 overflow-hidden ${
+            isCollapsed ? "p-2" : "p-4"
+          }`}
+        >
           <div
-            className={`flex items-center gap-3 transition-all duration-300 ${
-              isCollapsed ? "justify-center" : ""
+            className={`flex items-center transition-all duration-300 ${
+              isCollapsed ? "justify-center" : "gap-3"
             }`}
           >
             <div className="shrink-0">
-              <UserPropile />
+              <UserPropile logout={!isCollapsed} />
             </div>
             {!isCollapsed && (
               <div className="overflow-hidden">

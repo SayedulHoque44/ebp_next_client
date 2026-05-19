@@ -8,6 +8,7 @@ import EndedCourseTime from "./EndedCourseTime/EndedCourseTime";
 import OnGoingCourseTime from "./OnGoingCourseTime/OnGoingCourseTime";
 import UpComingCourseTime from "./UpComingCourseTime/UpComingCourseTime";
 import useAuth from "@/features/Auth/hooks/useAuth";
+import UserHooks from "@/features/User/hooks/user.hooks";
 import { IUserCourse } from "@/features/User/interface/user.interface";
 
 interface DashboardWrapperProps {
@@ -15,10 +16,19 @@ interface DashboardWrapperProps {
 }
 
 const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
-  const { user, isLoading } = useAuth();
+  const { user: loggedUser, isLoading: isAuthLoading } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-  const SingleUser = user;
+
+  const { data: singleUserResponse, isLoading: isSingleUserLoading } =
+    UserHooks.useGetSingleUserQuery({
+      queryKey: ["dashboard-single-user", loggedUser?._id || ""],
+      params: { userId: loggedUser?._id || "" },
+      options: { enabled: !!loggedUser?._id },
+    });
+
+  const SingleUser = singleUserResponse?.data ?? loggedUser;
+  const isLoading = isAuthLoading || isSingleUserLoading;
 
   const userCourseTimes = useMemo(
     () => [...(SingleUser?.courseTimes || [])].reverse(),
@@ -101,7 +111,7 @@ const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
               <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight text-center">
                 Welcome back,{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-P-primary to-purple-600">
-                  {user?.name}
+                  {loggedUser?.name}
                 </span>
                 <span className="inline-block animate-bounce-gentle ml-2">
                   👋
@@ -115,31 +125,29 @@ const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
           )}
         </div>
       )}
-      {/* show course information */}
-      {isDashboardPage && (
-        <>
-          {isLoading ? (
-            <div className="flex justify-center mt-4 px-4">
-              <div className="w-full max-w-[600px]">
-                <Skeleton width="100%" height={120} className="rounded-xl" />
-              </div>
+      {/* show course information (all dashboard routes, same as previous app) */}
+      {/* <>
+        {isLoading ? (
+          <div className="flex justify-center mt-4 px-4">
+            <div className="w-full max-w-[600px]">
+              <Skeleton width="100%" height={120} className="rounded-xl" />
             </div>
-          ) : (
-            user?.role !== "Admin" &&
-            SingleUser?.status !== "Passed" && (
-              <div className="w-full max-w-4xl mx-auto px-4 my-6">
-                {isThereAnyOnGoingCourse ? (
-                  <OnGoingCourseTime courseDuration={isThereAnyOnGoingCourse} />
-                ) : isThereUpcoming ? (
-                  <UpComingCourseTime courseDuration={isThereUpcoming} />
-                ) : isThereEndedCourse ? (
-                  <EndedCourseTime courseDuration={isThereEndedCourse} />
-                ) : null}
-              </div>
-            )
-          )}
-        </>
-      )}
+          </div>
+        ) : (
+          loggedUser?.role !== "Admin" &&
+          SingleUser?.status !== "Passed" && (
+            <div className="w-full max-w-4xl mx-auto px-4 my-6">
+              {isThereAnyOnGoingCourse ? (
+                <OnGoingCourseTime courseDuration={isThereAnyOnGoingCourse} />
+              ) : isThereUpcoming ? (
+                <UpComingCourseTime courseDuration={isThereUpcoming} />
+              ) : isThereEndedCourse ? (
+                <EndedCourseTime courseDuration={isThereEndedCourse} />
+              ) : null}
+            </div>
+          )
+        )}
+      </> */}
 
       {/* congratulation */}
       {SingleUser?.status === "Passed" && (
