@@ -29,9 +29,9 @@ const TranslationInModal = ({ text, component }: TranslationInModalProps) => {
     setIsModalOpen(true);
   }, []);
 
-  const handleCancel = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    event.preventDefault();
+  const handleCancel = useCallback((e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     setIsModalOpen(false);
   }, []);
 

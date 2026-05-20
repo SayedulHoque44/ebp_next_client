@@ -117,7 +117,7 @@ const useAuthDataDefine = () => {
     options: {
       enabled: !!accessToken && typeof window !== "undefined",
       onSuccess: (data) => {
-        console.log("data", data);
+        // console.log("data", data);
         setUser(data.data);
         setIsLoading(false);
       },

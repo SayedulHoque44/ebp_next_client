@@ -60,7 +60,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/video-react": "^0.15.8",
-    "baseline-browser-mapping": "^2.10.29",
+    "baseline-browser-mapping": "^2.10.31",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
     "tailwindcss": "^4",

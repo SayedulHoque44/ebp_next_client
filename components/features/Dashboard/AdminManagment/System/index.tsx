@@ -9,13 +9,11 @@ import { ISystem } from "@/features/System/interface/system.interface";
 import { QUERY_KEY } from "@/constants/constendData";
 import SingleSystem from "./SingleSystem";
 
-
-
 const SystemManagment = memo(() => {
   const { data, isLoading } = SystemManagementHooks.useGetAllSystems({
     queryKey: [QUERY_KEY.SYSTEMS],
   });
-console.log(data);
+  // console.log(data);
   const allSystems: ISystem[] = data?.data || [];
 
   return (
@@ -150,4 +148,3 @@ const System = ({ allSystems, isLoading }: SystemProps) => {
 };
 
 export default SystemManagment;
-
