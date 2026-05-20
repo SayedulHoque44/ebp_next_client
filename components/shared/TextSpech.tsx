@@ -24,11 +24,13 @@ const TextSpech = ({
   lang = "it-IT",
 }: TextSpechProps) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speechSynthesis, setSpeechSynthesis] = useState<SpeechSynthesis | null>(null);
+  const [speechSynthesis, setSpeechSynthesis] =
+    useState<SpeechSynthesis | null>(null);
 
   // Initialize speech synthesis on client side
   React.useEffect(() => {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSpeechSynthesis(window.speechSynthesis);
     }
   }, []);
@@ -62,7 +64,7 @@ const TextSpech = ({
         voices.find(
           (voice) =>
             voice.lang.startsWith("it") &&
-            (voice.name.includes("Google") || voice.name.includes("italiano"))
+            (voice.name.includes("Google") || voice.name.includes("italiano")),
         ) || voices.find((voice) => voice.lang.startsWith("it"));
 
       if (italianVoice) {
@@ -86,7 +88,7 @@ const TextSpech = ({
       // Speak the text
       speechSynthesis.speak(utterance);
     },
-    [text, lang, speechSynthesis, isSpeaking]
+    [text, lang, speechSynthesis, isSpeaking],
   );
 
   // Cleanup on unmount

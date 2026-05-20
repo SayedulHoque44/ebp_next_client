@@ -22,6 +22,7 @@ const EBSearch = ({
 
   // Update value when defaultValue changes
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setValue(defaultValue);
   }, [defaultValue]);
 

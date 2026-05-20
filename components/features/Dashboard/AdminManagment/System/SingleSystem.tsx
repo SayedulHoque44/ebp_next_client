@@ -31,14 +31,12 @@ interface SingleSystemProps {
 }
 
 const SingleSystem = memo(({ systemId }: SingleSystemProps) => {
-  const {
-    data,
-    isLoading,
-    refetch,
-  } = SystemManagementHooks.useGetSingleSystem({
-    queryKey: [QUERY_KEY.SINGLE_SYSTEM, systemId],
-    params: { systemId },
-  });
+  const { data, isLoading, refetch } = SystemManagementHooks.useGetSingleSystem(
+    {
+      queryKey: [QUERY_KEY.SINGLE_SYSTEM, systemId],
+      params: { systemId },
+    },
+  );
 
   const system = data?.data as ISystem | undefined;
 
@@ -50,7 +48,7 @@ const SingleSystem = memo(({ systemId }: SingleSystemProps) => {
             refetch,
           }
         : null,
-    [system, refetch]
+    [system, refetch],
   );
 
   const redirectUrl = system?.redirect_url || [];
@@ -259,14 +257,14 @@ const HandledIndividualFieldWithAntDesign = ({
         data: systemData,
       });
     },
-    [system._id, updateSystemMutation]
+    [system._id, updateSystemMutation],
   );
 
   const handleChange =
-    (fieldName: keyof ISystem) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (fieldName: keyof ISystem) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
 
+      // eslint-disable-next-line react-hooks/refs
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
       }
@@ -342,4 +340,3 @@ const HandledIndividualFieldWithAntDesign = ({
 };
 
 export default SingleSystem;
-

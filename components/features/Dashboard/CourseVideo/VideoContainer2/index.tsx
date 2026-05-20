@@ -67,6 +67,7 @@ const VideoContainer2: React.FC = () => {
       CourseVideoss?.data?.result?.length &&
       CourseVideoss?.data?.result?.length > 0
     ) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVideo(CourseVideoss.data.result[0] as VideoItem);
     }
   }, [CourseVideoss, video]);
