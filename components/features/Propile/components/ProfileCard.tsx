@@ -24,7 +24,12 @@ interface InfoItemProps {
   itemClassName?: string;
 }
 
-const InfoItem = ({ icon: Icon, label, value, itemClassName = "" }: InfoItemProps) => (
+const InfoItem = ({
+  icon: Icon,
+  label,
+  value,
+  itemClassName = "",
+}: InfoItemProps) => (
   <div
     className={`group flex items-start gap-2 rounded-lg p-2 transition-colors duration-200 hover:bg-gray-50 sm:gap-3 sm:p-3 ${itemClassName}`}
   >
@@ -42,9 +47,24 @@ const InfoItem = ({ icon: Icon, label, value, itemClassName = "" }: InfoItemProp
   </div>
 );
 
-const ProfileCard = ({ user, isAdmin = false, className = "" }: ProfileCardProps) => {
-  const { propileImageUrl, name, email, phone, city, group, status, paymentStatus, role, pin, createdAt } =
-    user;
+const ProfileCard = ({
+  user,
+  isAdmin = false,
+  className = "",
+}: ProfileCardProps) => {
+  const {
+    propileImageUrl,
+    name,
+    email,
+    phone,
+    city,
+    group,
+    status,
+    paymentStatus,
+    role,
+    pin,
+    createdAt,
+  } = user;
 
   return (
     <aside
@@ -88,12 +108,23 @@ const ProfileCard = ({ user, isAdmin = false, className = "" }: ProfileCardProps
                 </p>
               </div>
             ) : (
-              <p className="mt-1 text-xs text-primary-100 sm:text-sm">{group}</p>
+              <p className="mt-1 text-xs text-primary-100 sm:text-sm">
+                {group}
+              </p>
             )}
           </div>
         </div>
       </div>
 
+      {/* Status Badges */}
+      {role !== "Admin" && (
+        <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-b border-gray-100">
+          <div className="flex justify-center gap-2">
+            <StatusBadge type={paymentStatus}>{paymentStatus}</StatusBadge>
+            <StatusBadge type={status}>{status}</StatusBadge>
+          </div>
+        </div>
+      )}
       <div className="space-y-1 bg-gray-100 p-4 sm:p-6">
         <InfoItem icon={MdOutlineEmail} label="Email" value={email} />
         <InfoItem icon={MdOutlinePhone} label="Phone" value={phone} />
@@ -111,7 +142,11 @@ const ProfileCard = ({ user, isAdmin = false, className = "" }: ProfileCardProps
         <InfoItem
           icon={TbCalendarTime}
           label="Member Since"
-          value={createdAt ? moment(createdAt).local().format("MMM D, YYYY") : "Not provided"}
+          value={
+            createdAt
+              ? moment(createdAt).local().format("MMM D, YYYY")
+              : "Not provided"
+          }
         />
       </div>
     </aside>

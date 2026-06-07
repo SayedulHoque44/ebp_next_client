@@ -1,6 +1,13 @@
 "use client";
-import React, { useMemo, useState, useEffect, useCallback, startTransition } from "react";
-import { Image } from "antd";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  startTransition,
+} from "react";
+import { Image as AntdImage } from "antd";
+import Image from "next/image";
 import { FaClock } from "react-icons/fa";
 import { Lock } from "@phosphor-icons/react";
 import Skeleton from "react-loading-skeleton";
@@ -54,7 +61,7 @@ const RipassoErrori = () => {
       limit,
       ...filterParams.map((p) => `${p.name}:${p.value}`),
     ],
-    [page, limit, filterParams]
+    [page, limit, filterParams],
   );
 
   const {
@@ -76,16 +83,13 @@ const RipassoErrori = () => {
 
   const playedQuizData = useMemo(
     () => userQuizPlayed?.data?.result || [],
-    [userQuizPlayed]
+    [userQuizPlayed],
   );
-  const metaData = useMemo(
-    () => userQuizPlayed?.data?.meta,
-    [userQuizPlayed]
-  );
+  const metaData = useMemo(() => userQuizPlayed?.data?.meta, [userQuizPlayed]);
 
   // Fetch quiz data only when shouldFetchQuiz is true
   const {
-    data: randomPlayedQuizData ,
+    data: randomPlayedQuizData,
     isLoading: isRandomPlayedQuizLoading,
     isFetching: isRandomPlayedQuizFetching,
     refetch: refetchRandomPlayedQuiz,
@@ -146,7 +150,7 @@ const RipassoErrori = () => {
   const onSearch = useCallback((value: string) => {
     setFilterParams((prev) => {
       const searchItemRemove = prev.filter(
-        (item) => item.name !== "searchTerm"
+        (item) => item.name !== "searchTerm",
       );
       if (value && value.trim()) {
         return [
@@ -218,7 +222,9 @@ const RipassoErrori = () => {
   };
 
   const getAnswerColorClass = useCallback((answer: string) => {
-    const normalized = String(answer || "").trim().toLowerCase();
+    const normalized = String(answer || "")
+      .trim()
+      .toLowerCase();
     if (!normalized) return "text-slate-500";
     if (["v", "vero", "true"].includes(normalized)) return "text-emerald-600";
     if (["f", "falso", "false"].includes(normalized)) return "text-rose-600";
@@ -350,12 +356,12 @@ const RipassoErrori = () => {
                         {status === "correct"
                           ? "Corretto"
                           : status === "wrong"
-                          ? "Errato"
-                          : "Non risposto"}
+                            ? "Errato"
+                            : "Non risposto"}
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="absolute -top-1 md:-top-3 text-[10px] sm:text-xs left-0 flex-shrink-0 w-6 h-6 md:w-9 md:h-9 rounded-full bg-gradient-to-br from-violet-500 to-violet-700 text-white flex items-center justify-center font-bold shadow-lg">
+                      <div className="absolute -top-1 md:-top-3 text-[10px] sm:text-xs left-0 shrink-0 w-6 h-6 md:w-9 md:h-9 rounded-full bg-linear-to-br from-violet-500 to-violet-700 text-white flex items-center justify-center font-bold shadow-lg">
                         {index + 1}
                       </div>
                       <div className="flex-1 space-y-3">
@@ -371,7 +377,7 @@ const RipassoErrori = () => {
 
                         {item?.imageUrl && (
                           <div className="w-24 h-24 rounded-xl overflow-hidden border border-white/80 bg-white shadow-md">
-                            <Image
+                            <AntdImage
                               src={item.imageUrl}
                               alt={`Domanda ${index + 1}`}
                               className="w-full h-full object-contain"
@@ -389,7 +395,7 @@ const RipassoErrori = () => {
                           </span>
                           <span
                             className={`px-3 py-1.5 rounded-lg bg-white/80 text-sm font-semibold shadow-sm ${getAnswerColorClass(
-                              userAnswer
+                              userAnswer,
                             )}`}
                           >
                             La tua risposta: {userAnswer || "Non hai risposto"}

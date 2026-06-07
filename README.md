@@ -14,14 +14,21 @@
   -import Swal from "sweetalert2"; find any alternative
   -import toast from "react-hot-toast"; replace with sooner
 - in argument and topic single data retirve use query of them single featch of them instead of use navigation state on both react and next.js implementended then in all topic or argument query reduce the size of data all data dont need on their
-- Success student of some youtube video not playing and showing thumbnail
 - theoryconquiz theory bengali translation not showing only Theory
-- profile page -> Additional Information + Account Details design not same as previos
-- thouh its paid uses when try to open trucci book it redirect to dashboard
+- Pinned Blog not showing in HomePage
+
+## TODO DONE!
+
+- profile page -> Additional Information + Account Details design not same as previos - DONE!
+- thouh its paid uses when try to open trucci book it redirect to dashboard - DONE!
 
 ### Migration preocess important notes
 
 - Initially keep all things same just copy paste setup then try to run properly all things exact same as prev app, its also help to debug by following prev app code
+
+### Error
+
+- antd Drawer width is deprecated please use size instead - single blog view
 
 ### prompt
 

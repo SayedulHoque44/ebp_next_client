@@ -14,7 +14,7 @@ interface BlogArticleActionsProps {
 
 /**
  * BlogArticleActions Component (Client Component)
- * 
+ *
  * Blog article action buttons (like, bookmark, share)
  * Client component for interactions
  */
@@ -55,38 +55,45 @@ export const BlogArticleActions: React.FC<BlogArticleActionsProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.6 }}
-      className="bg-gray-50 rounded-2xl p-8"
+      className="rounded-xl bg-gray-50 p-4 sm:rounded-2xl sm:p-6 lg:p-8"
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center sm:gap-4 md:gap-6">
           <motion.button
             onClick={handleLike}
-            className={`flex items-center space-x-3 px-6 py-3 rounded-xl transition-all duration-300 ${
+            aria-label={`Like article, ${likes + (isLiked ? 1 : 0)} likes`}
+            className={`flex w-full items-center justify-center gap-2 rounded-xl border-2 px-3 py-2.5 transition-all duration-300 sm:w-auto sm:justify-start sm:gap-3 sm:px-6 sm:py-3 ${
               isLiked
-                ? "text-red-500 bg-red-50 border-2 border-red-200"
-                : "text-gray-600 hover:text-red-500 hover:bg-red-50 border-2 border-gray-200 hover:border-red-200"
+                ? "border-red-200 bg-red-50 text-red-500"
+                : "border-gray-200 text-gray-600 hover:border-red-200 hover:bg-red-50 hover:text-red-500"
             }`}
             whileTap={{ scale: 0.95 }}
           >
-            <FaHeart className={`w-6 h-6 ${isLiked ? "fill-current" : ""}`} />
-            <Caption className="font-semibold text-lg">
-              {likes + (isLiked ? 1 : 0)} Likes
+            <FaHeart
+              className={`h-5 w-5 shrink-0 sm:h-6 sm:w-6 ${isLiked ? "fill-current" : ""}`}
+            />
+            <Caption className="text-sm font-semibold sm:text-base md:text-lg">
+              <span className="sm:hidden">{likes + (isLiked ? 1 : 0)}</span>
+              <span className="hidden sm:inline">
+                {likes + (isLiked ? 1 : 0)} Likes
+              </span>
             </Caption>
           </motion.button>
 
           <motion.button
             onClick={handleBookmark}
-            className={`flex items-center space-x-3 px-6 py-3 rounded-xl transition-all duration-300 ${
+            aria-label={isBookmarked ? "Remove bookmark" : "Save article"}
+            className={`flex w-full items-center justify-center gap-2 rounded-xl border-2 px-3 py-2.5 transition-all duration-300 sm:w-auto sm:justify-start sm:gap-3 sm:px-6 sm:py-3 ${
               isBookmarked
-                ? "text-yellow-500 bg-yellow-50 border-2 border-yellow-200"
-                : "text-gray-600 hover:text-yellow-500 hover:bg-yellow-50 border-2 border-gray-200 hover:border-yellow-200"
+                ? "border-yellow-200 bg-yellow-50 text-yellow-500"
+                : "border-gray-200 text-gray-600 hover:border-yellow-200 hover:bg-yellow-50 hover:text-yellow-500"
             }`}
             whileTap={{ scale: 0.95 }}
           >
             <FaBookmark
-              className={`w-6 h-6 ${isBookmarked ? "fill-current" : ""}`}
+              className={`h-5 w-5 shrink-0 sm:h-6 sm:w-6 ${isBookmarked ? "fill-current" : ""}`}
             />
-            <Caption className="font-semibold text-lg">
+            <Caption className="text-sm font-semibold sm:text-base md:text-lg">
               {isBookmarked ? "Saved" : "Save"}
             </Caption>
           </motion.button>
@@ -94,11 +101,15 @@ export const BlogArticleActions: React.FC<BlogArticleActionsProps> = ({
 
         <motion.button
           onClick={handleShare}
-          className="flex items-center space-x-3 px-6 py-3 text-gray-600 hover:text-blue-500 hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-200 rounded-xl transition-all duration-300"
+          aria-label="Share article"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-gray-200 px-3 py-2.5 text-gray-600 transition-all duration-300 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-500 sm:w-auto sm:justify-start sm:gap-3 sm:px-6 sm:py-3"
           whileTap={{ scale: 0.95 }}
         >
-          <FaShareAlt className="w-6 h-6" />
-          <Caption className="font-semibold text-lg">Share Article</Caption>
+          <FaShareAlt className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
+          <Caption className="text-sm font-semibold sm:text-base md:text-lg">
+            <span className="sm:hidden">Share</span>
+            <span className="hidden sm:inline">Share Article</span>
+          </Caption>
         </motion.button>
       </div>
     </motion.div>

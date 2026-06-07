@@ -25,8 +25,6 @@ export interface ICreateQnaPdfResponse {
 
 export interface IDeleteQnaPdfResponse {
   success: boolean;
-  data: {
-    sucess: boolean;
-  };
   message: string;
+  data: IQnaPdf;
 }

@@ -10,6 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/constants/constendData";
 import useAuth from "@/features/Auth/hooks/useAuth";
+import { errorToast, successToast } from "@/utils/toast";
 
 interface QNAPdfItem {
   _id: string;
@@ -20,20 +21,20 @@ interface QNAPdfItem {
 const QNAPdf: React.FC = () => {
   const queryClient = useQueryClient();
   const { data, isLoading: isDataLoading } = QnaPdfHooks.useGetQnaPdfs({
-    queryKey: [],
+    queryKey: [QUERY_KEY.QNA_PDFS],
     options: {
       enabled: true,
     },
   });
   const deletePdfQuery = QnaPdfHooks.useDeleteQnaPdf({
     onSuccess: async (response) => {
-      if (response.data?.sucess) {
+      if (response.success) {
         await queryClient.invalidateQueries({ queryKey: [QUERY_KEY.QNA_PDFS] });
-        toast.success(response.message);
+        successToast(response.message);
       }
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to delete PDF");
+      errorToast(error.response?.data?.message || "Failed to delete PDF");
     },
   });
   const { user } = useAuth();
@@ -93,7 +94,12 @@ const QNAPdf: React.FC = () => {
                 key={_id}
                 className="p-3 bg-P-Black  my-5 rounded flex justify-between"
               >
-                <a className="text-P-gry flex-1" href={link} target="_blank" rel="noopener noreferrer">
+                <a
+                  className="text-P-gry flex-1"
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {title}
                 </a>
                 {user?.role === "Admin" && (
