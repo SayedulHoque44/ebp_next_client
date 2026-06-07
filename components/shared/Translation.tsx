@@ -169,7 +169,7 @@ export const TranslationFnText = ({
       try {
         setLoading(true);
         const response = await axios.post(
-          process.env.NEXT_PUBLIC_API_URL + "/api/words/translate/create",
+          process.env.NEXT_PUBLIC_API_URL + "words/translate/create",
           {
             sourceWords: inputText,
             sourceLang: translateLang,

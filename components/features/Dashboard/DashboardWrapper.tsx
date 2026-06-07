@@ -34,7 +34,7 @@ const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
     () => [...(SingleUser?.courseTimes || [])].reverse(),
     [SingleUser?.courseTimes],
   );
-  console.log(userCourseTimes);
+  // console.log(userCourseTimes);
 
   // Memoize course status checks
   const courseStatuses = useMemo(() => {
@@ -64,7 +64,7 @@ const DashboardWrapper = ({ children }: DashboardWrapperProps) => {
 
   const { isThereAnyOnGoingCourse, isThereEndedCourse, isThereUpcoming } =
     courseStatuses;
-  console.log(courseStatuses);
+  // console.log(courseStatuses);
   const isDashboardPage = useMemo(() => pathname === "/dashboard", [pathname]);
 
   // Handle redirects using Next.js router
