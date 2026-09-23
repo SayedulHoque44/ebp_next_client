@@ -6,7 +6,7 @@ import useAuth from "@/features/Auth/hooks/useAuth";
 import Image from "next/image";
 import { mediaProvider } from "@/constants/mediaProvider";
 const UserPropile = ({ logout = true }: { logout?: boolean }) => {
-  const { user, clearUser } = useAuth();
+  const { user, clearUser,confirmLogout } = useAuth();
 
   // console.log(SingleUser);
   return (
@@ -26,7 +26,7 @@ const UserPropile = ({ logout = true }: { logout?: boolean }) => {
       {logout && (
         <FiLogOut
           className="cursor-pointer hover:text-red-600"
-          onClick={clearUser}
+          onClick={() => confirmLogout()}
           size={25}
         />
       )}

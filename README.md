@@ -14,7 +14,6 @@
   -import Swal from "sweetalert2"; find any alternative
   -import toast from "react-hot-toast"; replace with sooner
 - in argument and topic single data retirve use query of them single featch of them instead of use navigation state on both react and next.js implementended then in all topic or argument query reduce the size of data all data dont need on their
-- theoryconquiz theory bengali translation not showing only Theory
 - Pinned Blog not showing in HomePage
 
 ## TODO DONE!

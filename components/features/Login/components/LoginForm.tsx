@@ -30,8 +30,8 @@ export const LoginForm: React.FC = () => {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      phone: "1111111111",
-      pin: 3544,
+      // phone: "1111111111",
+      // pin: 3544,
     },
     mode: "onChange",
   });
