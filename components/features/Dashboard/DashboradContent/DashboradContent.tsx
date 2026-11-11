@@ -239,7 +239,7 @@ const DashboradContent = ({ user }: DashboradContentProps) => {
       {
         path: "/dashboard/studentNotes",
         isPaidGuard: false,
-        title: "Student Note&apos;s",
+        title: "Student Note's",
         icon: QNABookImg,
         iconAlt: "Notes",
         bgColorClass: "bg-emerald-50",

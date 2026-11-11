@@ -85,8 +85,8 @@ export const VideoThumbnailWithPlayButton = ({
       {/* Cover image */}
       <Image
         src={coverUrl}
-        width={100}
-        height={100}
+        width={500}
+        height={500}
         className="w-full h-auto"
         alt={alt}
         loading="lazy"

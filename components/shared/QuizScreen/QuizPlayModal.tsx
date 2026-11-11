@@ -352,7 +352,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
           <p className="text-gray-600 mb-4">Nessun quiz disponibile</p>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-P-primary text-white rounded-lg hover:bg-primary-600"
+            className="cursor-pointer px-4 py-2 bg-P-primary text-white rounded-lg hover:bg-primary-600"
           >
             Chiudi
           </button>
@@ -543,7 +543,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                   const startIndex = section.start - 1;
                   goToQuestion(startIndex);
                 }}
-                className={`px-1.5 sm:px-2 md:px-3 lg:px-4 py-1 sm:py-1.5 md:py-2 text-xs sm:text-sm md:text-base lg:text-lg rounded transition-colors border flex flex-col items-center leading-tight ${
+                className={`cursor-pointer px-1.5 sm:px-2 md:px-3 lg:px-4 py-1 sm:py-1.5 md:py-2 text-xs sm:text-sm md:text-base lg:text-lg rounded transition-colors border flex flex-col items-center leading-tight ${
                   currentSection === idx
                     ? "bg-white text-red-600 font-semibold border-red-600"
                     : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
@@ -557,7 +557,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
         </div>
 
         {/* Section-specific Question Tabs (only current domande range) */}
-        <div className="  px-1 sm:px-2 md:px-4 lg:px-6  overflow-x-auto">
+        <div className="  px-1 sm:px-2 md:px-4 lg:px-6  overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 justify-center min-w-max">
             {Array.from(
               {
@@ -577,12 +577,12 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                       numberRefs.current[qIndex] = el;
                     }}
                     onClick={() => goToQuestion(qIndex)}
-                    className={`w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 flex items-center justify-center text-[11px] sm:text-xs md:text-sm lg:text-base font-medium rounded transition-all border ${
+                    className={`cursor-pointer w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 flex items-center justify-center text-[11px] sm:text-xs md:text-sm lg:text-base font-medium rounded transition-all border ${
                       status === "current"
                         ? "bg-red-600 text-white border-red-600"
                         : status === "answered"
-                          ? "bg-green-200 text-black "
-                          : "bg-white text-black "
+                          ? "bg-green-200 text-black border-transparent"
+                          : "bg-white text-black border-transparent"
                     }`}
                   >
                     {qIndex + 1}
@@ -594,7 +594,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
         </div>
 
         {/* Question Numbers Navigation */}
-        <div className="  sm:block  px-1 sm:px-2 md:px-4 lg:px-6  overflow-x-auto scrollbar-hide">
+        <div className="  sm:block  px-1 sm:px-2 md:px-4 lg:px-6  overflow-x-auto scrollbar-hide [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex gap-0.5 sm:gap-1  justify-center min-w-max">
             {Array.from({ length: questions.length }, (_, i) => {
               const status = getQuestionStatus(i);
@@ -605,12 +605,12 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                     numberRefs.current[i] = el;
                   }}
                   onClick={() => goToQuestion(i)}
-                  className={`w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 flex items-center justify-center text-[11px] sm:text-xs md:text-sm lg:text-base font-medium rounded transition-all border ${
+                  className={`cursor-pointer w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 flex items-center justify-center text-[11px] sm:text-xs md:text-sm lg:text-base font-medium rounded transition-all border ${
                     status === "current"
                       ? "bg-red-600 text-white border-red-600"
                       : status === "answered"
-                        ? "bg-green-200 text-black "
-                        : "bg-white text-black "
+                        ? "bg-green-200 text-black border-transparent"
+                        : "bg-white text-black border-transparent"
                   }`}
                 >
                   {i + 1}
@@ -629,12 +629,11 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                 {/* Left: Quiz Image - Smaller side */}
                 <div className="shrink-0 w-[35%] sm:w-[36%] md:w-[37%] lg:w-[38%] bg-white rounded-lg p-2 sm:p-3 md:p-4 lg:p-6 shadow-sm flex items-center justify-center">
                   {imageUrl ? (
-                    <Image
+                    <AntdImage
                       src={imageUrl}
-                      width={300}
-                      height={300}
                       alt="Quiz"
-                      className="w-full max-w-full h-28 sm:h-40 md:h-60 lg:h-72 object-contain rounded-lg"
+                      classNames={{ root: "w-full" }}
+                      className="w-full! max-w-full h-28! sm:h-40! md:h-60! lg:h-72! object-contain rounded-lg"
                     />
                   ) : (
                     <div className="w-full h-32 sm:h-40 md:h-48 lg:h-64 bg-white rounded-lg flex items-center justify-center">
@@ -693,7 +692,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                             <TranslationInModal
                               component={
                                 <button
-                                  className="group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full bg-linear-to-br from-blue-50 to-blue-100/50 hover:from-blue-100 hover:to-blue-200 transition-all duration-200 shadow-sm hover:shadow-md"
+                                  className="cursor-pointer group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full bg-linear-to-br from-blue-50 to-blue-100/50 hover:from-blue-100 hover:to-blue-200 transition-all duration-200 shadow-sm hover:shadow-md"
                                   aria-label="Translate question"
                                 >
                                   <Image
@@ -709,13 +708,13 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                             />
                           )}
                           {showTheory && (
-                            <div className="transform scale-90 sm:scale-95 md:scale-100 origin-center">
+                            <div className="transform scale-90 sm:scale-95 md:scale-100 origin-center [&_button]:cursor-pointer">
                               <ShowTheoryModal
                                 topic={currentQuestion.ArgTopicId}
                               />
                             </div>
                           )}
-                          <div className="transform scale-90 sm:scale-95 md:scale-100 origin-center">
+                          <div className="transform scale-90 sm:scale-95 md:scale-100 origin-center [&_button]:cursor-pointer">
                             <AuthorAudioPlay
                               authorAudio={currentQuestion.authorAudio}
                             />
@@ -732,7 +731,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                         {/* Vero (True) - with V letter */}
                         <button
                           onClick={() => handleAnswerSelect("V")}
-                          className="flex flex-col items-center gap-2 sm:gap-2.5 md:gap-3"
+                          className="cursor-pointer flex flex-col items-center gap-2 sm:gap-2.5 md:gap-3"
                         >
                           <span
                             className={`text-xs sm:text-sm md:text-base lg:text-lg font-medium ${
@@ -805,7 +804,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                         {/* Falso (False) - with F letter */}
                         <button
                           onClick={() => handleAnswerSelect("F")}
-                          className=" flex flex-col items-center gap-2 sm:gap-2.5 md:gap-3"
+                          className="cursor-pointer flex flex-col items-center gap-2 sm:gap-2.5 md:gap-3"
                         >
                           <span
                             className={`text-xs sm:text-sm md:text-base lg:text-lg font-medium ${
@@ -898,7 +897,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                     <button
                       onClick={goToPrevious}
                       disabled={currentQuestionIndex === 0}
-                      className="w-12 h-12 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white border border-gray-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:shadow-lg overflow-hidden"
+                      className="cursor-pointer w-12 h-12 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white border border-gray-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:shadow-lg overflow-hidden"
                     >
                       <Image
                         src={mediaProvider.dashboard.backQuiz.src as string}
@@ -912,7 +911,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                     <button
                       onClick={goToNext}
                       disabled={currentQuestionIndex >= questions.length - 1}
-                      className="w-12 h-12 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white border border-gray-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:shadow-lg overflow-hidden"
+                      className="cursor-pointer w-12 h-12 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white border border-gray-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:shadow-lg overflow-hidden"
                     >
                       <Image
                         src={mediaProvider.dashboard.nextQuiz.src as string}
@@ -924,7 +923,7 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                     </button>
                     <button
                       onClick={handleEndQuiz}
-                      className="px-3 py-2 md:px-4 md:py-2 rounded-lg bg-red-600 text-white font-semibold shadow-md hover:bg-red-700 transition"
+                      className="cursor-pointer px-3 py-2 md:px-4 md:py-2 rounded-lg bg-red-600 text-white font-semibold shadow-md hover:bg-red-700 transition"
                     >
                       Correggi
                     </button>
@@ -944,13 +943,13 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowConfirmEnd(false)}
-                className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+                className="cursor-pointer px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
               >
                 Annulla
               </button>
               <button
                 onClick={confirmEndQuiz}
-                className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition"
+                className="cursor-pointer px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition"
               >
                 Conferma
               </button>
