@@ -165,15 +165,15 @@ const Pagination = ({
         <div className="absolute inset-0 bg-white/20 backdrop-blur-lg rounded-3xl border border-white/30 shadow-2xl"></div>
 
         {/* Content */}
-        <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 p-6 min-w-[400px]">
+        <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 p-2 sm:p-6 sm:min-w-[400px]">
           {/* Pagination Controls */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-1 sm:gap-0">
             {/* Previous Button */}
             {showArrows && (
               <motion.button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`flex items-center space-x-2 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
+                className={`flex items-center space-x-2 px-2.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
                   currentPage === 1
                     ? `opacity-50 cursor-not-allowed text-gray-400 ${disabledButtonClassName}`
                     : "text-gray-700 hover:bg-white/20 hover:scale-105 active:scale-95"
@@ -188,13 +188,13 @@ const Pagination = ({
             )}
 
             {/* Page Numbers */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               {visiblePages.map((page, index) => {
                 if (page === "ellipsis-start" || page === "ellipsis-end") {
                   return (
                     <span
                       key={`ellipsis-${index}`}
-                      className="px-3 py-2 text-gray-400"
+                      className="px-1 sm:px-3 py-2 text-gray-400"
                       aria-hidden="true"
                     >
                       <FaEllipsisH className="w-4 h-4" />
@@ -209,7 +209,7 @@ const Pagination = ({
                   <motion.button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
+                    className={`min-w-9 px-2 py-2 sm:min-w-0 sm:px-4 sm:py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
                       currentPage === page
                         ? "bg-linear-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25"
                         : "text-gray-700 hover:bg-white/20 hover:scale-105 active:scale-95"
@@ -232,7 +232,7 @@ const Pagination = ({
               <motion.button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`flex items-center space-x-2 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
+                className={`flex items-center space-x-2 px-2.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
                   currentPage === totalPages
                     ? `opacity-50 cursor-not-allowed text-gray-400 ${disabledButtonClassName}`
                     : "text-gray-700 hover:bg-white/20 hover:scale-105 active:scale-95"

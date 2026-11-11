@@ -88,7 +88,7 @@ const AntMobileNav = ({
       placement="right"
       onClose={onClose}
       open={isOpen}
-      width={340}
+      width="min(340px, 85vw)"
       styles={{
         body: { padding: 0 },
         header: { display: "none" },

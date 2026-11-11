@@ -883,10 +883,10 @@ const QuizPlayModal: React.FC<QuizPlayModalProps> = ({
                 <div className="flex flex-row items-center justify-between gap-3 sm:gap-4 md:gap-5 lg:gap-6 py-3 sm:py-3.5 md:py-4">
                   {/* Timer - Left side */}
                   <div className="bg-white flex flex-col items-center justify-center rounded-lg px-1 sm:px-4 md:px-5 lg:px-6 py-1 sm:py-2.5 md:py-3 lg:py-3.5 border border-gray-300 shadow-sm">
-                    <div className="text-[7px] sm:text-xs md:text-sm text-gray-600 mb-1 sm:mb-1.5 font-medium">
+                    <div className="text-[9px] leading-tight text-center sm:text-xs md:text-sm text-gray-600 mb-1 sm:mb-1.5 font-medium">
                       TEMPO A DISPOSIZIONE
                     </div>
-                    <div className="text-xs sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 tracking-wide">
+                    <div className="text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 tracking-wide">
                       {formatTime(timeRemaining)}
                     </div>
                   </div>

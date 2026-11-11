@@ -27,7 +27,7 @@ const IntroVideoPlayer = () => {
     <div className="max-w-4xl mx-auto">
       <div className="modern-card p-1 sm:p-8 relative group">
         {/* Video Stats */}
-        <div className="absolute -top-4 -right-4 bg-white rounded-full p-1 sm:p-4 shadow-large z-10">
+        <div className="absolute -top-4 right-0 sm:-right-4 bg-white rounded-full p-1 sm:p-4 shadow-large z-10">
           <div className="flex items-center space-x-2 text-xs sm:text-sm font-semibold text-gray-700">
             <FaUsers className="text-primary-600" />
             <span>{STATS.STUDENTS_PASSED}+ Views</span>

@@ -50,14 +50,16 @@ const ContentPages: React.FC = () => {
 
   return (
     <div className="no-scrollbar">
-      <div className="my-20  border-l-4 border-P-primary pl-5">
-        <p className="text-lg text-P-gry">{UniContent?.description}</p>
-        <h2 className="text-6xl text-P-primary font-semibold">
+      <div className="my-8 sm:my-20 border-l-4 border-P-primary pl-4 sm:pl-5">
+        <p className="text-base sm:text-lg text-P-gry">
+          {UniContent?.description}
+        </p>
+        <h2 className="text-3xl sm:text-5xl md:text-6xl text-P-primary font-semibold break-words">
           {UniContent?.title}
         </h2>
       </div>
 
-      <div className="gap-10 flex flex-col items-center">
+      <div className="gap-10 flex flex-col items-center pb-24">
         {isPageFetching && <Skeleton className="h-[500px]" />}
 
         <div className="fixed z-10 bottom-0  bg-white p-3 w-full flex justify-center">

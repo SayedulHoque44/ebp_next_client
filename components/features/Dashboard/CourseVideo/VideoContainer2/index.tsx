@@ -113,7 +113,7 @@ const VideoContainer2: React.FC = () => {
         <div className=" lg:col-span-6 xl:col-span-5  2xl:col-span-4 flex flex-col h-full">
           <h2 className="text-xl border-l-4 border-white pl-2 mb-3">Lecture</h2>
           <div
-            className={`border-2 flex-grow border-slate-800 p-5 mt-5 flex flex-col gap-5 max-h-[590px]  min-h-[590px] flex-1 overflow-y-scroll rounded relative shadow-inner-custom`}
+            className={`border-2 flex-grow border-slate-800 p-5 mt-5 flex flex-col gap-5 max-h-[590px] lg:min-h-[590px] flex-1 overflow-y-scroll rounded relative shadow-inner-custom`}
           >
             {CourseVideoss?.data?.result?.length &&
               CourseVideoss?.data?.result?.length > 0 &&

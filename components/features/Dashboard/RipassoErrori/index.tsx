@@ -284,7 +284,7 @@ const RipassoErrori = () => {
     !isFetching && !isUserQuizPlayedLoading && !transformedQuizData.length;
 
   return (
-    <div className="  flex justify-center px-2 sm:px-4 py-5 sm:py-8">
+    <div className="  flex justify-center px-2 sm:px-4 pt-5 pb-24 sm:pt-8 sm:pb-28">
       <div className="w-full max-w-6xl space-y-5 sm:space-y-7">
         <div className="relative overflow-hidden rounded-3xl bg-white/70 backdrop-blur-xl border border-white/60 shadow-2xl">
           <div className="absolute inset-0 bg-gradient-to-br from-[#b7e4c7]/40 via-white/40 to-[#a5d8ff]/30" />

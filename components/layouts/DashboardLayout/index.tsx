@@ -200,7 +200,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden font-sans">
+    <div className="flex h-screen supports-[height:100dvh]:h-dvh bg-gray-50 overflow-hidden font-sans">
       {/* Desktop Sidebar */}
       <aside
         className={`hidden md:flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 overflow-x-hidden ${
@@ -326,7 +326,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
+      <div className="flex-1 flex flex-col h-screen supports-[height:100dvh]:h-dvh overflow-hidden relative">
         {/* Mobile Header */}
         <header className="md:hidden h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 sticky top-0 z-30">
           <button
