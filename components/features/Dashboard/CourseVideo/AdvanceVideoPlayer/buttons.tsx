@@ -10,6 +10,9 @@ import {
   Pause,
   PictureInPicture,
   Play as PlayB,
+  Rectangle,
+  SkipBack,
+  SkipForward,
   SpeakerSimpleHigh,
   SpeakerSimpleLow,
   SpeakerSimpleX,
@@ -166,6 +169,77 @@ export function NextBtn({ tooltipPlacement }: { tooltipPlacement: string }) {
       </Tooltip.Trigger>
       <Tooltip.Content className={tooltipClass} placement={tooltipPlacement as any}>
         {isOn ? "Closed-Captions Off" : "Closed-Captions On"}
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
+
+/** Previous / next lesson in the playlist. */
+export function LessonNav({
+  direction,
+  tooltipPlacement,
+  onClick,
+  disabled,
+}: {
+  direction: "prev" | "next";
+  tooltipPlacement: string;
+  onClick?: () => void;
+  disabled?: boolean;
+}) {
+  const isNext = direction === "next";
+  const Icon = isNext ? SkipForward : SkipBack;
+  const label = isNext ? "Next lesson" : "Previous lesson";
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <button
+          type="button"
+          onClick={onClick}
+          disabled={disabled}
+          aria-label={label}
+          className={`${buttonClass} disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent`}
+        >
+          <Icon weight="fill" className="text-white w-4 h-4 md:w-5 md:h-5" />
+        </button>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={tooltipClass} placement={tooltipPlacement as any}>
+        {label} ({isNext ? "Shift+N" : "Shift+P"})
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
+
+/** Theater mode toggle. Hidden in fullscreen, where it has no effect. */
+export function Theater({
+  tooltipPlacement,
+  active,
+  onClick,
+}: {
+  tooltipPlacement: string;
+  active?: boolean;
+  onClick?: () => void;
+}) {
+  const isFullscreen = useMediaState("fullscreen");
+  if (isFullscreen) return null;
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <button
+          type="button"
+          onClick={onClick}
+          aria-label={active ? "Exit theater mode" : "Theater mode"}
+          aria-pressed={!!active}
+          className={buttonClass}
+        >
+          <Rectangle
+            weight={active ? "fill" : "regular"}
+            size={22}
+            color="white"
+          />
+        </button>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={tooltipClass} placement={tooltipPlacement as any}>
+        {active ? "Exit theater mode (T)" : "Theater mode (T)"}
       </Tooltip.Content>
     </Tooltip.Root>
   );

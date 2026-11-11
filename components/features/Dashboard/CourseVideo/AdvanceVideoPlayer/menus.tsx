@@ -5,7 +5,6 @@ import {
   Menu,
   Tooltip,
   useAudioOptions,
-  useCaptionOptions,
   usePlaybackRateOptions,
   useVideoQualityOptions,
 } from "@vidstack/react";
@@ -13,11 +12,9 @@ import {
   CaretLeft,
   CaretRight,
   Check,
-  ClosedCaptioning,
   Gauge,
   GearSix,
   MusicNoteSimple,
-  PlayPause,
   SkipForward,
   Sliders,
 } from "@phosphor-icons/react/dist/ssr";
@@ -60,128 +57,10 @@ export function Settings({ placement, tooltipPlacement, iconProps = {} }: { plac
         </Tooltip.Content>
       </Tooltip.Root>
       <Menu.Content className={menuClass} placement={placement as any}>
-        <AutoPlay />
         <AutoNext />
-        <AutoSkip />
-        <CaptionSubmenu />
         <SpeedSubmenu />
         <AudioSubmenu />
         <VideoQualitySubmenu />
-      </Menu.Content>
-    </Menu.Root>
-  );
-}
-
-function CaptionSubmenu() {
-  const options = useCaptionOptions(),
-    hint = options.selectedTrack?.label ?? "Off";
-  return (
-    <Menu.Root>
-      <SubmenuButton
-        label="Captions"
-        hint={hint}
-        disabled={options.disabled}
-        icon={() => (
-          <ClosedCaptioning weight="fill" size={14} className="text-white" />
-        )}
-      />
-      <Menu.Content className={submenuClassName}>
-        <Menu.RadioGroup
-          className="w-full flex flex-col"
-          value={options.selectedValue}
-        >
-          {options.map(({ label, value, select }) => (
-            <Menu.Radio
-              className={radioClassName}
-              value={value}
-              onSelect={select}
-              key={value}
-            >
-              <Check
-                className={
-                  radioIconClassName +
-                  " group-data-[checked]:hidden invisible mr-1"
-                }
-              />
-              <Check className={radioSelectedIconClassName + " mr-1"} />
-              {label}
-            </Menu.Radio>
-          ))}
-        </Menu.RadioGroup>
-      </Menu.Content>
-    </Menu.Root>
-  );
-}
-
-function AutoPlay() {
-  const [options, setOptions] = useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
-
-  const settings = useStore(useSettings, (state) => state.settings);
-
-  return (
-    <Menu.Root>
-      <SubmenuButton
-        label="Autoplay Video"
-        hint={settings?.autoplay !== undefined
-          ? options.find((option) => option.value === settings?.autoplay)
-            ?.label as string
-          : options.find((option) => option.selected)?.label as string}
-        icon={() => (
-          <PlayPause weight="fill" size={14} className="text-white" />
-        )} disabled={false}      />
-      <Menu.Content className={styles.submenu}>
-        <Menu.RadioGroup
-          className={styles.radioGroup}
-          value={
-            settings?.autoplay !== undefined
-              ? settings?.autoplay.toString()
-              : "true"
-          }
-          onChange={(value) => {
-            const boolValue = value === "true"; // Parse string to boolean
-            setOptions((options) =>
-              options.map((option) =>
-                option.value === boolValue
-                  ? { ...option, selected: true }
-                  : { ...option, selected: false }
-              )
-            );
-            useSettings.setState({
-              settings: {
-                ...useSettings.getState().settings,
-                autoplay: boolValue,
-              },
-            });
-          }}
-        >
-          {options.map((option) => (
-            <Menu.Radio
-              className={radioClassName}
-              value={option.value.toString()}
-              key={option.label}
-            >
-              <Check
-                className={
-                  radioIconClassName +
-                  " group-data-[checked]:hidden invisible mr-1"
-                }
-              />
-              <Check className={radioSelectedIconClassName + " mr-1"} />
-              {option.label}
-            </Menu.Radio>
-          ))}
-        </Menu.RadioGroup>
       </Menu.Content>
     </Menu.Root>
   );
@@ -238,83 +117,6 @@ function AutoNext() {
               settings: {
                 ...useSettings.getState().settings,
                 autonext: boolValue,
-              },
-            });
-          }}
-        >
-          {options.map((option) => (
-            <Menu.Radio
-              className={radioClassName}
-              value={option.value.toString()}
-              key={option.label}
-            >
-              <Check
-                className={
-                  radioIconClassName +
-                  " group-data-[checked]:hidden invisible mr-1"
-                }
-              />
-              <Check className={radioSelectedIconClassName + " mr-1"} />
-              {option.label}
-            </Menu.Radio>
-          ))}
-        </Menu.RadioGroup>
-      </Menu.Content>
-    </Menu.Root>
-  );
-}
-
-function AutoSkip() {
-  const [options, setOptions] = useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
-
-  const settings = useStore(useSettings, (state) => state.settings);
-
-  return (
-    <Menu.Root>
-      <SubmenuButton
-        label="AutoSkip"
-        hint={
-          settings?.autoskip !== undefined
-            ? options.find((option) => option.value === settings?.autoskip)
-                ?.label as string
-            : options.find((option) => option.selected)?.label as string
-        }
-        icon={() => (
-          <SkipForward weight="fill" size={14} className="text-white" />
-        )}
-        disabled={false}      />
-      <Menu.Content className={styles.submenu}>
-        <Menu.RadioGroup
-          className={styles.radioGroup}
-          value={
-            settings?.autoskip !== undefined
-              ? settings?.autoskip.toString()
-              : "true"
-          }
-          onChange={(value) => {
-            const boolValue = value === "true"; // Parse string to boolean
-            setOptions((options) =>
-              options.map((option) =>
-                option.value === boolValue
-                  ? { ...option, selected: true }
-                  : { ...option, selected: false }
-              )
-            );
-            useSettings.setState({
-              settings: {
-                ...useSettings.getState().settings,
-                autoskip: boolValue,
               },
             });
           }}

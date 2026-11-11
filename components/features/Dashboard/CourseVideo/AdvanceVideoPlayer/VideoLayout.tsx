@@ -1,9 +1,7 @@
 "use client";
-import captionStyles from "./captions.module.css";
 import styles from "./video-controlls.module.css";
 
 import {
-  Captions,
   ChapterTitle,
   Controls,
   Gesture,
@@ -21,7 +19,28 @@ import * as Sliders from "./sliders";
 import { TimeGroup } from "./time-group";
 import React from "react";
 
-export function VideoLayout({ thumbnails }: { thumbnails: any }) {
+interface VideoLayoutProps {
+  thumbnails: any;
+  /** Playlist navigation (optional – buttons are hidden when not provided). */
+  onPrev?: () => void;
+  onNext?: () => void;
+  hasPrev?: boolean;
+  hasNext?: boolean;
+  /** Theater mode (optional – button is hidden when no handler is provided). */
+  theater?: boolean;
+  onToggleTheater?: () => void;
+}
+
+export function VideoLayout({
+  thumbnails,
+  onPrev,
+  onNext,
+  hasPrev = false,
+  hasNext = false,
+  theater = false,
+  onToggleTheater,
+}: VideoLayoutProps) {
+  const showLessonNav = Boolean(onPrev || onNext);
   return (
     <>
       <Gesture
@@ -59,11 +78,8 @@ export function VideoLayout({ thumbnails }: { thumbnails: any }) {
           <Spinner.TrackFill className="opacity-75" width={8} />
         </Spinner.Root>
       </div>
-      <Captions
-        className={`${captionStyles.captions} media-preview:opacity-0 media-controls:bottom-[85px] media-captions:opacity-100 absolute inset-0 bottom-2 z-10 select-none break-words opacity-0 transition-[opacity,bottom] duration-300 bg-red-500`}
-      />
       <Controls.Root
-        className={`${styles.controls} media-controls:opacity-100 absolute inset-0 z-10 flex h-full w-full flex-col bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity`}
+        className={`${styles.controls} @container media-controls:opacity-100 absolute inset-0 z-10 flex h-full w-full flex-col bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity`}
       >
         <Controls.Group className="flex justify-between items-center w-full px-1 pt-1">
           <div className="flex sm:hidden items-center justify-between w-full">
@@ -158,6 +174,23 @@ export function VideoLayout({ thumbnails }: { thumbnails: any }) {
         </Controls.Group>
         <Controls.Group className={`${styles.controlsGroup} pb-[10px]`}>
           <Buttons.Play tooltipPlacement="top start" />
+          {/* Lesson navigation – only when the player is wide enough to fit it */}
+          {showLessonNav && (
+            <div className="hidden @3xl:flex items-center">
+              <Buttons.LessonNav
+                direction="prev"
+                tooltipPlacement="top"
+                onClick={onPrev}
+                disabled={!hasPrev}
+              />
+              <Buttons.LessonNav
+                direction="next"
+                tooltipPlacement="top"
+                onClick={onNext}
+                disabled={!hasNext}
+              />
+            </div>
+          )}
           <Buttons.Mute tooltipPlacement="top" />
           <VolumeSlider.Root className="group relative mx-[7.5px] inline-flex h-7 md:h-10 w-full max-w-[80px] cursor-pointer touch-none select-none items-center outline-none aria-hidden:hidden">
             <VolumeSlider.Track className="relative ring-sky-400 z-0 h-[5px] w-full rounded-sm bg-white/30 group-data-[focus]:ring-[3px]">
@@ -196,7 +229,6 @@ export function VideoLayout({ thumbnails }: { thumbnails: any }) {
             {/* <FastForward className="text-white w-4 h-4 md:w-6 md:h-6" /> */}
             <TbRewindForward10 className="text-white w-4 h-4 md:w-6 md:h-6" />
           </SeekButton>
-          <Buttons.Caption tooltipPlacement="top" />
           <Menus.Settings
             placement="top end"
             tooltipPlacement="top"
@@ -206,6 +238,16 @@ export function VideoLayout({ thumbnails }: { thumbnails: any }) {
             tooltipPlacement="top"
             iconProps={{ size: 20, color: "white" }}
           />
+          {/* Theater mode – desktop only (below xl the page is already stacked) */}
+          {onToggleTheater && (
+            <div className="hidden xl:flex items-center">
+              <Buttons.Theater
+                tooltipPlacement="top"
+                active={theater}
+                onClick={onToggleTheater}
+              />
+            </div>
+          )}
           <Buttons.Fullscreen
             tooltipPlacement="top end"
             iconProps={{ size: 20, color: "white" }}
@@ -217,6 +259,22 @@ export function VideoLayout({ thumbnails }: { thumbnails: any }) {
           <div className="w-full flex items-center justify-between z-20">
             <TimeGroup />
             <div className="flex">
+              {showLessonNav && (
+                <>
+                  <Buttons.LessonNav
+                    direction="prev"
+                    tooltipPlacement="top"
+                    onClick={onPrev}
+                    disabled={!hasPrev}
+                  />
+                  <Buttons.LessonNav
+                    direction="next"
+                    tooltipPlacement="top"
+                    onClick={onNext}
+                    disabled={!hasNext}
+                  />
+                </>
+              )}
               <Buttons.PIP
                 tooltipPlacement="top"
                 iconProps={{ size: 24, color: "white" }}

@@ -1,5 +1,6 @@
 import { contentTypeObj } from "@/constants/ui_constent";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 // ============================================
 // Types for Settings Store
@@ -9,6 +10,8 @@ interface ISettings {
   autoplay: boolean;
   autonext: boolean;
   autoskip: boolean;
+  theater: boolean;
+  playbackRate: number;
 }
 
 interface ISettingsStore {
@@ -42,27 +45,51 @@ interface IUserUXSettingStore {
 // Settings Store
 // ============================================
 
-export const useSettings = create<ISettingsStore>((set) => ({
-  // Initial settings state
-  settings: {
-    autoplay: true, // Default value for autoplay
-    autonext: true, // Default value for autoplay next
-    autoskip: true, // Default value for auto-skip
-  },
-
-  /**
-   * Update a specific setting by key and value.
-   * @param key - The name of the setting to update.
-   * @param value - The new value for the setting.
-   */
-  updateSetting: <K extends keyof ISettings>(key: K, value: ISettings[K]) =>
-    set((state) => ({
+// Persisted in localStorage so the player remembers the student's choices
+// (autoplay next, theater mode, speed) between visits.
+export const useSettings = create<ISettingsStore>()(
+  persist(
+    (set) => ({
+      // Initial settings state
       settings: {
-        ...state.settings,
-        [key]: value,
+        autoplay: true, // Default value for autoplay
+        autonext: true, // Default value for autoplay next
+        autoskip: true, // Default value for auto-skip
+        theater: false, // Default value for theater mode
+        playbackRate: 1, // Default playback speed
       },
-    })),
-}));
+
+      /**
+       * Update a specific setting by key and value.
+       * @param key - The name of the setting to update.
+       * @param value - The new value for the setting.
+       */
+      updateSetting: <K extends keyof ISettings>(
+        key: K,
+        value: ISettings[K],
+      ) =>
+        set((state) => ({
+          settings: {
+            ...state.settings,
+            [key]: value,
+          },
+        })),
+    }),
+    {
+      name: "ebp-player-settings",
+      partialize: (state) => ({ settings: state.settings }),
+      // Keep defaults for any setting missing from an older saved copy.
+      merge: (persisted, current) => ({
+        ...current,
+        settings: {
+          ...current.settings,
+          ...((persisted as Partial<ISettingsStore> | undefined)?.settings ??
+            {}),
+        },
+      }),
+    },
+  ),
+);
 
 // ============================================
 // User UX Settings Store
